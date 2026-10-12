@@ -119,7 +119,7 @@ window.SKOLQUEST_DATA = {
   ],
   "settings": {
     "pin": "1234",
-    "lockTicks": false,
+    "lockTicks": true,
     "goodDayMin": 3,
     "perfectBonus": 25,
     "weeklyGoal": 300,
@@ -150,7 +150,8 @@ window.SKOLQUEST_DATA = {
         "pet": ""
       },
       "seen": 1,
-      "pseen": 1
+      "pseen": 1,
+      "petNames": {}
     },
     "b": {
       "eq": {
@@ -163,8 +164,9 @@ window.SKOLQUEST_DATA = {
         "pet": ""
       },
       "seen": 1,
-      "pseen": 1
+      "pseen": 1,
+      "petNames": {}
     }
   },
-  "updatedAt": 1791839814364
+  "updatedAt": 1791840999903
 };
