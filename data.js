@@ -150,7 +150,7 @@ window.SKOLQUEST_DATA = {
   "avatar": {
     "a": {
       "eq": {
-        "head": "",
+        "head": "starcrown",
         "face": "",
         "body": "",
         "chest": "",
@@ -158,7 +158,7 @@ window.SKOLQUEST_DATA = {
         "bg": "",
         "pet": "unicorn"
       },
-      "seen": 1,
+      "seen": 30,
       "pseen": 30
     },
     "b": {
@@ -175,5 +175,5 @@ window.SKOLQUEST_DATA = {
       "pseen": 1
     }
   },
-  "updatedAt": 1791839760008
+  "updatedAt": 1791839772688
 };
