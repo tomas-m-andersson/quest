@@ -156,7 +156,7 @@ window.SKOLQUEST_DATA = {
         "chest": "",
         "aura": "",
         "bg": "",
-        "pet": ""
+        "pet": "unicorn"
       },
       "seen": 1,
       "pseen": 30
@@ -175,5 +175,5 @@ window.SKOLQUEST_DATA = {
       "pseen": 1
     }
   },
-  "updatedAt": 1791839743530
+  "updatedAt": 1791839760008
 };
