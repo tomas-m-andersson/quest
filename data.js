@@ -150,7 +150,7 @@ window.SKOLQUEST_DATA = {
   "avatar": {
     "a": {
       "eq": {
-        "head": "starcrown",
+        "head": "headset",
         "face": "",
         "body": "",
         "chest": "",
@@ -175,5 +175,5 @@ window.SKOLQUEST_DATA = {
       "pseen": 1
     }
   },
-  "updatedAt": 1791839772688
+  "updatedAt": 1791839774316
 };
