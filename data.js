@@ -3,15 +3,15 @@ window.SKOLQUEST_DATA = {
   "heroes": [
     {
       "id": "a",
-      "name": "Hjälte 1",
+      "name": "Ville",
       "emoji": "🦊",
       "color": "cyan"
     },
     {
       "id": "b",
-      "name": "Hjälte 2",
+      "name": "Svante",
       "emoji": "🐉",
-      "color": "pink"
+      "color": "gold"
     }
   ],
   "quests": [
@@ -99,5 +99,5 @@ window.SKOLQUEST_DATA = {
     "a": [],
     "b": []
   },
-  "updatedAt": 1791822575840
+  "updatedAt": 1791822604582
 };
