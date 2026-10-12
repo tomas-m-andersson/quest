@@ -127,9 +127,7 @@ window.SKOLQUEST_DATA = {
     "setupDone": true
   },
   "checks": {
-    "a": {
-      "2026-10-12": []
-    },
+    "a": {},
     "b": {}
   },
   "claimed": {
@@ -137,29 +135,22 @@ window.SKOLQUEST_DATA = {
     "b": []
   },
   "boosts": {
-    "a": [
-      {
-        "id": "bmv5r471uprj",
-        "xp": 20000,
-        "note": "Extra boost",
-        "date": "2026-10-12"
-      }
-    ],
+    "a": [],
     "b": []
   },
   "avatar": {
     "a": {
       "eq": {
-        "head": "headset",
-        "face": "cyber",
-        "body": "jetpack",
-        "chest": "core",
-        "aura": "legend",
-        "bg": "planet",
-        "pet": "unicorn"
+        "head": "",
+        "face": "",
+        "body": "",
+        "chest": "",
+        "aura": "",
+        "bg": "",
+        "pet": ""
       },
-      "seen": 30,
-      "pseen": 30
+      "seen": 1,
+      "pseen": 1
     },
     "b": {
       "eq": {
@@ -175,5 +166,5 @@ window.SKOLQUEST_DATA = {
       "pseen": 1
     }
   },
-  "updatedAt": 1791839802924
+  "updatedAt": 1791839814364
 };
