@@ -88,7 +88,11 @@ window.SKOLQUEST_DATA = {
     "setupDone": true
   },
   "checks": {
-    "a": {},
+    "a": {
+      "2026-10-12": [
+        "q1"
+      ]
+    },
     "b": {}
   },
   "bonus": {
@@ -99,5 +103,5 @@ window.SKOLQUEST_DATA = {
     "a": [],
     "b": []
   },
-  "updatedAt": 1791822698344
+  "updatedAt": 1791837237660
 };
