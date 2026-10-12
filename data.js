@@ -152,7 +152,7 @@ window.SKOLQUEST_DATA = {
       "eq": {
         "head": "headset",
         "face": "cyber",
-        "body": "",
+        "body": "jetpack",
         "chest": "",
         "aura": "",
         "bg": "",
@@ -175,5 +175,5 @@ window.SKOLQUEST_DATA = {
       "pseen": 1
     }
   },
-  "updatedAt": 1791839780990
+  "updatedAt": 1791839788228
 };
