@@ -155,7 +155,7 @@ window.SKOLQUEST_DATA = {
         "body": "jetpack",
         "chest": "core",
         "aura": "legend",
-        "bg": "",
+        "bg": "planet",
         "pet": "unicorn"
       },
       "seen": 30,
@@ -175,5 +175,5 @@ window.SKOLQUEST_DATA = {
       "pseen": 1
     }
   },
-  "updatedAt": 1791839800158
+  "updatedAt": 1791839802924
 };
