@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skol-Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0a0d1c; --panel:#131930; --panel2:#1b2347; --line:#2b3563;
+  --text:#eaf0ff; --muted:#8e9bc9;
+  --gold:#ffcf3f; --green:#3dffa0; --red:#ff5d7a;
+  --head:'Orbitron','Rajdhani',system-ui,sans-serif;
+  --body:'Rajdhani',system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{
+  margin:0; min-height:100vh; color:var(--text); font-family:var(--body); font-size:17px; font-weight:600;
+  background:
+    radial-gradient(900px 500px at 10% -10%, rgba(39,225,255,.14), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(255,79,216,.12), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 60px}
+
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+h1{font-family:var(--head);font-weight:800;font-size:clamp(22px,4.5vw,34px);margin:0;letter-spacing:.06em;
+  background:linear-gradient(90deg,#27e1ff,#a78bff,#ff4fd8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{color:var(--muted);margin:2px 0 14px;font-size:16px}
+.iconbtn{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:20px}
+.iconbtn:hover{border-color:#5666b8}
+.sync{font-size:14px;color:var(--muted);text-align:right}
+.sync[data-k="ok"]{color:var(--green)} .sync[data-k="err"]{color:var(--red)} .sync[data-k="busy"]{color:var(--gold)}
+.hint{background:rgba(255,207,63,.1);border:1px solid rgba(255,207,63,.4);color:#ffe28a;border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:15px}
+
+/* heroes */
+.heroes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:18px}
+.hero{
+  --c:#27e1ff; text-align:left; display:flex; gap:14px; align-items:center;
+  background:linear-gradient(160deg,var(--panel2),var(--panel));
+  border:2px solid var(--line); border-radius:18px; padding:14px 16px; position:relative; overflow:hidden;
+  transition:transform .15s,border-color .2s,box-shadow .2s;
+}
+.hero:hover{transform:translateY(-2px)}
+.hero.sel{border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 0 26px -6px var(--c)}
+.avatar{flex:none;width:68px;height:68px;border-radius:16px;display:grid;place-items:center;font-size:40px;
+  background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.18),transparent 60%),color-mix(in srgb,var(--c) 22%,var(--panel));
+  border:2px solid var(--c);position:relative}
+.lvl{position:absolute;right:-8px;bottom:-8px;background:var(--c);color:#0a0d1c;font-family:var(--head);font-weight:800;
+  font-size:12px;padding:3px 7px;border-radius:8px}
+.hinfo{flex:1;min-width:0}
+.hname{font-family:var(--head);font-weight:800;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.htitle{color:var(--c);font-size:14px;letter-spacing:.12em;text-transform:uppercase;margin:1px 0 7px}
+.bar{height:14px;background:#0a0f22;border:1px solid var(--line);border-radius:99px;overflow:hidden;position:relative}
+.bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--c),#fff 140%);
+  box-shadow:0 0 12px var(--c);transition:width .5s cubic-bezier(.2,.9,.3,1.2)}
+.xpl{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-top:4px}
+.streak{position:absolute;top:10px;right:12px;font-family:var(--head);font-size:13px;color:#ffb347}
+
+/* week bar */
+.weekbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.weekbar h2{margin:0;font-family:var(--head);font-size:clamp(16px,3vw,22px);letter-spacing:.05em}
+.wnav{display:flex;gap:8px;align-items:center}
+.wnav button{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 14px;font-size:18px}
+.wnav button:hover{border-color:#5666b8}
+.goal{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:14px}
+.goal .row{display:flex;justify-content:space-between;gap:10px;margin-bottom:6px;font-size:16px}
+.goal .row b{font-family:var(--head);font-size:14px;letter-spacing:.08em}
+.goal .bar>i{background:linear-gradient(90deg,#ffcf3f,#ff9a3d);box-shadow:0 0 12px #ffb347}
+.goal.done{border-color:var(--gold);box-shadow:0 0 22px -8px var(--gold)}
+
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin-bottom:26px}
+.day{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;position:relative}
+.day.today{border-color:#6c7cff;box-shadow:0 0 22px -8px #6c7cff}
+.day.good{border-color:rgba(61,255,160,.65)}
+.day.perfect{border-color:var(--gold);background:linear-gradient(170deg,rgba(255,207,63,.12),var(--panel) 55%);box-shadow:0 0 24px -8px var(--gold)}
+.day.locked{opacity:.5}
+.dh{display:flex;justify-content:space-between;align-items:baseline}
+.dh b{font-family:var(--head);font-size:15px;letter-spacing:.06em}
+.dh span{color:var(--muted);font-size:14px}
+.q{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:#0e1430;border:1px solid var(--line);
+  border-radius:11px;padding:8px 10px;transition:transform .08s,background .15s,border-color .15s}
+.q:hover:not(:disabled){border-color:#5666b8}
+.q:active:not(:disabled){transform:scale(.97)}
+.q:disabled{cursor:not-allowed}
+.q .ic{font-size:20px;flex:none}
+.q .qn{flex:1;font-size:15.5px;line-height:1.1}
+.q .qx{font-family:var(--head);font-size:12px;color:var(--muted);flex:none}
+.q.on{background:linear-gradient(90deg,rgba(61,255,160,.2),rgba(61,255,160,.06));border-color:var(--green)}
+.q.on .qx{color:var(--green)}
+.q.on .qn{text-decoration:line-through;text-decoration-color:rgba(61,255,160,.6)}
+.df{display:flex;justify-content:space-between;align-items:center;margin-top:2px;font-size:14px;color:var(--muted)}
+.badge{font-family:var(--head);font-size:11px;letter-spacing:.06em}
+.day.perfect .badge{color:var(--gold)} .day.good .badge{color:var(--green)}
+.dxp{font-family:var(--head);font-size:13px;color:var(--text)}
+
+/* rewards */
+h3.sec{font-family:var(--head);font-size:clamp(16px,3vw,21px);letter-spacing:.06em;margin:0 0 12px}
+.rewards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rw{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:16px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.rw .big{font-size:42px;filter:grayscale(1) brightness(.6)}
+.rw .rn{font-size:17px;line-height:1.15}
+.rw .rl{font-family:var(--head);font-size:12px;letter-spacing:.08em;color:var(--muted)}
+.rw.open{border-color:var(--gold);background:linear-gradient(170deg,rgba(255,207,63,.16),var(--panel));animation:glow 1.6s ease-in-out infinite}
+.rw.open .big{filter:none;animation:bob 1.2s ease-in-out infinite}
+.rw.open .rl{color:var(--gold)}
+.rw.done{border-color:rgba(61,255,160,.5)}
+.rw.done .big{filter:none;opacity:.7}
+.rw.done .rl{color:var(--green)}
+.claim{background:linear-gradient(90deg,#ffcf3f,#ff9a3d);color:#1a1200;border:0;border-radius:10px;padding:8px 14px;font-family:var(--head);font-weight:800;font-size:12px;letter-spacing:.06em;margin-top:2px}
+@keyframes glow{50%{box-shadow:0 0 26px -4px var(--gold)}}
+@keyframes bob{50%{transform:translateY(-5px) rotate(-4deg)}}
+
+/* modal */
+#modal{position:fixed;inset:0;background:rgba(4,6,16,.78);display:none;align-items:center;justify-content:center;padding:16px;z-index:50;overflow:auto}
+#modal.show{display:flex}
+.sheet{background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:20px;width:100%;max-width:560px;max-height:calc(100vh - 40px);overflow:auto}
+.sheet h4{font-family:var(--head);margin:0 0 12px;letter-spacing:.06em;font-size:18px}
+.sheet h5{font-family:var(--head);margin:18px 0 8px;color:var(--muted);letter-spacing:.1em;font-size:12px;text-transform:uppercase}
+.sheet input,.sheet select{background:#0b1028;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px 10px;font:inherit;min-width:0}
+.sheet input:focus,.sheet select:focus{outline:2px solid #6c7cff;outline-offset:0}
+.frow{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.frow .grow{flex:1}
+.frow .em{width:58px;text-align:center;font-size:20px}
+.frow .num{width:76px}
+.frow label{color:var(--muted);font-size:15px;flex:1}
+.btn{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:#5666b8}
+.btn.pri{background:linear-gradient(90deg,#27e1ff,#a78bff);color:#07101f;border:0}
+.btn.danger{border-color:var(--red);color:var(--red)}
+.btn.sm{padding:6px 10px;font-size:15px}
+.acts{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+.pin{font-size:26px;letter-spacing:.4em;text-align:center;width:100%}
+.err{color:var(--red);text-align:center;height:20px;font-size:15px;margin-top:6px}
+.shake{animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+/* effects */
+.pop{position:fixed;transform:translate(-50%,0);font-family:var(--head);font-weight:800;color:var(--green);text-shadow:0 0 12px var(--green);
+  pointer-events:none;z-index:60;animation:pop 1s ease-out forwards;white-space:nowrap}
+@keyframes pop{to{transform:translate(-50%,-60px);opacity:0}}
+.lu{text-align:center}
+.lu .big{font-family:var(--head);font-weight:800;font-size:clamp(34px,9vw,52px);margin:6px 0;
+  background:linear-gradient(90deg,#ffcf3f,#ff4fd8);-webkit-background-clip:text;background-clip:text;color:transparent;animation:zoom .6s cubic-bezier(.2,1.6,.4,1)}
+.lu .av{font-size:70px;animation:bob 1.2s ease-in-out infinite}
+.lu p{margin:6px 0;color:var(--muted)}
+.lu .unl{color:var(--gold);font-size:18px}
+@keyframes zoom{from{transform:scale(.3);opacity:0}}
+.conf{position:fixed;top:-20px;z-index:70;font-size:22px;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>⚔️ SKOL-QUEST</h1>
+    <div style="display:flex;align-items:center;gap:10px"><span class="sync" id="sync"></span><button class="iconbtn" data-act="settings" aria-label="Inställningar">⚙️</button></div>
+  </header>
+  <p class="tag" id="tag"></p>
+  <div id="hintbox"></div>
+  <section class="heroes" id="heroes"></section>
+  <div class="weekbar">
+    <h2 id="weektitle"></h2>
+    <div class="wnav">
+      <button data-act="prev" aria-label="Förra veckan">‹</button>
+      <button data-act="today">Idag</button>
+      <button data-act="next" aria-label="Nästa vecka">›</button>
+    </div>
+  </div>
+  <div class="goal" id="goal"></div>
+  <section class="cal" id="cal"></section>
+  <h3 class="sec">🏆 BELÖNINGAR</h3>
+  <section class="rewards" id="rewards"></section>
+</div>
+<div id="modal"></div>
+
+<script src="data.js?v=1" onerror="void 0"></script>
+<script>
+(function(){
+'use strict';
+var $ = function(s){return document.querySelector(s)};
+var esc = function(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var COLORS={cyan:'#27e1ff',pink:'#ff4fd8',orange:'#ff9a3d',green:'#3dffa0',purple:'#a78bff',gold:'#ffcf3f'};
+var COLORNAMES={cyan:'Cyan',pink:'Rosa',orange:'Orange',green:'Grön',purple:'Lila',gold:'Guld'};
+var DAYS=['Måndag','Tisdag','Onsdag','Torsdag','Fredag'];
+var MONTHS=['jan','feb','mars','apr','maj','juni','juli','aug','sep','okt','nov','dec'];
+var LINES=['Varje dag är ett nytt uppdrag.','Små steg varje dag. Stora nivåer i längden.','Hjältar ger inte upp – de levlar.','Dagens boss: läxorna. Du klarar det!','XP kommer från att försöka, inte från att vara perfekt.'];
+
+/* ---------- dates ---------- */
+var pad=function(n){return String(n).padStart(2,'0')};
+var fmt=function(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+var parse=function(s){var p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2])};
+var addDays=function(d,n){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()+n);return x};
+function monday(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
+function isoWeek(d){var t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));var day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);var y0=new Date(Date.UTC(t.getUTCFullYear(),0,1));return Math.ceil(((t-y0)/864e5+1)/7)}
+var uid=function(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,5)};
+
+/* ---------- state ---------- */
+var LS='skolquest.v1';
+function defaults(){
+  return {
+    heroes:[{id:'a',name:'Hjälte 1',emoji:'🦊',color:'cyan'},{id:'b',name:'Hjälte 2',emoji:'🐉',color:'pink'}],
+    quests:[
+      {id:'q1',icon:'📚',name:'Läxor klara',xp:20},
+      {id:'q2',icon:'🧠',name:'Fokus på lektionerna',xp:15},
+      {id:'q3',icon:'📖',name:'Läste 15 minuter',xp:15},
+      {id:'q4',icon:'🎒',name:'Ordning på väskan',xp:10},
+      {id:'q5',icon:'😎',name:'Bra attityd',xp:10}
+    ],
+    rewards:[
+      {id:'r1',level:2,icon:'🍨',name:'Välj efterrätt'},
+      {id:'r2',level:3,icon:'🎮',name:'30 min extra skärmtid'},
+      {id:'r3',level:5,icon:'🍿',name:'Filmkväll – du väljer film'},
+      {id:'r4',level:7,icon:'🍕',name:'Välj middag'},
+      {id:'r5',level:10,icon:'🎢',name:'Egen aktivitet med en förälder'}
+    ],
+    settings:{pin:'1234',lockTicks:false,goodDayMin:3,perfectBonus:25,weeklyGoal:300,weeklyBonus:75,setupDone:false},
+    checks:{a:{},b:{}}, bonus:{a:0,b:0}, claimed:{a:[],b:[]}, updatedAt:0
+  };
+}
+function normalize(s){
+  var d=defaults();
+  s=s||{};
+  var o={heroes:s.heroes&&s.heroes.length?s.heroes:d.heroes,quests:s.quests&&s.quests.length?s.quests:d.quests,
+    rewards:s.rewards||d.rewards,settings:Object.assign({},d.settings,s.settings||{}),
+    checks:s.checks||{},bonus:s.bonus||{},claimed:s.claimed||{},updatedAt:s.updatedAt||0};
+  o.heroes.forEach(function(h){o.checks[h.id]=o.checks[h.id]||{};o.bonus[h.id]=o.bonus[h.id]||0;o.claimed[h.id]=o.claimed[h.id]||[]});
+  return o;
+}
+function loadLocal(){try{var s=localStorage.getItem(LS);if(s)return JSON.parse(s)}catch(e){}return null}
+function saveLocal(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+function newest(a,b){a=a||null;b=b||null;if(!a)return b;if(!b)return a;return (b.updatedAt||0)>(a.updatedAt||0)?b:a}
+var S=normalize(newest(loadLocal(),window.SKOLQUEST_DATA));
+var selId=S.heroes[0].id;
+var viewMon=monday(new Date());
+var parentUntil=0;
+
+/* ---------- GitHub-synk (data.js i ditt repo) ---------- */
+var GHK='skolquest.gh';
+function inferGh(){
+  var c={owner:'',repo:'',branch:'main',path:'data.js',token:''};
+  try{
+    var h=location.hostname;
+    if(/\.github\.io$/.test(h)){
+      c.owner=h.replace('.github.io','');
+      var seg=location.pathname.split('/').filter(Boolean)[0];
+      c.repo=(seg&&seg.indexOf('.')<0)?seg:h;
+    }
+  }catch(e){}
+  return c;
+}
+function loadGh(){var c=inferGh();try{var x=JSON.parse(localStorage.getItem(GHK)||'null');if(x)c=Object.assign(c,x)}catch(e){}return c}
+function saveGh(){try{localStorage.setItem(GHK,JSON.stringify(GH))}catch(e){}}
+var GH=loadGh();
+var ghSha=null,ghBusy=false,ghDirty=false,ghTimer=null,ghFatal=false,syncStarted=false;
+function ghReady(){return !!(GH.token&&GH.owner&&GH.repo)}
+function ghUrl(){return 'https://api.github.com/repos/'+encodeURIComponent(GH.owner)+'/'+encodeURIComponent(GH.repo)+'/contents/'+GH.path.split('/').map(encodeURIComponent).join('/')}
+function ghHeaders(){return {'Accept':'application/vnd.github+json','Authorization':'Bearer '+GH.token,'X-GitHub-Api-Version':'2022-11-28'}}
+function b64enc(str){var b=new TextEncoder().encode(str),s='';for(var i=0;i<b.length;i++)s+=String.fromCharCode(b[i]);return btoa(s)}
+function b64dec(b64){var s=atob(b64.replace(/\s/g,'')),b=new Uint8Array(s.length);for(var i=0;i<s.length;i++)b[i]=s.charCodeAt(i);return new TextDecoder().decode(b)}
+function toFile(){return '// Skol-Quest data - uppdateras automatiskt av appen. Redigera inte for hand.\nwindow.SKOLQUEST_DATA = '+JSON.stringify(S,null,2)+';\n'}
+function fromFile(txt){var a=txt.indexOf('{'),b=txt.lastIndexOf('}');if(a<0||b<a)throw new Error('Ogiltig datafil');return JSON.parse(txt.slice(a,b+1))}
+function setSync(kind,msg){var e=$('#sync');if(!e)return;e.textContent=msg;e.dataset.k=kind}
+function ghErr(st){
+  if(st===401)return 'Fel token';
+  if(st===403)return 'Token saknar behörighet (eller för många anrop)';
+  if(st===404)return 'Hittar inte repot/grenen – kontrollera uppgifterna och tokenens repo-åtkomst';
+  if(st===409||st===422)return 'Konflikt';
+  return 'GitHub-fel '+st;
+}
+async function ghPull(){
+  var r=await fetch(ghUrl()+'?ref='+encodeURIComponent(GH.branch)+'&_='+Date.now(),{headers:ghHeaders(),cache:'no-store'});
+  if(r.status===404){
+    // 404 kan betyda att filen saknas ELLER att repot inte hittas – kolla repot
+    var rr=await fetch('https://api.github.com/repos/'+encodeURIComponent(GH.owner)+'/'+encodeURIComponent(GH.repo),{headers:ghHeaders(),cache:'no-store'});
+    if(!rr.ok){var e=new Error(ghErr(rr.status===404?404:rr.status));e.status=rr.status;throw e}
+    ghSha=null;return null;
+  }
+  if(!r.ok){var e2=new Error(ghErr(r.status));e2.status=r.status;throw e2}
+  var j=await r.json();ghSha=j.sha;
+  return fromFile(b64dec(j.content));
+}
+function mergeStates(a,b){
+  var newer=(a.updatedAt>=b.updatedAt)?a:b,older=(newer===a)?b:a;
+  var o=JSON.parse(JSON.stringify(newer));
+  var ids={};[a,b].forEach(function(x){Object.keys(x.checks).forEach(function(h){ids[h]=1})});
+  Object.keys(ids).forEach(function(h){
+    o.checks[h]=o.checks[h]||{};
+    var oc=older.checks[h]||{};
+    Object.keys(oc).forEach(function(ds){var cur=o.checks[h][ds]||[];oc[ds].forEach(function(q){if(cur.indexOf(q)<0)cur.push(q)});o.checks[h][ds]=cur});
+    o.claimed[h]=o.claimed[h]||[];
+    (older.claimed[h]||[]).forEach(function(r){if(o.claimed[h].indexOf(r)<0)o.claimed[h].push(r)});
+  });
+  o.updatedAt=Date.now();
+  return normalize(o);
+}
+async function ghPush(retry){
+  var body={message:'Skol-Quest: uppdatering '+new Date().toISOString().slice(0,16).replace('T',' '),content:b64enc(toFile()),branch:GH.branch};
+  if(ghSha)body.sha=ghSha;
+  var r=await fetch(ghUrl(),{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},ghHeaders()),body:JSON.stringify(body)});
+  if(r.ok){var j=await r.json();ghSha=j.content.sha;return}
+  if((r.status===409||r.status===422)&&!retry){
+    var remote=await ghPull();
+    if(remote){S=mergeStates(S,normalize(remote));keepSel();saveLocal();render()}
+    return ghPush(true);
+  }
+  var e=new Error(ghErr(r.status));e.status=r.status;throw e;
+}
+function keepSel(){if(!S.heroes.some(function(h){return h.id===selId}))selId=S.heroes[0].id}
+function schedulePush(){
+  if(!ghReady())return;
+  ghDirty=true;ghFatal=false;setSync('busy','⏳ Sparar…');
+  clearTimeout(ghTimer);ghTimer=setTimeout(flush,1500);
+}
+async function flush(){
+  if(!ghReady()||!ghDirty)return;
+  if(ghBusy){ghTimer=setTimeout(flush,800);return}
+  ghBusy=true;ghDirty=false;
+  try{await ghPush(false);setSync('ok','☁️ Synkad')}
+  catch(e){
+    ghDirty=true;
+    if(e.status===401||e.status===403||e.status===404){ghFatal=true;setSync('err','⚠️ '+e.message)}
+    else{setSync('err','⚠️ '+(e.message||'Nätverksfel')+' – försöker igen');ghTimer=setTimeout(flush,15000)}
+  }
+  ghBusy=false;
+}
+async function refresh(){
+  if(!ghReady()||ghBusy||ghDirty)return;
+  try{
+    var remote=await ghPull();
+    setSync('ok','☁️ Synkad');
+    if(remote){
+      remote=normalize(remote);
+      if(remote.updatedAt>S.updatedAt){S=remote;keepSel();saveLocal();render()}
+      else if(remote.updatedAt<S.updatedAt){schedulePush()}
+    }else if(S.updatedAt){schedulePush()}
+  }catch(e){setSync('err','⚠️ '+(e.message||'Nätverksfel'))}
+}
+function initSync(){
+  if(!ghReady()){setSync('off','📴 Sparas bara på den här enheten');return}
+  setSync('busy','⏳ Hämtar…');refresh();
+  if(syncStarted)return;syncStarted=true;
+  setInterval(function(){if(document.visibilityState==='visible'&&!ghFatal)refresh()},60000);
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&!ghFatal)refresh()});
+}
+function commit(){S.updatedAt=Date.now();saveLocal();schedulePush();render()}
+
+/* ---------- game logic ---------- */
+function validIds(ids){return (ids||[]).filter(function(id){return S.quests.some(function(q){return q.id===id})})}
+function qxp(id){var q=S.quests.find(function(q){return q.id===id});return q?q.xp:0}
+function goodMin(){return Math.min(S.settings.goodDayMin,S.quests.length)||1}
+function dayIds(hid,ds){return validIds((S.checks[hid]||{})[ds])}
+function dayXp(hid,ds){
+  var ids=dayIds(hid,ds);
+  var xp=ids.reduce(function(a,id){return a+qxp(id)},0);
+  if(S.quests.length&&ids.length===S.quests.length)xp+=S.settings.perfectBonus;
+  return xp;
+}
+function dayState(hid,ds){
+  var n=dayIds(hid,ds).length;
+  if(S.quests.length&&n===S.quests.length)return 'perfect';
+  if(n>=goodMin())return 'good';
+  return n>0?'some':'none';
+}
+function weekXp(hid,mon){var s=0;for(var i=0;i<5;i++)s+=dayXp(hid,fmt(addDays(mon,i)));return s}
+function totalXp(hid){
+  var c=S.checks[hid]||{},t=0,weeks={};
+  for(var ds in c){var x=dayXp(hid,ds);t+=x;var wk=fmt(monday(parse(ds)));weeks[wk]=(weeks[wk]||0)+x}
+  if(S.settings.weeklyBonus>0)for(var wk2 in weeks)if(weeks[wk2]>=S.settings.weeklyGoal)t+=S.settings.weeklyBonus;
+  return Math.max(0,t+(S.bonus[hid]||0));
+}
+function need(L){return 100+(L-1)*40}
+function levelInfo(xp){var L=1,rem=xp;while(rem>=need(L)){rem-=need(L);L++}return {level:L,cur:rem,need:need(L),pct:rem/need(L)*100}}
+function rank(L){var t=['Rekryt','Lärling','Äventyrare','Riddare','Krigare','Mästare','Hjältemästare','Drakdödare','Legend','Mytisk legend'];return t[Math.min(L,t.length)-1]}
+function streak(hid){
+  var d=new Date(),today=fmt(d),n=0,guard=0;
+  while(guard++<400){
+    var wd=(d.getDay()+6)%7;
+    if(wd<5){
+      var st=dayState(hid,fmt(d));
+      if(st==='good'||st==='perfect')n++;
+      else if(fmt(d)!==today)break;
+    }
+    d=addDays(d,-1);
+  }
+  return n;
+}
+function heroById(id){return S.heroes.find(function(h){return h.id===id})}
+
+/* ---------- render ---------- */
+function render(){
+  $('#tag').textContent=LINES[new Date().getDate()%LINES.length];
+  $('#hintbox').innerHTML=S.settings.setupDone?'':'<div class="hint">💡 Tips: tryck på ⚙️ för att ge hjältarna rätt namn och avatar, och för att ändra uppdrag och belöningar. Föräldrakoden är <b>1234</b> från början – byt den där. Under GitHub-synk kopplar du ihop appen med ert repo.</div>';
+
+  var hs='';
+  S.heroes.forEach(function(h){
+    var li=levelInfo(totalXp(h.id)),st=streak(h.id);
+    hs+='<button class="hero '+(h.id===selId?'sel':'')+'" data-act="sel" data-id="'+esc(h.id)+'" style="--c:'+(COLORS[h.color]||COLORS.cyan)+'">'+
+      '<div class="avatar">'+esc(h.emoji)+'<span class="lvl">LV '+li.level+'</span></div>'+
+      '<div class="hinfo"><div class="hname">'+esc(h.name)+'</div><div class="htitle">'+rank(li.level)+'</div>'+
+      '<div class="bar"><i style="width:'+li.pct.toFixed(1)+'%"></i></div>'+
+      '<div class="xpl"><span>'+li.cur+' / '+li.need+' XP</span><span>till LV '+(li.level+1)+'</span></div></div>'+
+      (st>0?'<div class="streak">🔥 '+st+' '+(st===1?'dag':'dagar')+'</div>':'')+
+      '</button>';
+  });
+  $('#heroes').innerHTML=hs;
+
+  var sel=heroById(selId),mon=viewMon,fri=addDays(mon,4);
+  $('#weektitle').textContent='VECKA '+isoWeek(mon)+' · '+mon.getDate()+' '+MONTHS[mon.getMonth()]+' – '+fri.getDate()+' '+MONTHS[fri.getMonth()];
+
+  var wx=weekXp(sel.id,mon),goal=S.settings.weeklyGoal,gd=wx>=goal&&S.settings.weeklyBonus>0;
+  var g=$('#goal');g.className='goal'+(gd?' done':'');
+  g.innerHTML='<div class="row"><b>'+esc(sel.name.toUpperCase())+' · VECKOMÅL</b><span>'+wx+' / '+goal+' XP '+(gd?'🎁 Veckochest +'+S.settings.weeklyBonus+' XP!':'· 🎁 +'+S.settings.weeklyBonus+' XP bonus')+'</span></div>'+
+    '<div class="bar"><i style="width:'+Math.min(100,goal?wx/goal*100:0)+'%"></i></div>';
+
+  var today=fmt(new Date()),cal='';
+  for(var i=0;i<5;i++){
+    var dd=addDays(mon,i),ds=fmt(dd),future=ds>today,st=dayState(sel.id,ds),done=dayIds(sel.id,ds);
+    var badge=future?'🔒 Kommande':st==='perfect'?'⭐ PERFEKT DAG':st==='good'?'✅ BRA DAG':st==='some'?'PÅGÅR…':'—';
+    cal+='<div class="day '+(ds===today?'today ':'')+(future?'locked ':'')+(future?'':st)+'"><div class="dh"><b>'+DAYS[i].toUpperCase()+'</b><span>'+dd.getDate()+' '+MONTHS[dd.getMonth()]+'</span></div>';
+    S.quests.forEach(function(q){
+      var on=done.indexOf(q.id)>=0;
+      cal+='<button class="q '+(on?'on':'')+'" data-act="tick" data-ds="'+ds+'" data-q="'+esc(q.id)+'"'+(future?' disabled':'')+'><span class="ic">'+esc(q.icon)+'</span><span class="qn">'+esc(q.name)+'</span><span class="qx">+'+q.xp+'</span></button>';
+    });
+    cal+='<div class="df"><span class="badge">'+badge+'</span><span class="dxp">'+(future?'':dayXp(sel.id,ds)+' XP')+'</span></div></div>';
+  }
+  $('#cal').innerHTML=cal;
+
+  var li2=levelInfo(totalXp(sel.id)),cl=S.claimed[sel.id]||[],rs='';
+  S.rewards.slice().sort(function(a,b){return a.level-b.level}).forEach(function(r){
+    var claimed=cl.indexOf(r.id)>=0,unlocked=li2.level>=r.level;
+    if(claimed)rs+='<div class="rw done"><div class="big">'+esc(r.icon)+'</div><div class="rn">'+esc(r.name)+'</div><div class="rl">✓ INLÖST</div></div>';
+    else if(unlocked)rs+='<div class="rw open"><div class="big">'+esc(r.icon)+'</div><div class="rn">'+esc(r.name)+'</div><div class="rl">UPPLÅST!</div><button class="claim" data-act="claim" data-r="'+esc(r.id)+'">ÖPPNA BELÖNING</button></div>';
+    else rs+='<div class="rw"><div class="big">'+esc(r.icon)+'</div><div class="rn">'+esc(r.name)+'</div><div class="rl">🔒 NIVÅ '+r.level+' KRÄVS</div></div>';
+  });
+  $('#rewards').innerHTML=rs||'<div style="color:var(--muted)">Inga belöningar ännu – lägg till i ⚙️.</div>';
+}
+
+/* ---------- modal helpers ---------- */
+function openModal(html){var m=$('#modal');m.innerHTML=html;m.className='show'}
+function closeModal(){var m=$('#modal');m.className='';m.innerHTML=''}
+function requirePin(){
+  return new Promise(function(res){
+    if(Date.now()<parentUntil){res(true);return}
+    openModal('<div class="sheet" style="max-width:340px"><h4>🔐 Föräldrakod</h4><input class="pin" id="pinin" type="password" inputmode="numeric" autocomplete="off" maxlength="12"><div class="err" id="pinerr"></div><div class="acts"><button class="btn" id="pincancel">Avbryt</button><button class="btn pri" id="pinok">OK</button></div></div>');
+    var inp=$('#pinin');inp.focus();
+    function ok(){
+      if(inp.value===S.settings.pin){parentUntil=Date.now()+5*60*1000;closeModal();res(true)}
+      else{$('#pinerr').textContent='Fel kod';var s=$('.sheet');s.classList.remove('shake');void s.offsetWidth;s.classList.add('shake');inp.value='';inp.focus()}
+    }
+    $('#pinok').onclick=ok;
+    $('#pincancel').onclick=function(){closeModal();res(false)};
+    inp.onkeydown=function(e){if(e.key==='Enter')ok();if(e.key==='Escape'){closeModal();res(false)}};
+  });
+}
+
+/* ---------- effects ---------- */
+function xpPop(rect,text){
+  var e=document.createElement('div');e.className='pop';e.textContent=text;
+  e.style.left=(rect.left+rect.width/2)+'px';e.style.top=rect.top+'px';
+  document.body.appendChild(e);setTimeout(function(){e.remove()},1000);
+}
+function confetti(){
+  var em=['⭐','✨','🎉','💎','🔥','⚡'];
+  for(var i=0;i<36;i++){
+    var c=document.createElement('div');c.className='conf';c.textContent=em[i%em.length];
+    c.style.left=(Math.random()*100)+'vw';c.style.animationDuration=(1.8+Math.random()*1.6)+'s';c.style.animationDelay=(Math.random()*.5)+'s';
+    document.body.appendChild(c);(function(x){setTimeout(function(){x.remove()},4200)})(c);
+  }
+}
+function levelUp(hero,from,to){
+  var unlocked=S.rewards.filter(function(r){return r.level>from&&r.level<=to});
+  openModal('<div class="sheet lu" style="--c:'+(COLORS[hero.color]||COLORS.cyan)+'"><div class="av">'+esc(hero.emoji)+'</div><div class="big">LEVEL UP!</div>'+
+    '<p style="font-size:20px;color:var(--text)">'+esc(hero.name)+' är nu <b>nivå '+to+'</b> – '+rank(to)+'</p>'+
+    (unlocked.length?'<p class="unl">🎁 Ny belöning upplåst: '+unlocked.map(function(r){return esc(r.icon+' '+r.name)}).join(', ')+'</p>':'')+
+    '<div class="acts" style="justify-content:center"><button class="btn pri" data-act="close">KÖR VIDARE 🚀</button></div></div>');
+  confetti();
+}
+
+/* ---------- actions ---------- */
+async function tick(btn){
+  var ds=btn.dataset.ds,qid=btn.dataset.q,hid=selId;
+  if(ds>fmt(new Date()))return;
+  if(S.settings.lockTicks){var ok=await requirePin();if(!ok)return}
+  var rect=btn.getBoundingClientRect();
+  var before=totalXp(hid),lvBefore=levelInfo(before).level;
+  var arr=S.checks[hid][ds]||(S.checks[hid][ds]=[]);
+  var i=arr.indexOf(qid),adding=i<0;
+  if(adding)arr.push(qid);else arr.splice(i,1);
+  var after=totalXp(hid),lvAfter=levelInfo(after).level;
+  commit();
+  if(adding){
+    var perfect=dayState(hid,ds)==='perfect';
+    xpPop(rect,(perfect?'⭐ ':'')+'+'+(after-before)+' XP');
+  }
+  if(lvAfter>lvBefore){setTimeout(function(){levelUp(heroById(hid),lvBefore,lvAfter)},350)}
+}
+async function claim(rid){
+  var ok=await requirePin();if(!ok)return;
+  var cl=S.claimed[selId];if(cl.indexOf(rid)<0)cl.push(rid);
+  commit();confetti();
+}
+
+/* ---------- settings ---------- */
+var draft=null,resetArm=false;
+function openSettings(){
+  draft=JSON.parse(JSON.stringify({heroes:S.heroes,quests:S.quests,rewards:S.rewards,settings:S.settings,bonus:S.bonus}));
+  resetArm=false;renderSettings();
+}
+function renderSettings(){
+  var h='<div class="sheet"><h4>⚙️ Inställningar</h4><form id="sf" onsubmit="return false">';
+  h+='<h5>Hjältar</h5>';
+  draft.heroes.forEach(function(x,i){
+    h+='<div class="frow"><input class="em" data-k="heroes.'+i+'.emoji" value="'+esc(x.emoji)+'" maxlength="4" aria-label="Avatar"><input class="grow" data-k="heroes.'+i+'.name" value="'+esc(x.name)+'" maxlength="20" aria-label="Namn">'+
+      '<select data-k="heroes.'+i+'.color" aria-label="Färg">'+Object.keys(COLORS).map(function(c){return '<option value="'+c+'"'+(c===x.color?' selected':'')+'>'+COLORNAMES[c]+'</option>'}).join('')+'</select></div>';
+  });
+  h+='<h5>Uppdrag (varje dag)</h5>';
+  draft.quests.forEach(function(q,i){
+    h+='<div class="frow"><input class="em" data-k="quests.'+i+'.icon" value="'+esc(q.icon)+'" maxlength="4"><input class="grow" data-k="quests.'+i+'.name" value="'+esc(q.name)+'" maxlength="40"><input class="num" type="number" min="0" data-num data-k="quests.'+i+'.xp" value="'+q.xp+'" aria-label="XP"><button type="button" class="btn sm" data-act="delq" data-i="'+i+'" aria-label="Ta bort">✕</button></div>';
+  });
+  h+='<button type="button" class="btn sm" data-act="addq">+ Nytt uppdrag</button>';
+  h+='<h5>Belöningar (upplåses vid nivå)</h5>';
+  draft.rewards.forEach(function(r,i){
+    h+='<div class="frow"><input class="em" data-k="rewards.'+i+'.icon" value="'+esc(r.icon)+'" maxlength="4"><input class="grow" data-k="rewards.'+i+'.name" value="'+esc(r.name)+'" maxlength="50"><input class="num" type="number" min="1" data-num data-k="rewards.'+i+'.level" value="'+r.level+'" aria-label="Nivå"><button type="button" class="btn sm" data-act="delr" data-i="'+i+'" aria-label="Ta bort">✕</button></div>';
+  });
+  h+='<button type="button" class="btn sm" data-act="addr">+ Ny belöning</button>';
+  h+='<h5>Regler</h5>';
+  h+='<div class="frow"><label>Uppdrag för en "bra dag"</label><input class="num" type="number" min="1" data-num data-k="settings.goodDayMin" value="'+draft.settings.goodDayMin+'"></div>';
+  h+='<div class="frow"><label>Bonus-XP för perfekt dag (alla uppdrag)</label><input class="num" type="number" min="0" data-num data-k="settings.perfectBonus" value="'+draft.settings.perfectBonus+'"></div>';
+  h+='<div class="frow"><label>Veckomål (XP, mån–fre)</label><input class="num" type="number" min="0" data-num data-k="settings.weeklyGoal" value="'+draft.settings.weeklyGoal+'"></div>';
+  h+='<div class="frow"><label>Veckochest-bonus (XP)</label><input class="num" type="number" min="0" data-num data-k="settings.weeklyBonus" value="'+draft.settings.weeklyBonus+'"></div>';
+  h+='<div class="frow"><label>Föräldrakod</label><input class="num" style="width:110px" data-k="settings.pin" value="'+esc(draft.settings.pin)+'" maxlength="12" inputmode="numeric"></div>';
+  h+='<div class="frow"><label for="lt">Kräv föräldrakod för att bocka av uppdrag</label><input id="lt" type="checkbox" data-k="settings.lockTicks"'+(draft.settings.lockTicks?' checked':'')+' style="width:22px;height:22px"></div>';
+  h+='<h5>Justera XP manuellt</h5>';
+  draft.heroes.forEach(function(x,i){
+    h+='<div class="frow"><label>'+esc(x.emoji)+' '+esc(x.name)+' (nu '+(draft.bonus[x.id]||0)+' extra XP)</label><input class="num" type="number" id="adj'+i+'" placeholder="±XP"><button type="button" class="btn sm" data-act="adj" data-i="'+i+'">Lägg till</button></div>';
+  });
+  h+='<h5>GitHub-synk (gemensam data)</h5>';
+  h+='<div class="frow"><label>Användarnamn/organisation</label><input class="grow" id="gh-owner" value="'+esc(GH.owner)+'" autocomplete="off" autocapitalize="off"></div>';
+  h+='<div class="frow"><label>Repo</label><input class="grow" id="gh-repo" value="'+esc(GH.repo)+'" autocomplete="off" autocapitalize="off"></div>';
+  h+='<div class="frow"><label>Gren</label><input class="grow" id="gh-branch" value="'+esc(GH.branch)+'" autocomplete="off" autocapitalize="off"></div>';
+  h+='<div class="frow"><label>Datafil</label><input class="grow" id="gh-path" value="'+esc(GH.path)+'" autocomplete="off" autocapitalize="off"></div>';
+  h+='<div class="frow"><label>Token</label><input class="grow" id="gh-token" type="password" placeholder="'+(GH.token?'(sparad på den här enheten – lämna tomt för att behålla)':'github_pat_…')+'" autocomplete="off"></div>';
+  h+='<div class="frow"><button type="button" class="btn sm" data-act="ghtest">Testa anslutning</button>'+(GH.token?'<button type="button" class="btn sm" data-act="ghclear">Ta bort token här</button>':'')+'</div><div id="ghmsg" style="color:var(--muted);font-size:15px;min-height:20px"></div>';
+  h+='<h5>Data</h5><button type="button" class="btn sm danger" data-act="reset">'+(resetArm?'Klicka igen för att nollställa ALLT':'Nollställ allt (XP, kalender, belöningar)')+'</button>';
+  h+='</form><div class="acts"><button class="btn" data-act="close">Avbryt</button><button class="btn pri" data-act="save">Spara</button></div></div>';
+  openModal(h);
+}
+function readForm(){
+  var f=$('#sf');if(!f)return;
+  f.querySelectorAll('[data-k]').forEach(function(el){
+    var p=el.dataset.k.split('.'),o=draft;
+    for(var i=0;i<p.length-1;i++)o=o[p[i]];
+    var k=p[p.length-1],v=el.type==='checkbox'?el.checked:el.value;
+    if(el.dataset.num!==undefined)v=Math.max(0,parseInt(v,10)||0);
+    o[k]=v;
+  });
+}
+function readGh(){
+  var g=function(id){var e=$('#'+id);return e?e.value.trim():null};
+  var o=g('gh-owner');if(o===null)return;
+  GH.owner=o;GH.repo=g('gh-repo');GH.branch=g('gh-branch')||'main';GH.path=(g('gh-path')||'data.js').replace(/^\/+/,'');
+  var t=g('gh-token');if(t)GH.token=t;
+  saveGh();
+}
+function saveSettings(){
+  readForm();readGh();
+  draft.heroes.forEach(function(h){h.name=(h.name||'').trim()||'Hjälte';h.emoji=(h.emoji||'').trim()||'🦊'});
+  draft.quests.forEach(function(q){q.name=(q.name||'').trim()||'Uppdrag';q.icon=(q.icon||'').trim()||'⭐'});
+  draft.rewards.forEach(function(r){r.name=(r.name||'').trim()||'Belöning';r.icon=(r.icon||'').trim()||'🎁';r.level=Math.max(1,r.level||1)});
+  draft.settings.pin=(draft.settings.pin||'').trim()||'1234';
+  draft.settings.goodDayMin=Math.max(1,draft.settings.goodDayMin||1);
+  draft.settings.setupDone=true;
+  S.heroes=draft.heroes;S.quests=draft.quests.length?draft.quests:S.quests;S.rewards=draft.rewards;S.settings=draft.settings;S.bonus=draft.bonus;
+  S=normalize(S);
+  ghFatal=false;commit();closeModal();initSync();
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-act]');
+  if(!t){return}
+  var a=t.dataset.act;
+  if(a==='sel'){selId=t.dataset.id;render()}
+  else if(a==='prev'){viewMon=addDays(viewMon,-7);render()}
+  else if(a==='next'){viewMon=addDays(viewMon,7);render()}
+  else if(a==='today'){viewMon=monday(new Date());render()}
+  else if(a==='tick'){tick(t)}
+  else if(a==='claim'){claim(t.dataset.r)}
+  else if(a==='settings'){requirePin().then(function(ok){if(ok)openSettings()})}
+  else if(a==='close'){closeModal()}
+  else if(a==='save'){saveSettings()}
+  else if(a==='addq'){readForm();draft.quests.push({id:uid('q'),icon:'⭐',name:'Nytt uppdrag',xp:10});renderSettings()}
+  else if(a==='delq'){readForm();if(draft.quests.length>1){draft.quests.splice(+t.dataset.i,1);renderSettings()}}
+  else if(a==='addr'){readForm();draft.rewards.push({id:uid('r'),icon:'🎁',name:'Ny belöning',level:2});renderSettings()}
+  else if(a==='delr'){readForm();draft.rewards.splice(+t.dataset.i,1);renderSettings()}
+  else if(a==='adj'){
+    readForm();var i=+t.dataset.i,v=parseInt(($('#adj'+i)||{}).value,10);
+    if(!isNaN(v)){var id=draft.heroes[i].id;draft.bonus[id]=(draft.bonus[id]||0)+v}
+    renderSettings();
+  }
+  else if(a==='ghtest'){
+    readGh();var m=$('#ghmsg');
+    if(!ghReady()){m.style.color='var(--red)';m.textContent='Fyll i användarnamn, repo och token först.';return}
+    m.style.color='var(--muted)';m.textContent='Testar…';
+    ghPull().then(function(r){m.style.color='var(--green)';m.textContent=r?'✅ Anslutningen fungerar – datafilen hittades.':'✅ Anslutningen fungerar – datafilen skapas när du sparar.'})
+      .catch(function(err){m.style.color='var(--red)';m.textContent='⚠️ '+(err.message||'Nätverksfel')});
+  }
+  else if(a==='ghclear'){readForm();readGh();GH.token='';saveGh();ghFatal=false;setSync('off','📴 Sparas bara på den här enheten');renderSettings()}
+  else if(a==='reset'){
+    if(!resetArm){readForm();resetArm=true;renderSettings();return}
+    var keep={heroes:draft.heroes,quests:draft.quests,rewards:draft.rewards,settings:draft.settings};
+    readForm();
+    var fresh=normalize({heroes:draft.heroes,quests:draft.quests,rewards:draft.rewards,settings:draft.settings});
+    S=fresh;commit();closeModal();
+  }
+});
+$('#modal').addEventListener('click',function(e){
+  if(e.target.id==='modal'&&!$('.sheet #pinin'))closeModal();
+});
+
+render();
+initSync();
+})();
+</script>
+</body>
+</html>
