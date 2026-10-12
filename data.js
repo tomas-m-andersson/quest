@@ -99,5 +99,5 @@ window.SKOLQUEST_DATA = {
     "a": [],
     "b": []
   },
-  "updatedAt": 1791822609427
+  "updatedAt": 1791822698344
 };
