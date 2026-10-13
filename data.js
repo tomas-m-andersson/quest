@@ -274,7 +274,7 @@ window.SKOLQUEST_DATA = {
       "eq": {
         "pose": "",
         "paint": "",
-        "head": "",
+        "head": "antennhjalm",
         "torso": "",
         "shoulders": "",
         "arms": "",
@@ -287,7 +287,7 @@ window.SKOLQUEST_DATA = {
         "bg": "",
         "pet": ""
       },
-      "seen": 1,
+      "seen": 150,
       "pseen": 1,
       "petNames": {}
     },
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923503159
+  "updatedAt": 1791923920284
 };
