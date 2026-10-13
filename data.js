@@ -148,7 +148,7 @@ window.SKOLQUEST_DATA = {
   "avatar": {
     "a": {
       "eq": {
-        "pose": "",
+        "pose": "stand",
         "paint": "",
         "head": "lion",
         "torso": "",
@@ -195,5 +195,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791915093214
+  "updatedAt": 1791915101547
 };
