@@ -399,7 +399,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT H</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT I</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2533,7 +2533,7 @@ function panelHtml(h){
   o+='<div class="xpwrap2"><div class="bar"><i style="width:'+li.pct.toFixed(1)+'%"></i></div><div class="xpl"><span>'+li.cur+' / '+li.need+' XP</span><span>→ LV '+(li.level+1)+'</span></div></div>';
   o+='<div class="stats"><div class="stat"><small>STREAK</small><b>🔥 '+st+'</b></div><div class="stat"><small>PERFEKTA DAGAR</small><b>⭐ '+pd+'</b></div><div class="stat"><small>XP TOTALT</small><b>'+tx+'</b></div></div>';
   o+='<div class="goalrow"><div class="gl"><span>Veckomål · '+wx+' / '+goal+' XP</span><span>'+(gd?'🎁 Veckochest +'+S.settings.weeklyBonus+' XP!':'🎁 +'+S.settings.weeklyBonus+' XP')+'</span></div><div class="bar"><i style="width:'+Math.min(100,goal?wx/goal*100:0)+'%"></i></div></div>';
-  o+='<div class="pbtns"><button class="btn" data-act="avatar">🛠 Hangar'+(nw?'<span class="newdot">NY'+(nw>1?' ×'+nw:'')+'</span>':'')+'</button><button class="btn" data-act="pets">🐾 Följeslagare'+(np?'<span class="newdot">NY'+(np>1?' ×'+np:'')+'</span>':'')+'<span class="cnt">'+ph+'/'+pl.length+'</span></button><button class="btn gold wide" data-act="boost">⚡ Extra XP</button></div>';
+  o+='<div class="pbtns"><button class="btn" data-act="avatar">🛠 Hangar'+(nw?'<span class="newdot">NY'+(nw>1?' ×'+nw:'')+'</span>':'')+'</button><button class="btn" data-act="pets">🐾 Följeslagare'+(np?'<span class="newdot">NY'+(np>1?' ×'+np:'')+'</span>':'')+'<span class="cnt">'+ph+'/'+pl.length+'</span></button></div>';
   if(bs.length)o+='<div class="boosts">'+bs.map(function(b){var d=parse(b.date);return '<div class="bst"><b>'+(b.xp>0?'+':'')+b.xp+' XP</b> · '+esc(b.note)+' <span style="opacity:.7">· '+d.getDate()+' '+MONTHS[d.getMonth()]+'</span></div>'}).join('')+'</div>';
   return o;
 }
@@ -2745,11 +2745,12 @@ function giveBoost(){
   var names=st.ids.map(function(id){return heroById(id).name}).join(' & ');
   toast('⚡ '+(amt>0?'+':'')+amt+' XP till '+names);
   if(amt>0)confetti();
+  if(boostFromSet&&!ups.length){boostFromSet=false;renderSettings()}else boostFromSet=false;
   if(ups.length)setTimeout(function(){levelUp(heroById(ups[0][0]),ups[0][1],ups[0][2])},500);
 }
 
 /* ---------- settings ---------- */
-var draft=null,resetArm=false,openSecs={};
+var draft=null,resetArm=false,openSecs={},boostFromSet=false;
 function openSettings(){
   draft=JSON.parse(JSON.stringify({heroes:S.heroes,quests:S.quests,heroQuests:S.heroQuests,rewards:S.rewards,settings:S.settings}));
   resetArm=false;renderSettings();
@@ -2767,6 +2768,7 @@ function renderSettings(){
     b+='<div class="frow"><input class="grow" data-k="heroes.'+i+'.name" value="'+esc(x.name)+'" maxlength="20" aria-label="Namn"></div>';
   });
   b+='<p class="mute" style="font-size:14px">Avataren byggs om i Hangaren (knappen 🛠 på startsidan). Färgen styrs av lackeringen.</p>';
+  o+='<button type="button" class="btn gold wide" data-act="boostset" style="margin-bottom:12px">⚡ Ge extra XP</button>';
   o+=sec('heroes','Hjältar',b);
   b='<p class="mute" style="font-size:14px;margin-bottom:10px">Gäller båda. Välj vilka dagar varje uppdrag ska finnas.</p>';
   d.quests.forEach(function(q,i){b+=questRow('quests.'+i,q,'data-h="" data-i="'+i+'"')});
@@ -2962,7 +2964,8 @@ document.addEventListener('click',function(e){
   else if(a==='tick'){tick(t)}
   else if(a==='claim'){claim(t.dataset.r)}
   else if(a==='settings'){requirePin().then(function(ok){if(ok)openSettings()})}
-  else if(a==='close'){closeModal()}
+  else if(a==='close'){closeModal();if(boostFromSet){boostFromSet=false;renderSettings()}}
+  else if(a==='boostset'){boostFromSet=true;openBoost()}
   else if(a==='save'){saveSettings()}
   else if(a==='avatar'){openAvatar()}
   else if(a==='hslot'){hSlot=t.dataset.slot;openAvatar(false)}
