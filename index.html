@@ -341,6 +341,27 @@ details[open] summary::after{content:"–"}
 }
 @media(max-width:380px){.tsub{display:none}.pname{font-size:19px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+#basecard{margin-bottom:14px}
+.basebtn{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--p1);border:1px solid var(--line);border-radius:12px;padding:10px;color:var(--text);cursor:pointer;font:inherit}
+.basebtn:hover{border-color:#2fd0f0}
+.bth{flex:none;width:150px;max-width:42%}
+.btx{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.btx small{font:700 10.5px var(--head);letter-spacing:.18em;color:var(--mute)}
+.btx b{font:700 19px var(--head);letter-spacing:.06em;text-transform:uppercase}
+.btx span{font-size:12px;color:var(--mute)}
+.bbar{height:8px;background:#0b0e14;border-radius:6px;overflow:hidden;border:1px solid var(--line2)}
+.bbar i{display:block;height:100%;background:linear-gradient(90deg,#2fd0f0,#7dff6a)}
+.bbar.big{height:12px;margin:6px 0}
+.basestage{position:relative}
+.bmechs{position:absolute;left:0;right:0;bottom:4%;display:flex;justify-content:space-between;padding:0 6%;pointer-events:none}
+.bmechs .bm{width:27%;max-width:140px;display:block}
+.bmechs svg{width:100%;height:auto;display:block}
+.bcon{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}
+.bbl{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.bbl div{background:#0b0e14;border:1px solid var(--line);border-radius:8px;padding:8px;opacity:.55;display:flex;flex-direction:column;gap:2px}
+.bbl div.on{opacity:1;border-color:#2fd0f0}
+.bbl small{color:var(--mute);font-size:11px}
 </style>
 </head>
 <body>
@@ -352,6 +373,7 @@ details[open] summary::after{content:"–"}
   <div id="hintbox"></div>
   <section class="tabs" id="tabs"></section>
   <section class="panel" id="panel"></section>
+  <section id="basecard"></section>
   <div class="weekbar">
     <h2 id="weektitle"></h2>
     <div class="wnav">
@@ -365,7 +387,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT F</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT G</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2539,6 +2561,7 @@ function render(){
     else rs+='<div class="rw"><div class="big">'+esc(r.icon)+'</div><div class="rn">'+esc(r.name)+'</div><div class="rl">🔒 NIVÅ '+r.level+'</div></div>';
   });
   $('#rewards').innerHTML=rs||'<div class="mute">Inga belöningar ännu – lägg till i ⚙️.</div>';
+  renderBase();
 }
 
 /* ---------- modal helpers ---------- */
@@ -2803,6 +2826,56 @@ function saveSettings(){
   ghFatal=false;commit();closeModal();initSync();
 }
 
+/* ===================== GEMENSAM BAS ===================== */
+var BASE_AT=[0,100,250,450,700,1000,1400,1900,2500,3300];
+var BASE_NAMES=['Skrotupplag','Verkstad','Radartorn','Vapensmedja','Hangar','Kraftverk','Försvarstorn','Kommandocentral','Fästning','Citadell'];
+function baseInfo(){
+  var tot=0;S.heroes.forEach(function(h){tot+=totalXp(h.id)});
+  var xp=Math.floor(tot*.2),L=1;
+  while(L<BASE_AT.length&&xp>=BASE_AT[L])L++;
+  var nxt=L<BASE_AT.length?BASE_AT[L]:null,prv=BASE_AT[L-1];
+  return {xp:xp,level:L,name:BASE_NAMES[L-1],next:nxt,pct:nxt?Math.round((xp-prv)/(nxt-prv)*100):100,nextName:nxt?BASE_NAMES[L]:''};
+}
+function baseSvg(L,w){
+  var id='bs'+(MX.n++)+'_',A='#2fd0f0',G='#e3b341',s='';
+  function r(x,y,ww,hh,f,o){return '<rect x="'+x+'" y="'+y+'" width="'+ww+'" height="'+hh+'" fill="'+f+'"'+(o||'')+' stroke="#06080d" stroke-opacity=".55"/>'}
+  function win(x,y,ww,hh,c){return '<rect x="'+x+'" y="'+y+'" width="'+ww+'" height="'+hh+'" fill="'+(c||A)+'" fill-opacity=".9" class="fxg" filter="url(#'+id+'f)"/>'}
+  s+='<defs><linearGradient id="'+id+'sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070b18"/><stop offset="1" stop-color="#1c2540"/></linearGradient><linearGradient id="'+id+'m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b778f"/><stop offset="1" stop-color="#2a3142"/></linearGradient><linearGradient id="'+id+'d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a4256"/><stop offset="1" stop-color="#171b26"/></linearGradient>'+
+   '<filter id="'+id+'f" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+  s+='<rect width="400" height="240" fill="url(#'+id+'sky)"/>';
+  for(var i=0;i<26;i++)s+='<circle cx="'+((i*53)%400)+'" cy="'+((i*29)%120)+'" r="'+(i%4===0?1.3:.8)+'" fill="#fff" fill-opacity=".7"/>';
+  s+='<path d="M0 170 L50 135 L95 165 L150 120 L210 168 L270 128 L330 164 L400 132 V210 H0Z" fill="#10162a"/>';
+  s+='<rect y="200" width="400" height="40" fill="#0b0f19"/><path d="M0 200 H400" stroke="#2b3550" stroke-width="2"/>';
+  for(var g=-8;g<=8;g++)s+='<line x1="'+(200+g*22)+'" y1="200" x2="'+(200+g*70)+'" y2="240" stroke="#fff" stroke-opacity=".07"/>';
+  if(L>=10)s+='<ellipse cx="200" cy="200" rx="190" ry="165" fill="'+G+'" fill-opacity=".07" stroke="'+G+'" stroke-opacity=".6" stroke-width="2" class="fxg" filter="url(#'+id+'f)"/>';
+  if(L>=6)s+='<g>'+'<path d="M24 200 L30 130 H56 L62 200Z" fill="url(#'+id+'m)" stroke="#06080d" stroke-opacity=".5"/><path d="M70 200 L75 140 H96 L101 200Z" fill="url(#'+id+'m)" stroke="#06080d" stroke-opacity=".5"/>'+win(32,128,16,4,'#ff9a3a')+win(76,138,14,4,'#ff9a3a')+'<path d="M56 190 H70" stroke="'+A+'" stroke-width="3"/></g>';
+  if(L>=8)s+=r(186,70,28,130,'url(#'+id+'m)')+r(180,64,40,12,'url(#'+id+'d)')+win(190,84,20,5)+win(190,98,20,5)+win(190,112,20,5)+'<path d="M200 64 V40" stroke="#c9d3e6" stroke-width="2"/>'+win(197,36,6,6,'#ff4a4a');
+  if(L>=9){s+=r(0,168,400,32,'url(#'+id+'d)');for(var c=0;c<20;c++)s+=r(c*20+2,160,12,10,'#2a3142');s+='<path d="M60 160 V132 L84 140 L60 148" fill="'+A+'" stroke="#06080d" stroke-opacity=".5"/><path d="M340 160 V132 L316 140 L340 148" fill="'+A+'" stroke="#06080d" stroke-opacity=".5"/><path d="M60 160 V128 M340 160 V128" stroke="#c9d3e6" stroke-width="2"/>'}
+  if(L>=5)s+='<path d="M104 200 V150 Q104 108 150 108 Q196 108 196 150 V200Z" fill="url(#'+id+'m)" stroke="#06080d" stroke-opacity=".55"/><path d="M122 200 V152 Q122 128 150 128 Q178 128 178 152 V200Z" fill="#05080f"/>'+win(136,150,28,4)+'<path d="M150 128 V200" stroke="#2a3142" stroke-width="2"/>';
+  else if(L>=2)s+=r(104,148,100,52,'url(#'+id+'m)')+r(98,142,112,10,'url(#'+id+'d)')+r(132,166,36,34,'#05080f')+win(136,170,28,4)+'<circle cx="188" cy="168" r="7" fill="#c9d3e6" stroke="#06080d"/><circle cx="188" cy="168" r="2.5" fill="#0b0f19"/>'+r(176,128,10,20,'url(#'+id+'d)');
+  else s+='<path d="M120 200 V170 L160 156 L200 170 V200Z" fill="url(#'+id+'m)" stroke="#06080d" stroke-opacity=".55"/>'+r(146,178,28,22,'#05080f')+win(150,182,20,3);
+  if(L>=4)s+=r(268,158,66,42,'url(#'+id+'m)')+r(262,152,78,8,'url(#'+id+'d)')+win(278,170,14,12,'#ff9a3a')+r(304,186,24,14,'#171b26')+'<path d="M300 186 h32 l-4 -8 h-24z" fill="#8d97ab" stroke="#06080d"/>';
+  if(L>=3)s+='<path d="M244 200 V138" stroke="#c9d3e6" stroke-width="3"/><path d="M228 126 Q244 150 260 126Z" fill="#8d97ab" stroke="#06080d"/>'+win(241,118,6,6,'#ff4a4a')+'<path d="M244 138 L232 158 M244 138 L256 158" stroke="#8d97ab" stroke-width="2"/>';
+  if(L>=7){[40,360].forEach(function(x,k){s+=r(x-12,176,24,24,'url(#'+id+'m)')+'<path d="M'+x+' 178 L'+(x+(k?-26:26))+' 164" stroke="#c9d3e6" stroke-width="5" stroke-linecap="round"/>'+win(x-3,184,6,6,'#ff4a4a')})}
+  if(L>=10)s+='<path d="M200 36 V0" stroke="'+G+'" stroke-width="8" stroke-opacity=".5" class="fxg" filter="url(#'+id+'f)"/><path d="M200 30 l4 9 10 1 -8 6 3 10 -9 -6 -9 6 3 -10 -8 -6 10 -1z" fill="'+G+'" stroke="#06080d" stroke-opacity=".5"/>';
+  return '<svg viewBox="0 0 400 240" width="'+w+'" height="'+Math.round(w*.6)+'" aria-hidden="true" focusable="false" style="display:block;border-radius:10px;max-width:100%;height:auto">'+s+'</svg>';
+}
+function renderBase(){
+  var b=baseInfo(),el=$('#basecard');if(!el)return;
+  el.innerHTML='<button class="basebtn" data-act="base"><div class="bth">'+baseSvg(b.level,150)+'</div><div class="btx"><small>GEMENSAM BAS</small><b>'+esc(b.name)+'</b><span>NIVÅ '+b.level+(b.next?' · '+b.xp+' / '+b.next+' BAS-XP':' · MAXNIVÅ')+'</span><div class="bbar"><i style="width:'+b.pct+'%"></i></div></div></button>';
+}
+function openBase(){
+  var b=baseInfo(),o='<div class="sheet" style="--c:#2fd0f0"><div class="hgtop"><h4>🏰 Gemensam bas</h4><button class="btn sm pri" data-act="close">Klar</button></div>';
+  o+='<div class="basestage">'+baseSvg(b.level,540);
+  o+='<div class="bmechs">'+S.heroes.slice(0,2).map(function(h,i){var eq=Object.assign({},(S.avatar[h.id]||{}).eq||{},{bg:'',aura:'',pet:''});return '<span class="bm'+(i?' r':'')+'">'+avatarSvg(h.id,140,eq,undefined,DEF_VB)+'</span>'}).join('')+'</div></div>';
+  o+='<p style="margin:12px 0 2px;font:700 18px var(--head);letter-spacing:.08em">'+esc(b.name).toUpperCase()+' · NIVÅ '+b.level+'</p>';
+  o+=b.next?'<div class="bbar big"><i style="width:'+b.pct+'%"></i></div><p style="font-size:13px;color:var(--mute)">'+b.xp+' / '+b.next+' bas-XP · nästa: <b>'+esc(b.nextName)+'</b></p>':'<p style="color:var(--mute)">Basen är fullt utbyggd – Citadellet står! 🌟</p>';
+  o+='<h5>Bidrag</h5>'+S.heroes.map(function(h){var x=Math.floor(totalXp(h.id)*.2);return '<div class="bcon"><span>'+esc(h.name)+'</span><b>+'+x+' bas-XP</b></div>'}).join('');
+  o+='<h5>Byggnader</h5><div class="bbl">'+BASE_NAMES.map(function(n,i){var on=b.level>=i+1;return '<div class="'+(on?'on':'')+'"><b>'+(on?'✓':'🔒')+' '+esc(n)+'</b><small>'+(on?'Byggd':BASE_AT[i]+' bas-XP')+'</small></div>'}).join('')+'</div>';
+  o+='<p style="font-size:12.5px;color:var(--mute);margin-top:10px">20 % av all XP ni båda tjänar går till basen – det påverkar inte era egna nivåer.</p></div>';
+  openModal(o);
+}
+
 /* ---------- events ---------- */
 document.addEventListener('click',function(e){
   var t=e.target.closest('[data-act]');
@@ -2822,6 +2895,7 @@ document.addEventListener('click',function(e){
   else if(a==='hslot'){hSlot=t.dataset.slot;openAvatar(false)}
   else if(a==='hscroll'){var ht=$('.hgtabs');if(ht)ht.scrollBy({left:(+t.dataset.dir)*180,behavior:'smooth'})}
   else if(a==='aeq'){S.avatar[selId].eq[t.dataset.slot]=t.dataset.id;commit();if(t.dataset.slot==='pet')openPets(true);else openAvatar(true)}
+  else if(a==='base'){openBase()}
   else if(a==='pets'){openPets()}
   else if(a==='pname'){namePet()}
   else if(a==='boost'){requirePin().then(function(ok){if(ok)openBoost()})}
