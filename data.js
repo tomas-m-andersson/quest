@@ -281,7 +281,7 @@ window.SKOLQUEST_DATA = {
         "waist": "ringbalte",
         "legs": "dubbelskydd",
         "back": "solfjader",
-        "weapon": "",
+        "weapon": "isspjut",
         "offhand": "",
         "aura": "",
         "bg": "",
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923943490
+  "updatedAt": 1791923946774
 };
