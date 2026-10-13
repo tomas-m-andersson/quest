@@ -186,7 +186,7 @@ window.SKOLQUEST_DATA = {
         "legs": "stormben",
         "back": "energywings",
         "weapon": "guldglaive",
-        "offhand": "kraftskold",
+        "offhand": "mirror",
         "aura": "",
         "bg": "",
         "pet": "phoenix"
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921631083
+  "updatedAt": 1791921632976
 };
