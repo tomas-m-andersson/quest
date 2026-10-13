@@ -159,172 +159,56 @@ window.SKOLQUEST_DATA = {
     "b": {}
   },
   "claimed": {
-    "a": [
-      "r5",
-      "r4",
-      "r3",
-      "r2",
-      "r1"
-    ],
+    "a": [],
     "b": []
   },
   "boosts": {
-    "a": [
-      {
-        "id": "bmv74udw3koq",
-        "xp": 100,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74v7kijfw",
-        "xp": 200,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74vdr4vvj",
-        "xp": 500,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74vprqtwx",
-        "xp": 800,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74w3tyfnz",
-        "xp": 500,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74w8yib05",
-        "xp": 200,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74wih1efx",
-        "xp": 500,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74wpfh5zr",
-        "xp": 200,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74wucxxnk",
-        "xp": 500,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74x7dl19i",
-        "xp": 800,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74xed9mk6",
-        "xp": 800,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74xqi4vy5",
-        "xp": 1000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74xyftbtu",
-        "xp": 1000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74yp853cx",
-        "xp": 2000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74yuzd2cu",
-        "xp": 1000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74z7014qx",
-        "xp": 3000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      },
-      {
-        "id": "bmv74zk1jh5h",
-        "xp": 100000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      }
-    ],
-    "b": [
-      {
-        "id": "bmv759tzljw9",
-        "xp": 100000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      }
-    ]
+    "a": [],
+    "b": []
   },
   "avatar": {
     "a": {
       "eq": {
         "pose": "",
-        "paint": "toxic",
-        "head": "antennhjalm",
-        "torso": "taggkrage",
-        "shoulders": "ringaxlar",
-        "arms": "ventilarmar",
-        "waist": "ringbalte",
-        "legs": "dubbelskydd",
-        "back": "solfjader",
-        "weapon": "isspjut",
-        "offhand": "mirror",
-        "aura": "starstorm",
-        "bg": "forest",
+        "paint": "",
+        "head": "",
+        "torso": "",
+        "shoulders": "",
+        "arms": "",
+        "waist": "",
+        "legs": "",
+        "back": "",
+        "weapon": "",
+        "offhand": "",
+        "aura": "",
+        "bg": "",
         "pet": ""
       },
-      "seen": 150,
+      "seen": 1,
       "pseen": 1,
       "petNames": {}
     },
     "b": {
       "eq": {
-        "pose": "stand",
-        "paint": "sand",
-        "head": "veteran",
-        "torso": "skiktpansar",
-        "shoulders": "kristallaxlar",
-        "arms": "ringarmar",
-        "waist": "ringbalte",
-        "legs": "skenbenplat",
-        "back": "energywings",
-        "weapon": "eternalblade",
-        "offhand": "yxskold",
-        "aura": "gronplasma",
-        "bg": "desert",
+        "pose": "",
+        "paint": "",
+        "head": "",
+        "torso": "",
+        "shoulders": "",
+        "arms": "",
+        "waist": "",
+        "legs": "",
+        "back": "",
+        "weapon": "",
+        "offhand": "",
+        "aura": "",
+        "bg": "",
         "pet": ""
       },
-      "seen": 134,
+      "seen": 1,
       "pseen": 1,
       "petNames": {}
     }
   },
-  "updatedAt": 1791924159774
+  "updatedAt": 1791924165471
 };
