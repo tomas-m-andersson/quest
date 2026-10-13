@@ -153,7 +153,7 @@ window.SKOLQUEST_DATA = {
         "head": "lion",
         "torso": "reactor",
         "shoulders": "pods",
-        "arms": "",
+        "arms": "guard",
         "waist": "",
         "legs": "",
         "back": "",
@@ -195,5 +195,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791915116855
+  "updatedAt": 1791915126792
 };
