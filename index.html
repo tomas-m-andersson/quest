@@ -9,9 +9,9 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Skol-Quest">
+<meta name="apple-mobile-web-app-title" content="Mech Quest">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Skol-Quest</title>
+<title>Mech Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
@@ -346,7 +346,7 @@ details[open] summary::after{content:"–"}
 <body>
 <div class="wrap">
   <div class="top">
-    <div class="logo"><i></i>SKOL<b>QUEST</b></div>
+    <div class="logo"><i></i>MECH<b>QUEST</b></div>
     <div class="topr"><span class="sync" id="sync"></span><button class="ib" data-act="settings" aria-label="Inställningar">⚙️</button></div>
   </div>
   <div id="hintbox"></div>
@@ -487,7 +487,7 @@ function ghUrl(){return 'https://api.github.com/repos/'+encodeURIComponent(GH.ow
 function ghHeaders(){return {'Accept':'application/vnd.github+json','Authorization':'Bearer '+GH.token,'X-GitHub-Api-Version':'2022-11-28'}}
 function b64enc(str){var b=new TextEncoder().encode(str),s='';for(var i=0;i<b.length;i++)s+=String.fromCharCode(b[i]);return btoa(s)}
 function b64dec(b64){var s=atob(b64.replace(/\s/g,'')),b=new Uint8Array(s.length);for(var i=0;i<s.length;i++)b[i]=s.charCodeAt(i);return new TextDecoder().decode(b)}
-function toFile(){return '// Skol-Quest data - uppdateras automatiskt av appen. Redigera inte for hand.\nwindow.SKOLQUEST_DATA = '+JSON.stringify(S,null,2)+';\n'}
+function toFile(){return '// Mech Quest data - uppdateras automatiskt av appen. Redigera inte for hand.\nwindow.SKOLQUEST_DATA = '+JSON.stringify(S,null,2)+';\n'}
 function fromFile(txt){var a=txt.indexOf('{'),b=txt.lastIndexOf('}');if(a<0||b<a)throw new Error('Ogiltig datafil');return JSON.parse(txt.slice(a,b+1))}
 function setSync(kind,msg){var e=$('#sync');if(!e)return;e.textContent=msg;e.dataset.k=kind}
 function ghErr(st){
@@ -510,7 +510,7 @@ async function ghPull(){
   return fromFile(b64dec(j.content));
 }
 async function ghPush(retry){
-  var body={message:'Skol-Quest: uppdatering '+new Date().toISOString().slice(0,16).replace('T',' '),content:b64enc(toFile()),branch:GH.branch};
+  var body={message:'Mech Quest: uppdatering '+new Date().toISOString().slice(0,16).replace('T',' '),content:b64enc(toFile()),branch:GH.branch};
   if(ghSha)body.sha=ghSha;
   var r=await fetch(ghUrl(),{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},ghHeaders()),body:JSON.stringify(body)});
   if(r.ok){var j=await r.json();ghSha=j.content.sha;return}

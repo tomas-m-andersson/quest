@@ -1,6 +1,6 @@
 {
-  "name": "Skol-Quest",
-  "short_name": "Skol-Quest",
+  "name": "Mech Quest",
+  "short_name": "Mech Quest",
   "description": "Skolkampen med XP, nivåer och mechs",
   "lang": "sv",
   "start_url": "./index.html",
