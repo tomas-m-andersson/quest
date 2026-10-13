@@ -1,4 +1,4 @@
-// Skol-Quest data - uppdateras automatiskt av appen. Redigera inte for hand.
+// Mech Quest data - uppdateras automatiskt av appen. Redigera inte for hand.
 window.SKOLQUEST_DATA = {
   "heroes": [
     {
@@ -16,22 +16,9 @@ window.SKOLQUEST_DATA = {
   ],
   "quests": [
     {
-      "id": "q1",
-      "icon": "📚",
-      "name": "Läxor klara",
-      "xp": 20,
-      "days": [
-        true,
-        true,
-        true,
-        true,
-        true
-      ]
-    },
-    {
       "id": "q2",
       "icon": "🧠",
-      "name": "Fokus på lektionerna",
+      "name": "Bra dag på skolan/förskolan",
       "xp": 15,
       "days": [
         true,
@@ -44,7 +31,7 @@ window.SKOLQUEST_DATA = {
     {
       "id": "q3",
       "icon": "📖",
-      "name": "Läste 15 minuter",
+      "name": "Läst 15 minuter",
       "xp": 15,
       "days": [
         true,
@@ -57,7 +44,7 @@ window.SKOLQUEST_DATA = {
     {
       "id": "q4",
       "icon": "🎒",
-      "name": "Ordning på väskan",
+      "name": "Hängt upp alla ytterkläder",
       "xp": 10,
       "days": [
         true,
@@ -70,7 +57,7 @@ window.SKOLQUEST_DATA = {
     {
       "id": "q5",
       "icon": "😎",
-      "name": "Bra attityd",
+      "name": "Inte slagits med brorsan",
       "xp": 10,
       "days": [
         true,
@@ -82,8 +69,49 @@ window.SKOLQUEST_DATA = {
     }
   ],
   "heroQuests": {
-    "a": [],
-    "b": []
+    "a": [
+      {
+        "id": "qmv70sqn0y2i",
+        "icon": "⭐",
+        "name": "Inte lämnat klassrumnet",
+        "xp": 15,
+        "days": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "id": "qmv70tufeq18",
+        "icon": "⭐",
+        "name": "Arbetsro på lektionen",
+        "xp": 15,
+        "days": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    ],
+    "b": [
+      {
+        "id": "qmv70t83xdpn",
+        "icon": "⭐",
+        "name": "Varit snäll med Sally",
+        "xp": 20,
+        "days": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    ]
   },
   "rewards": [
     {
@@ -182,5 +210,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791916046009
+  "updatedAt": 1791916615093
 };
