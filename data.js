@@ -150,7 +150,7 @@ window.SKOLQUEST_DATA = {
       "eq": {
         "pose": "",
         "paint": "",
-        "head": "warlord",
+        "head": "lion",
         "torso": "",
         "shoulders": "",
         "arms": "",
@@ -195,5 +195,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791915091507
+  "updatedAt": 1791915093214
 };
