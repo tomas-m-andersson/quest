@@ -315,10 +315,10 @@ window.SKOLQUEST_DATA = {
         "bg": "",
         "pet": ""
       },
-      "seen": 1,
+      "seen": 134,
       "pseen": 1,
       "petNames": {}
     }
   },
-  "updatedAt": 1791923982609
+  "updatedAt": 1791923992477
 };
