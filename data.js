@@ -161,13 +161,13 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
-        "pet": "",
+        "pet": "quadcopter",
         "face": "",
         "body": "",
         "chest": ""
       },
       "seen": 71,
-      "pseen": 1,
+      "pseen": 71,
       "petNames": {}
     },
     "b": {
@@ -195,5 +195,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791915140756
+  "updatedAt": 1791915148331
 };
