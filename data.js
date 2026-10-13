@@ -159,7 +159,13 @@ window.SKOLQUEST_DATA = {
     "b": {}
   },
   "claimed": {
-    "a": [],
+    "a": [
+      "r5",
+      "r4",
+      "r3",
+      "r2",
+      "r1"
+    ],
     "b": []
   },
   "boosts": {
@@ -320,5 +326,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791924046769
+  "updatedAt": 1791924093562
 };
