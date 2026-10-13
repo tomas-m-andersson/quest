@@ -199,6 +199,12 @@ window.SKOLQUEST_DATA = {
         "xp": 200,
         "note": "Extra boost",
         "date": "2026-10-13"
+      },
+      {
+        "id": "bmv74wih1efx",
+        "xp": 500,
+        "note": "Extra boost",
+        "date": "2026-10-13"
       }
     ],
     "b": []
@@ -247,5 +253,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923348826
+  "updatedAt": 1791923361157
 };
