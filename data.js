@@ -154,7 +154,7 @@ window.SKOLQUEST_DATA = {
         "torso": "reactor",
         "shoulders": "pods",
         "arms": "guard",
-        "waist": "",
+        "waist": "tails",
         "legs": "",
         "back": "",
         "weapon": "",
@@ -195,5 +195,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791915126792
+  "updatedAt": 1791915130942
 };
