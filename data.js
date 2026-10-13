@@ -306,7 +306,7 @@ window.SKOLQUEST_DATA = {
         "torso": "skiktpansar",
         "shoulders": "kristallaxlar",
         "arms": "ringarmar",
-        "waist": "",
+        "waist": "ringbalte",
         "legs": "",
         "back": "",
         "weapon": "",
@@ -320,5 +320,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791924012966
+  "updatedAt": 1791924015153
 };
