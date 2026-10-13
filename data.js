@@ -163,7 +163,14 @@ window.SKOLQUEST_DATA = {
     "b": []
   },
   "boosts": {
-    "a": [],
+    "a": [
+      {
+        "id": "bmv74udw3koq",
+        "xp": 100,
+        "note": "Extra boost",
+        "date": "2026-10-13"
+      }
+    ],
     "b": []
   },
   "avatar": {
@@ -210,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923248365
+  "updatedAt": 1791923261907
 };
