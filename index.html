@@ -365,7 +365,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT D</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT E</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -665,6 +665,7 @@ function mechK(P,id){
    '<filter id="'+id+'f" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
    '<filter id="'+id+'F" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
    '</defs>';
+  defs=defs.replace('</defs>',varDefs(id)+'</defs>');
   return {id:id,defs:defs,m:'url(#'+id+'m)',s:'url(#'+id+'s)',t:'url(#'+id+'t)',d:'url(#'+id+'d)',k:'url(#'+id+'k)',e:'url(#'+id+'e)',o:'url(#'+id+'o)',g:P.g,mc:P.m,m2c:P.m2,tc:P.t,dc:d,P:P};
 }
 
@@ -2006,6 +2007,341 @@ var PAINTS=[
 /* ===== REGISTER & API ===== */
 var AV_SLOTS=[{id:'pose',name:'Pose',icon:'🕺'},{id:'paint',name:'Lackering',icon:'🎨'},{id:'head',name:'Huvud',icon:'🪖'},{id:'torso',name:'Bröst',icon:'🛡️'},{id:'shoulders',name:'Axlar',icon:'🦾'},{id:'arms',name:'Armar',icon:'💪'},{id:'waist',name:'Midja',icon:'🎽'},{id:'legs',name:'Ben',icon:'🦿'},{id:'back',name:'Rygg',icon:'🪽'},{id:'weapon',name:'Vapen',icon:'⚔️'},{id:'offhand',name:'Sköld',icon:'🔰'},{id:'aura',name:'Energi',icon:'✨'},{id:'bg',name:'Miljö',icon:'🌆'},{id:'pet',name:'Följeslagare',icon:'🐾'}];
 var AV_DEFAULT={pose:'guard',paint:'graphite',head:'scout',torso:'light',shoulders:'round',arms:'std',waist:'skirt',legs:'std',back:'',weapon:'',offhand:'',aura:'',bg:'',pet:''};
+/* ===================== VARIANTER: FLER DELAR ===================== */
+var ACC=[['Guld','#e3b341'],['Röd','#e0403f'],['Cyan','#2fd0f0'],['Lila','#a56bff'],['Grön','#46d37c'],['Orange','#ff8a2a'],['Silver','#e1e7f2'],['Svart','#1c1e26'],['Rosa','#ff5fa8'],['Koppar','#c77b4a']];
+var EYES=[['Röd','#ff3b3b'],['Grön','#5dff7a'],['Lila','#b36bff'],['Orange','#ffa030'],['Cyan','#35e3ff'],['Vit','#ffffff'],['Rosa','#ff5fd0'],['Gul','#ffe14a']];
+var HUES=[40,90,150,200,260,310];
+function varDefs(id){
+  var s='';
+  ACC.forEach(function(a,i){
+    s+=grad(id+'a'+i,a[1]);
+    s+='<linearGradient id="'+id+'kb'+i+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="'+shade(a[1],.25)+'"/><stop offset="1" stop-color="'+shade(a[1],-.55)+'"/></linearGradient>';
+  });
+  EYES.forEach(function(e,j){
+    s+='<linearGradient id="'+id+'ev'+j+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="'+e[1]+'"/><stop offset="1" stop-color="'+shade(e[1],-.4)+'"/></linearGradient>'+
+       '<radialGradient id="'+id+'ov'+j+'"><stop offset="0" stop-color="'+e[1]+'" stop-opacity=".95"/><stop offset=".5" stop-color="'+e[1]+'" stop-opacity=".35"/><stop offset="1" stop-color="'+e[1]+'" stop-opacity="0"/></radialGradient>';
+  });
+  HUES.forEach(function(h,i){s+='<filter id="'+id+'hr'+i+'" filterUnits="userSpaceOnUse" x="-300" y="-300" width="900" height="1000" color-interpolation-filters="sRGB"><feColorMatrix type="hueRotate" values="'+h+'"/></filter>'});
+  return s;
+}
+/* a=accent, e=ögonfärg, b=bladfärg (alla index, -1/undefined = oförändrad) */
+function vK(K,a,e,b){
+  var k=Object.assign({},K);
+  if(a!=null&&a>=0){k.t='url(#'+K.id+'a'+a+')';k.tc=ACC[a][1]}
+  if(e!=null&&e>=0){k.e='url(#'+K.id+'ev'+e+')';k.o='url(#'+K.id+'ov'+e+')';k.g=EYES[e][1]}
+  if(b!=null&&b>=0){k.k='url(#'+K.id+'kb'+b+')'}
+  return k;
+}
+function autoLv(list,n,maxL){
+  var lv=list.map(function(x){return x[2]}).sort(function(a,b){return a-b}),add=[];
+  maxL=maxL||58;
+  for(var i=0;i<n;i++){
+    var pts=[0].concat(lv).concat([maxL+2]),best=0,bi=0;
+    for(var j=0;j<pts.length-1;j++){var g=pts[j+1]-pts[j];if(g>best){best=g;bi=j}}
+    var v=Math.round((pts[bi]+pts[bi+1])/2);
+    if(v<1)v=1;if(v>maxL)v=maxL;
+    lv.push(v);lv.sort(function(a,b){return a-b});add.push(v);
+  }
+  return add.sort(function(a,b){return a-b});
+}
+function addVariants(list,specs,make){
+  var lvs=autoLv(list,specs.length);
+  specs.forEach(function(s,i){make(s,s[0]);list.push([s[0],s[1],lvs[i]])});
+}
+function decoApply(lib,names,K){var pre='',post='';(names||[]).forEach(function(n){var o=lib[n](K);pre+=o[0]||'';post+=o[1]||''});return [pre,post]}
+
+/* ---------- huvud ---------- */
+var HD={
+  horns:function(K){return [SY(plate([[128,58],[118,40],[108,16],[128,34],[136,50]],K.t,{inn:.5})),'']},
+  hornsLong:function(K){return [SY(plate([[126,54],[104,46],[88,16],[112,34],[130,46]],K.t,{inn:.5})),'']},
+  fin:function(K){return [plate([[144,48],[150,4],[156,48]],K.t,{inn:.4})+plate([[141,52],[150,26],[159,52]],K.m,{inn:.5}),'']},
+  mohawk:function(K){var s='';for(var i=-3;i<=3;i++)s+=plate([[150+i*8-4,48],[150+i*8,10+Math.abs(i)*6],[150+i*8+4,48]],K.t,{inn:0,hl:false});return [s,'']},
+  antennae:function(K){return ['',SY(ln('M132 50 L122 14','#c9d3e6',2,1)+glow(K,'<circle cx="122" cy="12" r="3.6" fill="'+K.e+'"/>'))]},
+  cheeks:function(K){return ['',SY(plate([[124,68],[108,76],[110,100],[128,96]],K.m)+bolt(116,84))]},
+  halo:function(K){return [glow(K,'<circle cx="150" cy="68" r="64" fill="none" stroke="'+K.g+'" stroke-width="3" stroke-opacity=".85"/><circle cx="150" cy="68" r="56" fill="none" stroke="'+K.g+'" stroke-width="1.2" stroke-opacity=".5"/>'),'']},
+  tusks:function(K){return ['',SY(plate([[137,96],[131,116],[142,102]],'#ece7d3',{inn:0}))]},
+  crown:function(K){return [plate([[126,50],[130,24],[138,44],[144,16],[150,42],[156,16],[162,44],[170,24],[174,50]],K.t,{inn:.4}),'']},
+  earpods:function(K){return ['',SY(ci(119,72,9,K.d)+glow(K,'<circle cx="119" cy="72" r="3.6" fill="'+K.e+'"/>'))]},
+  scar:function(K){return ['',ln('M136 50 L164 94','#eef2fa',1.6,.85)+ln('M141 49 L169 93','#000',1.2,.45)]},
+  wings:function(K){return [SY(plate([[124,62],[96,52],[78,32],[96,64],[80,72],[102,80],[124,84]],K.t,{inn:.5})),'']}
+};
+/* ---------- bröst ---------- */
+var TD={
+  ribs:function(K){var s='';for(var i=0;i<4;i++)s+=ln('M116 '+(156+i*11)+' H184','#000',1.8,.55)+ln('M116 '+(157+i*11)+' H184','#fff',.8,.25);return ['',s]},
+  chains:function(K){var s=ln('M108 126 Q150 188 192 126','#9aa6bd',2.4,.95);for(var i=0;i<9;i++){var t=i/8,x=108+84*t,y=126+(1-Math.pow(2*t-1,2))*47*.78;s+='<circle cx="'+x.toFixed(1)+'" cy="'+(y+.5).toFixed(1)+'" r="2.6" fill="#cfd8ea" stroke="#06080d" stroke-width=".6"/>'}return ['',s]},
+  straps:function(K){return ['','<path d="M102 120 L196 206" stroke="#0c0f15" stroke-width="9"/><path d="M198 120 L104 206" stroke="#0c0f15" stroke-width="9"/><path d="M102 120 L196 206" stroke="'+K.tc+'" stroke-width="2.2" stroke-opacity=".9"/><path d="M198 120 L104 206" stroke="'+K.tc+'" stroke-width="2.2" stroke-opacity=".9"/>'+ci(150,163,6,K.t)]},
+  ring:function(K){return ['',glow(K,'<circle cx="150" cy="156" r="25" fill="none" stroke="'+K.g+'" stroke-width="3"/><circle cx="150" cy="156" r="7" fill="'+K.e+'"/>')]},
+  spikes:function(K){return ['',SY(plate([[112,114],[100,94],[122,110]],K.t,{inn:0})+plate([[104,122],[90,108],[110,118]],K.t,{inn:0}))]},
+  plate:function(K){return ['',plate([[126,130],[174,130],[166,180],[150,196],[134,180]],K.t,{inn:.62,io:.1})+glow(K,'<path d="M146 146 H154 V168 H146Z" fill="'+K.e+'"/>')]},
+  flame:function(K){return ['',SY(glow(K,'<path d="M106 122 Q112 160 104 198 L110 198 Q122 160 112 122Z" fill="'+K.e+'" fill-opacity=".85"/>'))]},
+  tabard:function(K){return ['',plate([[136,206],[164,206],[160,254],[150,270],[140,254]],K.t,{inn:.55})+ln('M150 210 V262','#000',1,.4)]},
+  emblem:function(K){return ['',plate([[150,130],[170,156],[150,182],[130,156]],K.t,{inn:.6})+glow(K,'<circle cx="150" cy="156" r="6" fill="'+K.e+'"/>')]},
+  layers:function(K){return ['',SY(plate([[96,138],[118,132],[116,178],[98,172]],K.t,{inn:.6})+plate([[100,184],[120,180],[118,204],[102,200]],K.t,{inn:.6}))]},
+  vents:function(K){return ['',SY(vents(106,150,24,5,8,'#000',.65)+ln('M106 148 H130','#fff',.8,.3))]},
+  turrets:function(K){return ['',SY(ci(112,132,9,K.d)+plate([[108,132],[116,132],[116,112],[108,112]],K.t,{inn:0})+glow(K,'<circle cx="112" cy="110" r="3" fill="'+K.e+'"/>'))]}
+};
+/* ---------- axlar (vänster, speglas) ---------- */
+var SD={
+  spikes:function(K){return ['',SY(plate([[52,126],[28,116],[50,136]],K.t,{inn:0})+plate([[56,112],[40,94],[64,108]],K.t,{inn:0}))]},
+  fin:function(K){return [SY(plate([[70,106],[54,56],[92,104]],K.t,{inn:.4})),'']},
+  lights:function(K){return ['',SY(glow(K,'<rect x="52" y="140" width="24" height="4" fill="'+K.e+'"/><rect x="56" y="148" width="16" height="3" fill="'+K.e+'"/>'))]},
+  stack:function(K){return ['',SY(plate([[46,108],[88,92],[92,102],[50,120]],K.t,{inn:.55})+plate([[52,100],[84,86],[86,92],[54,106]],K.m,{inn:.5}))]},
+  antenna:function(K){return ['',SY(ln('M66 104 V64','#c9d3e6',2.2,1)+glow(K,'<circle cx="66" cy="62" r="3.8" fill="'+K.e+'"/>'))]},
+  banner:function(K){return [SY(ln('M52 108 V40','#8d97ab',2.4,1)+plate([[52,42],[76,50],[52,66]],K.t,{inn:.5})),'']},
+  rivets:function(K){var s='';[[56,132],[66,124],[78,120],[90,122],[102,128]].forEach(function(p){s+=bolt(p[0],p[1],2.2)});return ['',SY(s)]},
+  cannons:function(K){return [SY(plate([[58,106],[64,66],[76,66],[82,104]],K.d,{inn:.8})+plate([[62,70],[78,70],[78,62],[62,62]],K.t,{inn:.4})+glow(K,'<circle cx="70" cy="60" r="3" fill="'+K.e+'"/>')),'']},
+  ring:function(K){return ['',SY('<ellipse cx="82" cy="134" rx="40" ry="34" fill="none" stroke="'+K.tc+'" stroke-width="3" stroke-opacity=".9"/>')]},
+  sleeve:function(K){return ['',SY(plate([[46,152],[116,166],[108,190],[52,178]],K.m,{inn:.7})+plate([[52,158],[110,170],[106,178],[54,168]],K.t,{inn:0,hl:false}))]}
+};
+/* ---------- armar (ritas i armens egna ramar: [överarm, underarm]) ---------- */
+var AD={
+  bladeSide:function(K){return ['',plate([[64,226],[46,282],[58,296],[72,254]],K.k,{inn:.6,io:.12})+ln('M62 238 L52 284','#fff',1,.6)]},
+  cannon:function(K){return ['',plate([[104,226],[120,226],[120,266],[104,266]],K.d,{inn:.8})+plate([[106,262],[118,262],[118,272],[106,272]],K.t,{inn:.4})+glow(K,'<circle cx="112" cy="274" r="3" fill="'+K.e+'"/>')]},
+  plates:function(K){return [plate([[68,142],[106,142],[102,176],[72,176]],K.t,{inn:.62,io:.1}),plate([[66,216],[106,216],[100,248],[70,248]],K.t,{inn:.62,io:.1})]},
+  stripe:function(K){return ['',glow(K,'<rect x="84" y="220" width="4" height="44" fill="'+K.e+'"/>')+glow(K,'<rect x="94" y="224" width="3" height="36" fill="'+K.e+'" fill-opacity=".7"/>')]},
+  spikes:function(K){return [plate([[72,150],[54,142],[72,164]],K.t,{inn:0}),plate([[66,216],[48,224],[66,232]],K.t,{inn:0})+plate([[66,236],[52,246],[68,250]],K.t,{inn:0})]},
+  pistons:function(K){return ['',piston(68,218,70,262)+piston(104,218,102,262)]},
+  vents:function(K){return ['',vents(78,224,22,5,6,K.tc,.85)]},
+  rings:function(K){return [rect(68,158,38,6,K.t,2)+rect(68,174,38,6,K.t,2),rect(66,222,42,6,K.t,2)]},
+  glowjoint:function(K){return ['',glow(K,'<circle cx="88" cy="205" r="5" fill="'+K.e+'"/>')]},
+  shield:function(K){return [plate([[66,140],[108,140],[104,184],[72,184]],K.t,{inn:.6,io:.1}),'']}
+};
+/* ---------- ben ---------- */
+var LD={
+  thighPlate:function(K){return [plate([[106,246],[150,246],[142,298],[100,298]],K.t,{inn:.62,io:.1}),'']},
+  kneeSpike:function(K){return [plate([[96,318],[74,326],[96,338]],K.t,{inn:0}),'']},
+  stripes:function(K){return ['',plate([[92,342],[134,342],[133,348],[93,348]],K.t,{inn:0,hl:false})+plate([[94,354],[132,354],[131,360],[95,360]],K.t,{inn:0,hl:false})]},
+  glowLines:function(K){return ['',glow(K,'<path d="M100 340 L104 372 M128 340 L124 372" stroke="'+K.e+'" stroke-width="3" fill="none"/>')]},
+  pistons:function(K){return ['',piston(90,338,94,374)+piston(136,338,132,374)]},
+  shinBlades:function(K){return ['',plate([[88,348],[68,374],[90,374]],K.k,{inn:.6,io:.1})]},
+  ankleFins:function(K){return ['',plate([[90,370],[66,380],[90,390]],K.t,{inn:.4})]},
+  kneeLights:function(K){return [glow(K,'<circle cx="104" cy="318" r="4" fill="'+K.e+'"/><circle cx="126" cy="318" r="4" fill="'+K.e+'"/>'),'']},
+  greaves:function(K){return ['',plate([[84,334],[142,334],[136,374],[90,374]],K.t,{inn:.72,io:.1})]},
+  hipPlate:function(K){return [plate([[92,238],[152,238],[148,264],[96,264]],K.t,{inn:.6}),'']}
+};
+/* ---------- midja (speglas) ---------- */
+var WD={
+  buckle:function(K){return ['',plate([[138,208],[162,208],[160,234],[140,234]],K.t,{inn:.55})+glow(K,'<circle cx="150" cy="221" r="4" fill="'+K.e+'"/>')]},
+  chains:function(K){var s='';for(var i=0;i<8;i++){var x=112+i*10.2;s+='<circle cx="'+x.toFixed(1)+'" cy="'+(232+Math.sin(i/7*Math.PI)*12).toFixed(1)+'" r="2.8" fill="#cfd8ea" stroke="#06080d" stroke-width=".6"/>'}return ['',s]},
+  sash:function(K){return ['',plate([[110,212],[190,212],[190,222],[110,222]],K.t,{inn:.5})]},
+  tail:function(K){return ['',plate([[142,236],[158,236],[155,292],[150,304],[145,292]],K.t,{inn:.55})]},
+  glowBelt:function(K){return ['',glow(K,'<rect x="116" y="228" width="68" height="4" fill="'+K.e+'"/>')]},
+  spikes:function(K){return ['',SY(plate([[104,224],[84,232],[106,240]],K.t,{inn:0}))]},
+  pouches:function(K){return ['',SY(rect(108,238,14,16,K.d,3)+rect(108,238,14,5,K.t,2))]},
+  ammo:function(K){var s='';for(var i=0;i<11;i++)s+='<rect x="'+(112+i*7)+'" y="214" width="4" height="10" rx="1" fill="'+K.tc+'" stroke="#06080d" stroke-width=".5"/>';return ['',s]},
+  lamellae:function(K){return ['',SY(plate([[114,240],[136,240],[132,278],[118,272]],K.t,{inn:.62})+plate([[118,252],[134,252],[132,258],[119,258]],K.d,{inn:0}))]},
+  ring:function(K){return ['',glow(K,'<ellipse cx="150" cy="222" rx="50" ry="9" fill="none" stroke="'+K.g+'" stroke-width="2.4"/>')]}
+};
+/* ---------- rygg (bakom kroppen) ---------- */
+var BD={
+  antennas:function(K){return [SY(ln('M130 130 L112 20','#c9d3e6',2.4,1)+glow(K,'<circle cx="112" cy="18" r="4" fill="'+K.e+'"/>')),'']},
+  bigblade:function(K){return [plate([[142,170],[150,-40],[158,170]],K.k,{inn:.6,io:.12})+plate([[140,176],[160,176],[156,196],[144,196]],K.t,{inn:.5}),'']},
+  ring:function(K){return [glow(K,'<circle cx="150" cy="134" r="96" fill="none" stroke="'+K.g+'" stroke-width="5" stroke-opacity=".9"/><circle cx="150" cy="134" r="86" fill="none" stroke="'+K.g+'" stroke-width="1.4" stroke-opacity=".5"/>'),'']},
+  pipes:function(K){return [SY(plate([[112,70],[124,70],[124,206],[112,206]],K.d,{inn:.8})+plate([[110,66],[126,66],[126,76],[110,76]],K.t,{inn:.4})+glow(K,'<rect x="114" y="58" width="8" height="8" fill="'+K.e+'"/>')),'']},
+  solar:function(K){return [SY(plate([[112,120],[66,98],[54,172],[108,180]],K.m,{inn:.8})+ln('M84 108 L78 176 M100 114 L94 178 M60 138 L108 150','#000',1,.5)),'']},
+  tanks:function(K){return [SY(plate([[104,96],[126,96],[126,196],[104,196]],K.m,{inn:.7})+plate([[104,96],[126,96],[126,110],[104,110]],K.t,{inn:.4})+plate([[104,182],[126,182],[126,196],[104,196]],K.t,{inn:.4})),'']},
+  radar:function(K){return [ln('M150 130 V60','#c9d3e6',3,1)+'<ellipse cx="150" cy="54" rx="34" ry="12" fill="'+K.s+'" stroke="#06080d" stroke-width="1.2"/>'+glow(K,'<circle cx="150" cy="50" r="4" fill="'+K.e+'"/>'),'']},
+  pods:function(K){return [SY(plate([[96,100],[128,100],[128,176],[96,176]],K.d,{inn:.8})+'<circle cx="104" cy="112" r="4" fill="'+K.t+'"/><circle cx="116" cy="112" r="4" fill="'+K.t+'"/><circle cx="104" cy="128" r="4" fill="'+K.t+'"/><circle cx="116" cy="128" r="4" fill="'+K.t+'"/>'),'']},
+  fan:function(K){var s='';for(var i=-3;i<=3;i++){var a=i*17*Math.PI/180,x=150+Math.sin(a)*110,y=134-Math.cos(a)*110;s+=plate([[150+Math.cos(a)*-8,134+Math.sin(a)*-8+4],[x,y],[150+Math.cos(a)*8,134+Math.sin(a)*8+4]],K.t,{inn:.4})}return [s,'']},
+  cables:function(K){return [SY(ln('M130 150 C90 170 70 110 80 70','#2a2f3b',5,1)+ln('M130 160 C100 190 60 150 66 100','#2a2f3b',4,1)+glow(K,'<circle cx="80" cy="68" r="3" fill="'+K.e+'"/>')),'']},
+  flag:function(K){return [ln('M168 190 V10','#8d97ab',3,1)+plate([[168,12],[216,24],[168,52]],K.t,{inn:.5}),'']}
+};
+/* ---------- vapen (vänsterhand, grepp vid 62,277) ---------- */
+var XD={
+  gem:function(K){return ['',glow(K,'<circle cx="62" cy="262" r="4.4" fill="'+K.e+'"/>')]},
+  tassel:function(K){return ['',plate([[56,350],[68,350],[72,386],[62,380],[54,388]],K.t,{inn:0,hl:false})]},
+  spurs:function(K){return ['',plate([[50,252],[36,248],[50,262]],K.t,{inn:0})+plate([[74,252],[88,248],[74,262]],K.t,{inn:0})]},
+  runes:function(K){return ['',glow(K,'<path d="M60 200 h4 M60 170 h4 M60 140 h4 M60 110 h4" stroke="'+K.e+'" stroke-width="2"/>')]}
+};
+/* ---------- sköldar (högerhand) ---------- */
+var YD={
+  boss:function(K){return ['',plate([[234,216],[244,196],[254,216]],K.t,{inn:0})+glow(K,'<circle cx="244" cy="226" r="5" fill="'+K.e+'"/>')]},
+  rim:function(K){return ['',glow(K,'<path d="M212 176 H274" stroke="'+K.e+'" stroke-width="3"/>')]},
+  spikes:function(K){return ['',plate([[208,200],[190,194],[208,214]],K.t,{inn:0})+plate([[280,200],[298,194],[280,214]],K.t,{inn:0})]},
+  emblem:function(K){return ['',plate([[244,196],[262,226],[244,256],[226,226]],K.t,{inn:.55,io:.12})+glow(K,'<circle cx="244" cy="226" r="5" fill="'+K.e+'"/>')]},
+  stripes:function(K){return ['',plate([[222,262],[266,262],[264,270],[224,270]],K.t,{inn:0,hl:false})+plate([[226,276],[262,276],[260,284],[228,284]],K.t,{inn:0,hl:false})]}
+};
+/* ---------- auror och miljöer ---------- */
+
+/* ---------- registrera ---------- */
+function regSimple(reg,list,specs,lib){
+  addVariants(list,specs,function(s,id){
+    reg[id]=function(K){var k=vK(K,s[3],s[4]),d=decoApply(lib,s[5],k);return d[0]+reg[s[2]](k)+d[1]};
+  });
+}
+regSimple(HEADS,HEAD_LIST,[
+  ['antennhjalm','Antennhjälm','scout',-1,3,['antennae']],
+  ['kamhjalm','Kamhjälm','knight',1,-1,['fin']],
+  ['hornriddare','Hornriddare','knight',0,0,['horns']],
+  ['tuskhjalm','Tuskhjälm','oni',5,1,['tusks']],
+  ['mohawkhjalm','Mohawkhjälm','scout',3,2,['mohawk']],
+  ['kronhjalm','Kronhjälm','samurai',0,5,['crown']],
+  ['valkyria','Valkyriahjälm','dragon',6,4,['wings']],
+  ['gloria','Glorieskenet','phantom',2,4,['halo']],
+  ['veteran','Ärrad veteran','warlord',7,0,['scar','cheeks']],
+  ['dronare','Drönarhjälm','lion',4,7,['earpods','antennae']],
+  ['titanhorn','Titanhorn','sovereign',8,6,['hornsLong','crown']]
+],HD);
+regSimple(TORSOS,TORSO_LIST,[
+  ['ribbpansar','Ribbpansar','light',-1,-1,['ribs']],
+  ['kedjebrost','Kedjebröst','reactor',6,-1,['chains']],
+  ['korsrem','Korsrem','samurai',0,-1,['straps']],
+  ['reaktorring','Reaktorring','light',2,4,['ring']],
+  ['taggkrage','Taggkrage','dragon',1,-1,['spikes']],
+  ['stridsplat','Stridsplåt','heavy',0,3,['plate']],
+  ['eldrand','Eldrand','beast',5,3,['flame']],
+  ['tabard','Tabard','flagship',3,-1,['tabard']],
+  ['emblemrustning','Emblemrustning','aegis',0,6,['emblem']],
+  ['skiktpansar','Skiktpansar','heavy',6,-1,['layers']],
+  ['ventilbrost','Ventilbröst','samurai',-1,-1,['vents']],
+  ['tornbrost','Tornbröst','reactor',8,4,['turrets','ring']]
+],TD);
+regSimple(SHOULDERS,SHOULDER_LIST,[
+  ['taggkrans','Taggkrans','round',1,-1,['spikes']],
+  ['bladfenor','Fenaxlar','sode',2,-1,['fin']],
+  ['lysaxlar','Lysaxlar','pods',-1,4,['lights']],
+  ['stapelplat','Stapelplåt','round',0,-1,['stack']],
+  ['antennaxlar','Antennaxlar','spiked',6,5,['antenna']],
+  ['fanaxlar','Fanaxlar','sode',1,-1,['banner']],
+  ['nitaxlar','Nitaxlar','horned',9,-1,['rivets']],
+  ['kanonaxlar','Kanonaxlar','dragonhead',7,3,['cannons']],
+  ['ringaxlar','Ringaxlar','titan',3,2,['ring']],
+  ['armplat','Ärmplåt','fins',0,-1,['sleeve']],
+  ['kristallaxlar','Kristallaxlar','pods',2,6,['lights','antenna']],
+  ['stormaxlar','Stormaxlar','horned',4,4,['fin','lights']]
+],SD);
+regSimple(WAISTS,WAIST_LIST,[
+  ['spannebalte','Spännebälte','skirt',0,5,['buckle']],
+  ['kedjekjol','Kedjekjol','tasset',6,-1,['chains']],
+  ['skarp','Skärp','skirt',1,-1,['sash']],
+  ['svansplat','Svansplåt','belt',0,-1,['tail']],
+  ['glodbalte','Glödbälte','belt',-1,3,['glowBelt']],
+  ['taggkjol','Taggkjol','tasset',7,-1,['spikes']],
+  ['fickbalte','Fickbälte','belt',9,-1,['pouches']],
+  ['patronbalte','Patronbälte','skirt',0,-1,['ammo']],
+  ['lamellkjol','Lamellkjol','bladeskirt',2,-1,['lamellae']],
+  ['ringbalte','Ringbälte','banner',3,4,['ring']],
+  ['eldkjol','Eldkjol','banner',5,3,['glowBelt','sash']],
+  ['svansbalte','Svansbälte','tails',1,-1,['buckle','tail']],
+  ['skjoldkjol','Sköldkjol','bladeskirt',6,-1,['buckle','pouches']],
+  ['stormkjol','Stormkjol','tails',4,2,['ring','spikes']]
+],WD);
+regSimple(BACKS,BACK_LIST,[
+  ['antennpack','Antennpack','thrusters',6,5,['antennas']],
+  ['bladrygg','Stor klinga','shieldpack',1,-1,['bigblade']],
+  ['ringpack','Ringpack','thrusters',2,4,['ring']],
+  ['rorpack','Rörpack','gatlings',0,3,['pipes']],
+  ['solpack','Solpaneler','shieldpack',3,-1,['solar']],
+  ['tankpack','Tankpack','cannons',5,3,['tanks']],
+  ['radarpack','Radarpack','banners',6,4,['radar']],
+  ['raketpack','Raketpack','gatlings',1,-1,['pods']],
+  ['solfjader','Solfjäder','firewings',0,3,['fan']],
+  ['kabelpack','Kabelpack','thrusters',7,2,['cables']],
+  ['flaggpack','Flaggpack','cannons',1,-1,['flag']]
+],BD);
+/* vapen */
+addVariants(WEAPON_LIST,[
+  ['blodkatana','Blodkatana','katana',1,0,['gem']],
+  ['isspjut','Isspjut','spear',2,4,['tassel']],
+  ['gifthalberd','Gifthalberd','halberd',4,1,['spurs']],
+  ['guldglaive','Guldglaive','glaive',0,3,['runes']],
+  ['skuggscythe','Skuggslie','scythe',3,2,['gem']],
+  ['magmahammare','Magmahammare','hammer',5,3,['runes','gem']]
+].map(function(x){return [x[0],x[1],x[2],x[3],x[4],x[5]]}),function(s,id){
+  var base=WEAPONS[s[2]];
+  WEAPONS[id]={ang:base.ang,svg:function(K){var k=vK(K,s[3],s[4],s[3]),d=decoApply(XD,s[5],k);return d[0]+base.svg(k)+d[1]}};
+});
+/* sköldar */
+addVariants(OFFHAND_LIST,[
+  ['bossrund','Taggsköld','round',1,-1,['spikes','boss']],
+  ['draksköld2','Gyllene bastion','kite',0,5,['emblem']],
+  ['stormtorn','Stormtorn','tower',3,4,['rim','stripes']],
+  ['blodsköld','Blodsköld','kite',1,0,['boss']],
+  ['isbastion','Isbastion','energyshield',6,4,['rim']],
+  ['skogssköld','Skogssköld','round',4,1,['emblem']],
+  ['elddrake','Eldsköld','kite',5,3,['stripes','boss']],
+  ['skuggtorn','Skuggtorn','tower',7,2,['emblem','spikes']],
+  ['spegelstal','Spegelstål','mirror',6,5,['rim']],
+  ['kraftskold','Kraftsköld','energyshield',3,2,['emblem']],
+  ['yxskold','Yxsköld','dualaxe',1,0,['boss']],
+  ['bastion9','Bastion IX','tower',0,6,['emblem','rim']]
+].map(function(x){return [x[0].replace(/[^a-z0-9]/g,''),x[1],x[2],x[3],x[4],x[5]]}),function(s,id){
+  var base=OFFHANDS[s[2]];
+  OFFHANDS[id]={ang:base.ang,svg:function(K){var k=vK(K,s[3],s[4]),d=decoApply(YD,s[5],k);return d[0]+base.svg(k)+d[1]}};
+});
+/* armar och ben: fångar basens rigg och lägger till detaljer */
+function regLimb(reg,list,specs,lib,isLeg){
+  addVariants(list,specs,function(s,id){
+    reg[id]=function(K){
+      var k=vK(K,s[3],s[4]);reg[s[2]](k);var c=CAP,u='',l='';
+      (s[5]||[]).forEach(function(n){var o=lib[n](k);u+=o[0]||'';l+=o[1]||''});
+      c.up+=u;c.lo+=l;
+      return SY('<g transform="rotate('+c.a1+' '+c.p1[0]+' '+c.p1[1]+')">'+(c.hip||'')+c.up+'<g transform="rotate('+c.a2+' '+c.p2[0]+' '+c.p2[1]+')">'+c.lo+'</g></g>');
+    };
+  });
+}
+regLimb(ARMS,ARM_LIST,[
+  ['bladarm','Bladarm','std',2,-1,['bladeSide']],
+  ['kanonarm','Kanonarm','heavy',1,3,['cannon']],
+  ['platarmar','Plåtarmar','std',0,-1,['plates']],
+  ['ljusarmar','Ljusarmar','heavy',-1,4,['stripe']],
+  ['taggarmar','Taggarmar','guard',1,-1,['spikes']],
+  ['skyddsplat','Skyddsplåt','claw',6,-1,['shield']],
+  ['kolvarmar','Kolvarmar','std',0,-1,['pistons']],
+  ['ventilarmar','Ventilarmar','blade',5,-1,['vents']],
+  ['ringarmar','Ringarmar','heavy',3,-1,['rings']],
+  ['glodleder','Glödleder','energy',-1,1,['glowjoint','stripe']],
+  ['dubbelblad','Tvillingblad','blade',7,0,['bladeSide','spikes']],
+  ['stormarmar','Stormarmar','titan',4,4,['rings','glowjoint']],
+  ['rustarmar','Rustarmar','guard',9,-1,['plates','pistons']]
+],AD);
+regLimb(LEGS,LEG_LIST,[
+  ['platlar','Plåtlår','std',0,-1,['thighPlate']],
+  ['knedorn','Knädorn','guard',1,-1,['kneeSpike']],
+  ['randigaben','Randiga ben','heavy',5,-1,['stripes']],
+  ['ljusben','Ljusben','sleek',-1,4,['glowLines']],
+  ['kolvben','Kolvben','std',6,-1,['pistons']],
+  ['bladben','Bladben','drake',2,-1,['shinBlades']],
+  ['vingfot','Vingfot','boost',0,-1,['ankleFins']],
+  ['knalampor','Knälampor','guard',-1,3,['kneeLights']],
+  ['skenbenplat','Skenbensplåt','heavy',3,-1,['greaves']],
+  ['hoftplat','Höftplåt','sleek',1,-1,['hipPlate']],
+  ['stormben','Stormben','titan',4,2,['greaves','kneeLights']],
+  ['dubbelskydd','Dubbelskydd','ancestor',0,5,['thighPlate','stripes']]
+],LD,true);
+/* lackeringar */
+(function(){
+  var np=[
+    {id:'forest',name:'Skogsgrön',m:'#2f7d3a',m2:'#17441f',t:'#c9a64a',g:'#c8ff3a'},
+    {id:'rust',name:'Rost & stål',m:'#a8552b',m2:'#5a2a14',t:'#cdd3dc',g:'#ffb04a'},
+    {id:'ice',name:'Isblå',m:'#8fd0f0',m2:'#3a7fb0',t:'#ffffff',g:'#00e5ff'},
+    {id:'toxic',name:'Giftgrön',m:'#1f2a24',m2:'#5fd400',t:'#b6ff3c',g:'#b6ff3c'},
+    {id:'rose',name:'Rosa kamp',m:'#e0509a',m2:'#8a2860',t:'#ffe0f0',g:'#ffd0f0'},
+    {id:'chrome',name:'Krom',m:'#cfd6e2',m2:'#5e6a80',t:'#ffffff',g:'#4da6ff'},
+    {id:'blood',name:'Blodröd & svart',m:'#6e0f18',m2:'#17080a',t:'#ff3b3b',g:'#ff3b3b'},
+    {id:'sand',name:'Ökensand',m:'#c9ab72',m2:'#7a5f33',t:'#3b2d18',g:'#ffcc66'},
+    {id:'ocean',name:'Havsdjup',m:'#0e4a7a',m2:'#06223d',t:'#7de0d2',g:'#46ffd0'}
+  ];
+  var lvs=autoLv(PAINTS.map(function(p){return [0,0,p.level]}),np.length);
+  np.forEach(function(p,i){p.level=lvs[i];PAINTS.push(p)});
+  PAINTS.sort(function(a,b){return a.level-b.level});
+})();
+
+/* auror & miljöer: nyansrotation av befintliga */
+addVariants(AURA_LIST,[
+ ['giftpuls','Rosa puls','pulse',2],['violpuls','Limepuls','pulse',4],['blagnistor','Orange gnistor','sparks',3],
+ ['gronagnistor','Rosa gnistor','sparks',2],['blaeld','Blå eld','fire',3],['giftigeld','Turkos eld','fire',2],
+ ['rodblixt','Grön blixt','thunder',5],['rosablixt','Rosa blixt','thunder',2],['lilafrost','Giftfrost','ice',4],
+ ['blodskugga','Giftskugga','dark',5],['gronplasma','Violett plasma','plasma',1],['gyllenstorm','Kall stjärnstorm','starstorm',0]
+],function(s,id){AURAS[id]=function(K){return '<g filter="url(#'+K.id+'hr'+s[3]+')">'+AURAS[s[2]](K)+'</g>'}});
+addVariants(BG_LIST,[
+ ['guldhangar','Blå hangar','hangar',0],['rodhangar','Grön hangar','hangar',5],['gronstad','Giftstad','city',2],
+ ['lilaoken','Rosa öken','desert',4],['blavulkan','Blå vulkan','volcano',3],['rosais','Mintisbas','ice',4],
+ ['gronrymd','Röd rymdstation','space',2],['trollskog','Trollskog','forest',5],['giftstorm','Sandstorm','storm',2],
+ ['gronnebulosa','Röd nebulosa','nebula',1],['rodstorm','Skogsstorm','storm',4]
+],function(s,id){BGS[id]=function(K){return '<g filter="url(#'+K.id+'hr'+s[3]+')">'+BGS[s[2]](K)+'</g>'}});
+[HEAD_LIST,TORSO_LIST,SHOULDER_LIST,ARM_LIST,WAIST_LIST,LEG_LIST,BACK_LIST,WEAPON_LIST,OFFHAND_LIST,AURA_LIST,BG_LIST].forEach(function(l){l.sort(function(a,b){return a[2]-b[2]})});
+
 var POSE_LIST=[['guard','Vaktställning',1],['stand','Stå rakt',1],['advance','Framåt',1],['strike','Hugg',1],['crouch','Böjd',1],['victory','Seger',1]];
 var AV_ITEMS=[];
 (function(){
