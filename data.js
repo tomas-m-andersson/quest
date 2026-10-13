@@ -307,7 +307,7 @@ window.SKOLQUEST_DATA = {
         "shoulders": "kristallaxlar",
         "arms": "ringarmar",
         "waist": "ringbalte",
-        "legs": "",
+        "legs": "skenbenplat",
         "back": "",
         "weapon": "",
         "offhand": "",
@@ -320,5 +320,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791924015153
+  "updatedAt": 1791924018352
 };
