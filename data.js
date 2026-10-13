@@ -188,7 +188,7 @@ window.SKOLQUEST_DATA = {
         "weapon": "guldglaive",
         "offhand": "bossrund",
         "aura": "gyllenstorm",
-        "bg": "",
+        "bg": "rosais",
         "pet": "phoenix"
       },
       "seen": 71,
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921642826
+  "updatedAt": 1791921653171
 };
