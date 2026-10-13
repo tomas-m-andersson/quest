@@ -277,7 +277,7 @@ window.SKOLQUEST_DATA = {
         "head": "antennhjalm",
         "torso": "taggkrage",
         "shoulders": "ringaxlar",
-        "arms": "",
+        "arms": "ventilarmar",
         "waist": "",
         "legs": "",
         "back": "",
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923930770
+  "updatedAt": 1791923933360
 };
