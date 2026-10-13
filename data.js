@@ -184,7 +184,7 @@ window.SKOLQUEST_DATA = {
         "arms": "stormarmar",
         "waist": "stormkjol",
         "legs": "stormben",
-        "back": "solfjader",
+        "back": "energywings",
         "weapon": "",
         "offhand": "",
         "aura": "",
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921611051
+  "updatedAt": 1791921614128
 };
