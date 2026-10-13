@@ -135,19 +135,36 @@ window.SKOLQUEST_DATA = {
     "b": []
   },
   "boosts": {
-    "a": [],
+    "a": [
+      {
+        "id": "bmv6zz2bastn",
+        "xp": 50000,
+        "note": "Extra boost",
+        "date": "2026-10-13"
+      }
+    ],
     "b": []
   },
   "avatar": {
     "a": {
       "eq": {
+        "pose": "",
+        "paint": "",
         "head": "",
-        "face": "",
-        "body": "",
-        "chest": "",
+        "torso": "",
+        "shoulders": "",
+        "arms": "",
+        "waist": "",
+        "legs": "",
+        "back": "",
+        "weapon": "",
+        "offhand": "",
         "aura": "",
         "bg": "",
-        "pet": ""
+        "pet": "",
+        "face": "",
+        "body": "",
+        "chest": ""
       },
       "seen": 1,
       "pseen": 1,
@@ -155,18 +172,28 @@ window.SKOLQUEST_DATA = {
     },
     "b": {
       "eq": {
+        "pose": "",
+        "paint": "",
         "head": "",
-        "face": "",
-        "body": "",
-        "chest": "",
+        "torso": "",
+        "shoulders": "",
+        "arms": "",
+        "waist": "",
+        "legs": "",
+        "back": "",
+        "weapon": "",
+        "offhand": "",
         "aura": "",
         "bg": "",
-        "pet": ""
+        "pet": "",
+        "face": "",
+        "body": "",
+        "chest": ""
       },
       "seen": 1,
       "pseen": 1,
       "petNames": {}
     }
   },
-  "updatedAt": 1791840999903
+  "updatedAt": 1791915082102
 };
