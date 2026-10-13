@@ -303,7 +303,7 @@ window.SKOLQUEST_DATA = {
         "pose": "stand",
         "paint": "sand",
         "head": "veteran",
-        "torso": "",
+        "torso": "skiktpansar",
         "shoulders": "",
         "arms": "",
         "waist": "",
@@ -320,5 +320,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791924001615
+  "updatedAt": 1791924006742
 };
