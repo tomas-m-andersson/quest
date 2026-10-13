@@ -179,7 +179,7 @@ window.SKOLQUEST_DATA = {
         "pose": "stand",
         "paint": "blood",
         "head": "dronare",
-        "torso": "",
+        "torso": "tornbrost",
         "shoulders": "",
         "arms": "",
         "waist": "",
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921574449
+  "updatedAt": 1791921577869
 };
