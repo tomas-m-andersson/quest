@@ -309,7 +309,7 @@ window.SKOLQUEST_DATA = {
         "waist": "ringbalte",
         "legs": "skenbenplat",
         "back": "energywings",
-        "weapon": "",
+        "weapon": "eternalblade",
         "offhand": "",
         "aura": "",
         "bg": "",
@@ -320,5 +320,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791924024029
+  "updatedAt": 1791924027655
 };
