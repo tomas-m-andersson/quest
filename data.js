@@ -163,14 +163,7 @@ window.SKOLQUEST_DATA = {
     "b": []
   },
   "boosts": {
-    "a": [
-      {
-        "id": "bmv70z4y4lk6",
-        "xp": 50000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      }
-    ],
+    "a": [],
     "b": []
   },
   "avatar": {
@@ -189,10 +182,10 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
-        "pet": "quadcopter"
+        "pet": ""
       },
-      "seen": 71,
-      "pseen": 71,
+      "seen": 1,
+      "pseen": 1,
       "petNames": {}
     },
     "b": {
@@ -217,5 +210,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791916795384
+  "updatedAt": 1791916815124
 };
