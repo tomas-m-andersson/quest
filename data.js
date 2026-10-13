@@ -157,7 +157,7 @@ window.SKOLQUEST_DATA = {
         "waist": "bladeskirt",
         "legs": "heavy",
         "back": "",
-        "weapon": "scythe",
+        "weapon": "staff",
         "offhand": "tower",
         "aura": "starstorm",
         "bg": "volcano",
@@ -195,5 +195,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791915340355
+  "updatedAt": 1791915342979
 };
