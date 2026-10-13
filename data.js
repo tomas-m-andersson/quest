@@ -284,7 +284,7 @@ window.SKOLQUEST_DATA = {
         "weapon": "isspjut",
         "offhand": "mirror",
         "aura": "starstorm",
-        "bg": "",
+        "bg": "forest",
         "pet": ""
       },
       "seen": 150,
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923954991
+  "updatedAt": 1791923958456
 };
