@@ -345,7 +345,7 @@ details[open] summary::after{content:"–"}
 #basecard{margin-bottom:14px}
 .basebtn{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--p1);border:1px solid var(--line);border-radius:12px;padding:10px;color:var(--text);cursor:pointer;font:inherit}
 .basebtn:hover{border-color:#2fd0f0}
-.bth{flex:none;width:150px;max-width:42%}
+.bth{flex:none;width:170px;max-width:46%}
 .btx{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
 .btx small{font:700 10.5px var(--head);letter-spacing:.18em;color:var(--mute)}
 .btx b{font:700 19px var(--head);letter-spacing:.06em;text-transform:uppercase}
@@ -354,14 +354,26 @@ details[open] summary::after{content:"–"}
 .bbar i{display:block;height:100%;background:linear-gradient(90deg,#2fd0f0,#7dff6a)}
 .bbar.big{height:12px;margin:6px 0}
 .basestage{position:relative}
-.bmechs{position:absolute;left:0;right:0;bottom:4%;display:flex;justify-content:space-between;padding:0 6%;pointer-events:none}
-.bmechs .bm{width:27%;max-width:140px;display:block}
+.bmechs{position:absolute;left:0;right:0;bottom:1%;display:flex;justify-content:space-between;padding:0 3%;pointer-events:none}
+.bmechs .bm{width:20%;max-width:112px;display:block}
 .bmechs svg{width:100%;height:auto;display:block}
 .bcon{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}
 .bbl{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
 .bbl div{background:#0b0e14;border:1px solid var(--line);border-radius:8px;padding:8px;opacity:.55;display:flex;flex-direction:column;gap:2px}
 .bbl div.on{opacity:1;border-color:#2fd0f0}
 .bbl small{color:var(--mute);font-size:11px}
+
+.bk{animation:bkp 2.2s ease-in-out infinite}
+@keyframes bkp{0%,100%{opacity:1}50%{opacity:.25}}
+.bsm{animation:bsmu 4.4s linear infinite;transform-box:fill-box}
+@keyframes bsmu{0%{transform:translate(0,0) scale(.6);opacity:.4}100%{transform:translate(8px,-34px) scale(1.7);opacity:0}}
+.bdr{animation:bdb 3.2s ease-in-out infinite}
+@keyframes bdb{0%,100%{transform:translate(0,0)}50%{transform:translate(14px,-8px)}}
+.bdish{animation:bdi 6s ease-in-out infinite;transform-box:view-box}
+@keyframes bdi{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+.bsl{animation:bsw 7s ease-in-out infinite}
+@keyframes bsw{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(26deg)}}
+@media (prefers-reduced-motion:reduce){.bk,.bsm,.bdr,.bdish,.bsl{animation:none}}
 </style>
 </head>
 <body>
@@ -387,7 +399,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT G</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT H</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2837,32 +2849,93 @@ function baseInfo(){
   return {xp:xp,level:L,name:BASE_NAMES[L-1],next:nxt,pct:nxt?Math.round((xp-prv)/(nxt-prv)*100):100,nextName:nxt?BASE_NAMES[L]:''};
 }
 function baseSvg(L,w){
-  var id='bs'+(MX.n++)+'_',A='#2fd0f0',G='#e3b341',s='';
-  function r(x,y,ww,hh,f,o){return '<rect x="'+x+'" y="'+y+'" width="'+ww+'" height="'+hh+'" fill="'+f+'"'+(o||'')+' stroke="#06080d" stroke-opacity=".55"/>'}
-  function win(x,y,ww,hh,c){return '<rect x="'+x+'" y="'+y+'" width="'+ww+'" height="'+hh+'" fill="'+(c||A)+'" fill-opacity=".9" class="fxg" filter="url(#'+id+'f)"/>'}
-  s+='<defs><linearGradient id="'+id+'sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070b18"/><stop offset="1" stop-color="#1c2540"/></linearGradient><linearGradient id="'+id+'m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b778f"/><stop offset="1" stop-color="#2a3142"/></linearGradient><linearGradient id="'+id+'d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a4256"/><stop offset="1" stop-color="#171b26"/></linearGradient>'+
+  var id='bs'+(MX.n++)+'_',A='#2fd0f0',G='#e3b341',O='#ff9a3a',R='#ff4a4a',s='',u='url(#'+id;
+  function mt(x,y,ww,hh,g){g=g||'m';return '<rect x="'+x+'" y="'+y+'" width="'+ww+'" height="'+hh+'" fill="'+u+g+')" stroke="#06080d" stroke-opacity=".6"/><rect x="'+x+'" y="'+y+'" width="'+ww+'" height="2.5" fill="#fff" fill-opacity=".22"/><rect x="'+x+'" y="'+(y+hh-3)+'" width="'+ww+'" height="3" fill="#000" fill-opacity=".3"/>'}
+  function seam(x,y,ww,hh,n){var t='';for(var i=1;i<n;i++)t+='<line x1="'+(x+ww*i/n)+'" y1="'+y+'" x2="'+(x+ww*i/n)+'" y2="'+(y+hh)+'" stroke="#000" stroke-opacity=".35"/><line x1="'+(x+ww*i/n+1)+'" y1="'+y+'" x2="'+(x+ww*i/n+1)+'" y2="'+(y+hh)+'" stroke="#fff" stroke-opacity=".08"/>';return t}
+  function riv(x,y,ww,n){var t='';for(var i=0;i<n;i++)t+='<circle cx="'+(x+ww*(i+.5)/n)+'" cy="'+y+'" r="1.3" fill="#c9d3e6" fill-opacity=".7"/>';return t}
+  function win(x,y,ww,hh,c,cl){return '<rect x="'+x+'" y="'+y+'" width="'+ww+'" height="'+hh+'" fill="'+(c||A)+'" fill-opacity=".92" class="fxg'+(cl?' '+cl:'')+'" filter="url(#'+id+'f)"/>'}
+  function wgrid(x,y,cols,rows,ww,hh,gx,gy,c){var t='';for(var j=0;j<rows;j++)for(var i=0;i<cols;i++){if((i*7+j*3)%5===0)continue;t+='<rect x="'+(x+i*gx)+'" y="'+(y+j*gy)+'" width="'+ww+'" height="'+hh+'" fill="'+(c||A)+'" fill-opacity="'+(((i+j)%3===0)?.45:.9)+'"/>'}return '<g class="fxg" filter="url(#'+id+'f)">'+t+'</g>'}
+  function hz(x,y,ww,hh){var t='<rect x="'+x+'" y="'+y+'" width="'+ww+'" height="'+hh+'" fill="#e3b341"/>';for(var i=0;i<ww;i+=10)t+='<path d="M'+(x+i)+' '+(y+hh)+' l5 -'+hh+' h5 l-5 '+hh+'z" fill="#14171f"/>';return '<g clip-path="url(#'+id+'hzc'+x+')">'+t+'</g><clipPath id="'+id+'hzc'+x+'"><rect x="'+x+'" y="'+y+'" width="'+ww+'" height="'+hh+'"/></clipPath>'}
+  function lamp(x,y){return '<path d="M'+x+' '+y+' V'+(y-34)+' h8" stroke="#8d97ab" stroke-width="2.4" fill="none"/>'+win(x+5,y-37,7,4,'#fff3c0')+'<path d="M'+(x+5)+' '+(y-33)+' L'+(x-6)+' '+y+' H'+(x+22)+'Z" fill="#fff3c0" fill-opacity=".08"/>'}
+  function crate(x,y,z){return '<rect x="'+x+'" y="'+(y-z)+'" width="'+z+'" height="'+z+'" fill="#6a4a2a" stroke="#06080d" stroke-opacity=".6"/><path d="M'+x+' '+(y-z)+' L'+(x+z)+' '+y+' M'+(x+z)+' '+(y-z)+' L'+x+' '+y+'" stroke="#2c1d0f" stroke-width="1.4"/>'}
+  function barrel(x,y,c){return '<rect x="'+x+'" y="'+(y-17)+'" width="12" height="17" rx="2" fill="'+c+'" stroke="#06080d" stroke-opacity=".6"/><path d="M'+x+' '+(y-11)+' h12 M'+x+' '+(y-5)+' h12" stroke="#000" stroke-opacity=".4"/>'}
+  function smoke(x,y,n){var t='';for(var i=0;i<n;i++)t+='<circle class="bsm" style="animation-delay:'+(-i*1.1)+'s" cx="'+(x+(i%2?4:-3))+'" cy="'+y+'" r="'+(5+i*2.2)+'" fill="#b8c2d6" fill-opacity=".22"/>';return t}
+  s+='<defs><linearGradient id="'+id+'sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050816"/><stop offset=".6" stop-color="#1a2244"/><stop offset="1" stop-color="#3a3560"/></linearGradient>'+
+   '<linearGradient id="'+id+'m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7d89a3"/><stop offset=".5" stop-color="#4b556b"/><stop offset="1" stop-color="#262c3b"/></linearGradient>'+
+   '<linearGradient id="'+id+'d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#454e63"/><stop offset="1" stop-color="#171b26"/></linearGradient>'+
+   '<linearGradient id="'+id+'g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b0"/><stop offset=".5" stop-color="'+G+'"/><stop offset="1" stop-color="#7a5a14"/></linearGradient>'+
+   '<linearGradient id="'+id+'fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2236"/><stop offset="1" stop-color="#070a12"/></linearGradient>'+
+   '<radialGradient id="'+id+'mo"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".25" stop-color="#dfe8ff"/><stop offset="1" stop-color="#9fb0e0"/></radialGradient>'+
+   '<radialGradient id="'+id+'gl"><stop offset="0" stop-color="'+A+'" stop-opacity=".55"/><stop offset="1" stop-color="'+A+'" stop-opacity="0"/></radialGradient>'+
    '<filter id="'+id+'f" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
-  s+='<rect width="400" height="240" fill="url(#'+id+'sky)"/>';
-  for(var i=0;i<26;i++)s+='<circle cx="'+((i*53)%400)+'" cy="'+((i*29)%120)+'" r="'+(i%4===0?1.3:.8)+'" fill="#fff" fill-opacity=".7"/>';
-  s+='<path d="M0 170 L50 135 L95 165 L150 120 L210 168 L270 128 L330 164 L400 132 V210 H0Z" fill="#10162a"/>';
-  s+='<rect y="200" width="400" height="40" fill="#0b0f19"/><path d="M0 200 H400" stroke="#2b3550" stroke-width="2"/>';
-  for(var g=-8;g<=8;g++)s+='<line x1="'+(200+g*22)+'" y1="200" x2="'+(200+g*70)+'" y2="240" stroke="#fff" stroke-opacity=".07"/>';
-  if(L>=10)s+='<ellipse cx="200" cy="200" rx="190" ry="165" fill="'+G+'" fill-opacity=".07" stroke="'+G+'" stroke-opacity=".6" stroke-width="2" class="fxg" filter="url(#'+id+'f)"/>';
-  if(L>=6)s+='<g>'+'<path d="M24 200 L30 130 H56 L62 200Z" fill="url(#'+id+'m)" stroke="#06080d" stroke-opacity=".5"/><path d="M70 200 L75 140 H96 L101 200Z" fill="url(#'+id+'m)" stroke="#06080d" stroke-opacity=".5"/>'+win(32,128,16,4,'#ff9a3a')+win(76,138,14,4,'#ff9a3a')+'<path d="M56 190 H70" stroke="'+A+'" stroke-width="3"/></g>';
-  if(L>=8)s+=r(186,70,28,130,'url(#'+id+'m)')+r(180,64,40,12,'url(#'+id+'d)')+win(190,84,20,5)+win(190,98,20,5)+win(190,112,20,5)+'<path d="M200 64 V40" stroke="#c9d3e6" stroke-width="2"/>'+win(197,36,6,6,'#ff4a4a');
-  if(L>=9){s+=r(0,168,400,32,'url(#'+id+'d)');for(var c=0;c<20;c++)s+=r(c*20+2,160,12,10,'#2a3142');s+='<path d="M60 160 V132 L84 140 L60 148" fill="'+A+'" stroke="#06080d" stroke-opacity=".5"/><path d="M340 160 V132 L316 140 L340 148" fill="'+A+'" stroke="#06080d" stroke-opacity=".5"/><path d="M60 160 V128 M340 160 V128" stroke="#c9d3e6" stroke-width="2"/>'}
-  if(L>=5)s+='<path d="M104 200 V150 Q104 108 150 108 Q196 108 196 150 V200Z" fill="url(#'+id+'m)" stroke="#06080d" stroke-opacity=".55"/><path d="M122 200 V152 Q122 128 150 128 Q178 128 178 152 V200Z" fill="#05080f"/>'+win(136,150,28,4)+'<path d="M150 128 V200" stroke="#2a3142" stroke-width="2"/>';
-  else if(L>=2)s+=r(104,148,100,52,'url(#'+id+'m)')+r(98,142,112,10,'url(#'+id+'d)')+r(132,166,36,34,'#05080f')+win(136,170,28,4)+'<circle cx="188" cy="168" r="7" fill="#c9d3e6" stroke="#06080d"/><circle cx="188" cy="168" r="2.5" fill="#0b0f19"/>'+r(176,128,10,20,'url(#'+id+'d)');
-  else s+='<path d="M120 200 V170 L160 156 L200 170 V200Z" fill="url(#'+id+'m)" stroke="#06080d" stroke-opacity=".55"/>'+r(146,178,28,22,'#05080f')+win(150,182,20,3);
-  if(L>=4)s+=r(268,158,66,42,'url(#'+id+'m)')+r(262,152,78,8,'url(#'+id+'d)')+win(278,170,14,12,'#ff9a3a')+r(304,186,24,14,'#171b26')+'<path d="M300 186 h32 l-4 -8 h-24z" fill="#8d97ab" stroke="#06080d"/>';
-  if(L>=3)s+='<path d="M244 200 V138" stroke="#c9d3e6" stroke-width="3"/><path d="M228 126 Q244 150 260 126Z" fill="#8d97ab" stroke="#06080d"/>'+win(241,118,6,6,'#ff4a4a')+'<path d="M244 138 L232 158 M244 138 L256 158" stroke="#8d97ab" stroke-width="2"/>';
-  if(L>=7){[40,360].forEach(function(x,k){s+=r(x-12,176,24,24,'url(#'+id+'m)')+'<path d="M'+x+' 178 L'+(x+(k?-26:26))+' 164" stroke="#c9d3e6" stroke-width="5" stroke-linecap="round"/>'+win(x-3,184,6,6,'#ff4a4a')})}
-  if(L>=10)s+='<path d="M200 36 V0" stroke="'+G+'" stroke-width="8" stroke-opacity=".5" class="fxg" filter="url(#'+id+'f)"/><path d="M200 30 l4 9 10 1 -8 6 3 10 -9 -6 -9 6 3 -10 -8 -6 10 -1z" fill="'+G+'" stroke="#06080d" stroke-opacity=".5"/>';
-  return '<svg viewBox="0 0 400 240" width="'+w+'" height="'+Math.round(w*.6)+'" aria-hidden="true" focusable="false" style="display:block;border-radius:10px;max-width:100%;height:auto">'+s+'</svg>';
+  s+='<rect width="600" height="340" fill="'+u+'sky)"/>';
+  for(var i=0;i<46;i++)s+='<circle class="'+(i%7===0?'bk':'')+'" style="animation-delay:'+(-i*.37)+'s" cx="'+((i*97)%600)+'" cy="'+((i*41)%170)+'" r="'+(i%5===0?1.5:.8)+'" fill="#fff" fill-opacity=".75"/>';
+  s+='<circle cx="470" cy="62" r="30" fill="'+u+'mo)"/><circle cx="460" cy="54" r="5" fill="#8a97c4" fill-opacity=".35"/><circle cx="480" cy="72" r="7" fill="#8a97c4" fill-opacity=".3"/><circle cx="470" cy="62" r="46" fill="#9fb0e0" fill-opacity=".1"/>';
+  s+='<path d="M0 230 L60 170 L110 215 L190 140 L260 215 L330 160 L410 220 L480 150 L560 205 L600 175 V280 H0Z" fill="#141a33"/><path d="M190 140 L170 162 L186 156 L196 168 L206 154Z M480 150 L462 170 L478 164 L488 175 L498 160Z" fill="#8fa0d0" fill-opacity=".35"/>';
+  s+='<path d="M0 255 L70 215 L140 250 L230 205 L320 250 L400 212 L500 252 L600 220 V285 H0Z" fill="#0d1226"/>';
+  s+='<rect y="248" width="600" height="30" fill="#6a76b0" fill-opacity=".12"/>';
+  /* mark */
+  s+='<rect y="268" width="600" height="72" fill="'+u+'fl)"/><path d="M0 268 H600" stroke="#39466a" stroke-width="2"/>';
+  for(var g=-12;g<=12;g++)s+='<line x1="'+(300+g*28)+'" y1="268" x2="'+(300+g*120)+'" y2="340" stroke="#fff" stroke-opacity=".06"/>';
+  for(var gy=0;gy<5;gy++)s+='<line x1="0" y1="'+(276+gy*gy*3.4+gy*5)+'" x2="600" y2="'+(276+gy*gy*3.4+gy*5)+'" stroke="#fff" stroke-opacity=".05"/>';
+  if(L>=10)s+='<ellipse cx="300" cy="268" rx="290" ry="250" fill="'+G+'" fill-opacity=".06" stroke="'+u+'g)" stroke-opacity=".8" stroke-width="3" class="fxg" filter="url(#'+id+'f)"/><ellipse cx="300" cy="268" rx="280" ry="240" fill="none" stroke="'+G+'" stroke-opacity=".25" stroke-width="1"/>';
+  /* L6 kraftverk */
+  if(L>=6){
+    [[52,'#2a3042'],[112,'#313849']].forEach(function(t,k){var x=t[0];s+='<path d="M'+(x-26)+' 270 Q'+(x-12)+' 215 '+(x-15)+' 170 H'+(x+15)+' Q'+(x+12)+' 215 '+(x+26)+' 270Z" fill="'+u+'m)" stroke="#06080d" stroke-opacity=".6"/><path d="M'+(x-20)+' 240 H'+(x+20)+' M'+(x-17)+' 205 H'+(x+17)+'" stroke="#000" stroke-opacity=".3"/>'+win(x-14,168,28,4,O,'bk')+smoke(x,160,4)});
+    s+='<path d="M20 262 H150" stroke="'+A+'" stroke-width="3" class="fxg" filter="url(#'+id+'f)" stroke-opacity=".8"/>'+mt(146,236,34,34)+win(152,246,8,18,A)+win(164,246,8,18,A,'bk')+'<path d="M150 236 V226 M170 236 V222" stroke="#8d97ab" stroke-width="3"/>'}
+  /* L8 kommando */
+  if(L>=8){
+    s+=mt(268,98,64,172,'m')+seam(268,98,64,172,4)+mt(260,88,80,14,'d')+mt(276,50,48,44)+wgrid(280,56,5,3,6,5,8,12)+mt(268,138,64,6,'d')+wgrid(274,150,6,6,6,6,9,17)+
+     '<path d="M300 50 V16" stroke="#c9d3e6" stroke-width="2.4"/><path d="M290 36 H310" stroke="#c9d3e6" stroke-width="2"/>'+win(297,10,6,6,R,'bk')+'<circle cx="300" cy="72" r="20" fill="url(#'+id+'gl)"/>'+riv(268,104,64,8)+
+     '<path d="M268 140 L246 150 V270 H268Z" fill="'+u+'d)" stroke="#06080d" stroke-opacity=".6"/><path d="M332 140 L354 150 V270 H332Z" fill="'+u+'d)" stroke="#06080d" stroke-opacity=".6"/>'}
+  /* L9 murar */
+  if(L>=9){
+    s+=mt(0,222,600,48,'d')+seam(0,222,600,48,30);
+    for(var c=0;c<30;c++)s+=mt(c*20+2,212,14,11,'m');
+    s+=riv(0,262,600,60)+hz(0,262,600,5);
+    [18,582].forEach(function(x,k){s+=mt(x-18,150,36,120,'m')+seam(x-18,150,36,120,3)+mt(x-24,140,48,12,'d')+wgrid(x-12,168,3,4,6,7,9,16,A)+'<path d="M'+x+' 140 V104" stroke="#c9d3e6" stroke-width="2"/><path d="M'+x+' 106 L'+(x+(k?-28:28))+' 114 L'+x+' 124" fill="'+A+'" stroke="#06080d" stroke-opacity=".5"/>'+win(x-3,96,6,6,R,'bk')})}
+  /* L7 sökljus */
+  if(L>=7)s+='<g class="bsl" style="transform-origin:150px 268px;transform-box:view-box"><path d="M150 268 L110 60 L196 60Z" fill="#fff6c8" fill-opacity=".08"/></g>';
+  /* L1 skrot */
+  s+=crate(26,270,16)+crate(44,270,13)+crate(32,254,12)+barrel(64,270,'#7a3a2a')+barrel(78,270,'#3a5a7a');
+  s+='<path d="M86 270 V240 L130 226 L170 240 V270Z" fill="#5a4a3a" stroke="#06080d" stroke-opacity=".6"/><path d="M86 240 L130 226 L170 240" fill="none" stroke="#9a8a7a" stroke-width="2"/>';
+  for(var k2=0;k2<6;k2++)s+='<line x1="'+(94+k2*12)+'" y1="242" x2="'+(94+k2*12)+'" y2="270" stroke="#000" stroke-opacity=".35"/>';
+  s+=win(108,250,22,14,'#ffd488')+'<rect x="136" y="250" width="22" height="20" fill="#14100c"/>';
+  /* L2 verkstad */
+  if(L>=2){
+    s+=mt(178,206,96,64)+seam(178,206,96,64,6)+mt(172,198,108,10,'d')+'<rect x="196" y="230" width="48" height="40" fill="#07090f" stroke="#06080d"/>'+win(200,236,40,4,A)+'<path d="M196 230 H244" stroke="#2b3243" stroke-width="2"/>'+riv(178,212,96,12)+
+     '<circle cx="258" cy="218" r="10" fill="#c9d3e6" stroke="#06080d"/><circle cx="258" cy="218" r="3.5" fill="#14171f"/>'+'<path d="M258 207 v-3 M258 229 v3 M247 218 h-3 M269 218 h3" stroke="#c9d3e6" stroke-width="3"/>'+
+     mt(184,180,12,20,'d')+smoke(190,174,3)+'<path d="M236 198 V176 H264 M264 176 V190" stroke="#8d97ab" stroke-width="3" fill="none"/>'+'<path d="M264 190 l-4 8 h8z" fill="'+O+'"/>'+lamp(280,270)}
+  /* L5 hangar */
+  if(L>=5){
+    s+='<path d="M296 270 V200 Q296 150 358 150 Q420 150 420 200 V270Z" fill="'+u+'m)" stroke="#06080d" stroke-opacity=".6"/>';
+    for(var rb=0;rb<5;rb++)s+='<path d="M'+(304+rb*14)+' 270 V200 Q'+(304+rb*14)+' 160 358 160" fill="none" stroke="#000" stroke-opacity=".25"/>';
+    s+='<path d="M316 270 V206 Q316 176 358 176 Q400 176 400 206 V270Z" fill="#05070d"/><path d="M316 270 V206 Q316 176 358 176 Q400 176 400 206 V270Z" fill="'+A+'" fill-opacity=".1"/>'+win(330,246,56,3,A,'bk')+win(330,226,56,2,A)+
+     '<path d="M358 176 V270" stroke="#2b3243" stroke-width="3"/>'+hz(312,262,92,8)+'<path d="M296 200 Q296 150 358 150 Q420 150 420 200" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="2"/>'+win(352,156,12,5,O,'bk')+
+     '<ellipse cx="358" cy="304" rx="86" ry="14" fill="none" stroke="'+A+'" stroke-width="2.4" stroke-opacity=".8" class="fxg" filter="url(#'+id+'f)"/><ellipse cx="358" cy="304" rx="62" ry="9" fill="none" stroke="'+A+'" stroke-opacity=".4"/>'}
+  /* L4 smedja */
+  if(L>=4){
+    s+=mt(430,214,100,56)+seam(430,214,100,56,5)+mt(424,206,112,10,'d')+'<rect x="452" y="232" width="34" height="38" fill="#0a0604"/>'+win(456,238,26,30,O,'bk')+'<circle cx="469" cy="253" r="16" fill="'+O+'" fill-opacity=".25"/>'+
+     mt(500,170,18,40,'d')+smoke(509,164,4)+'<g class="bk">'+'<circle cx="512" cy="166" r="1.6" fill="#ffd488"/><circle cx="505" cy="158" r="1.2" fill="#ffd488"/></g>'+
+     '<path d="M496 270 v-10 h30 l-5 -8 h-20 z" fill="#8d97ab" stroke="#06080d"/>'+'<rect x="502" y="238" width="4" height="14" fill="#5a3a22"/><rect x="496" y="234" width="20" height="6" rx="2" fill="#aab4c8" stroke="#06080d"/>'+riv(430,220,100,11)}
+  /* L3 radar */
+  if(L>=3){
+    s+='<path d="M556 270 L566 150 H574 L584 270" fill="none" stroke="#9aa6bd" stroke-width="3"/><path d="M559 240 H581 M562 210 H578 M564 180 H576 M556 270 L581 240 L560 210 L579 180 L566 150 M584 270 L559 240 L580 210 L562 180 L574 150" fill="none" stroke="#9aa6bd" stroke-opacity=".7" stroke-width="1.4"/>'+
+     '<g class="bdish" style="transform-origin:570px 146px"><path d="M542 134 Q570 168 598 134Z" fill="#aeb8cc" stroke="#06080d"/><path d="M570 146 V120" stroke="#c9d3e6" stroke-width="2.4"/><circle cx="570" cy="118" r="3" fill="'+A+'"/></g>'+win(567,142,6,6,R,'bk')}
+  /* L7 torn */
+  if(L>=7)[[262,0],[444,1]].forEach(function(p){var x=p[0],f=p[1]?-1:1;s+='<path d="M'+(x-14)+' 270 l4 -22 h20 l4 22z" fill="'+u+'d)" stroke="#06080d" stroke-opacity=".6"/><rect x="'+(x-10)+'" y="236" width="20" height="12" rx="3" fill="'+u+'m)" stroke="#06080d"/><path d="M'+x+' 240 L'+(x+f*30)+' 226" stroke="#c9d3e6" stroke-width="5" stroke-linecap="round"/>'+win(x-3,242,6,4,R,'bk')+'<path d="M'+(x-18)+' 270 h36" stroke="#6a5a3a" stroke-width="6"/>'});
+  /* drönare */
+  if(L>=5)s+='<g class="bdr"><path d="M236 118 h24 M232 126 h32" stroke="#c9d3e6" stroke-width="3" stroke-linecap="round"/><rect x="240" y="120" width="16" height="7" rx="2" fill="'+u+'d)" stroke="#06080d"/>'+win(246,123,4,3,A)+'</g>';
+  /* lampor */
+  if(L>=3)s+=lamp(160,272);
+  if(L>=6)s+=lamp(410,272);
+  /* L10 stjärna + flaggor */
+  if(L>=10)s+='<path d="M300 0 V14" stroke="'+G+'" stroke-width="9" stroke-opacity=".55" class="fxg" filter="url(#'+id+'f)"/><path d="M300 -4 l5 11 12 1 -9 8 3 12 -11 -7 -11 7 3 -12 -9 -8 12 -1z" transform="translate(0 18)" fill="'+u+'g)" stroke="#06080d" stroke-opacity=".5"/>';
+  return '<svg viewBox="0 0 600 340" width="'+w+'" height="'+Math.round(w*340/600)+'" aria-hidden="true" focusable="false" style="display:block;border-radius:10px;max-width:100%;height:auto">'+s+'</svg>';
 }
 function renderBase(){
   var b=baseInfo(),el=$('#basecard');if(!el)return;
-  el.innerHTML='<button class="basebtn" data-act="base"><div class="bth">'+baseSvg(b.level,150)+'</div><div class="btx"><small>GEMENSAM BAS</small><b>'+esc(b.name)+'</b><span>NIVÅ '+b.level+(b.next?' · '+b.xp+' / '+b.next+' BAS-XP':' · MAXNIVÅ')+'</span><div class="bbar"><i style="width:'+b.pct+'%"></i></div></div></button>';
+  el.innerHTML='<button class="basebtn" data-act="base"><div class="bth">'+baseSvg(b.level,170)+'</div><div class="btx"><small>GEMENSAM BAS</small><b>'+esc(b.name)+'</b><span>NIVÅ '+b.level+(b.next?' · '+b.xp+' / '+b.next+' BAS-XP':' · MAXNIVÅ')+'</span><div class="bbar"><i style="width:'+b.pct+'%"></i></div></div></button>';
 }
 function openBase(){
   var b=baseInfo(),o='<div class="sheet" style="--c:#2fd0f0"><div class="hgtop"><h4>🏰 Gemensam bas</h4><button class="btn sm pri" data-act="close">Klar</button></div>';
