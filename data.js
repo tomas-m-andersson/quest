@@ -282,7 +282,7 @@ window.SKOLQUEST_DATA = {
         "legs": "dubbelskydd",
         "back": "solfjader",
         "weapon": "isspjut",
-        "offhand": "",
+        "offhand": "mirror",
         "aura": "",
         "bg": "",
         "pet": ""
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923946774
+  "updatedAt": 1791923950460
 };
