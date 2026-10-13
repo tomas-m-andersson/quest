@@ -279,7 +279,7 @@ window.SKOLQUEST_DATA = {
         "shoulders": "ringaxlar",
         "arms": "ventilarmar",
         "waist": "ringbalte",
-        "legs": "",
+        "legs": "dubbelskydd",
         "back": "",
         "weapon": "",
         "offhand": "",
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923935330
+  "updatedAt": 1791923939200
 };
