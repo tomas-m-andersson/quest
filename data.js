@@ -182,7 +182,7 @@ window.SKOLQUEST_DATA = {
         "torso": "tornbrost",
         "shoulders": "stormaxlar",
         "arms": "stormarmar",
-        "waist": "",
+        "waist": "stormkjol",
         "legs": "",
         "back": "",
         "weapon": "",
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921588485
+  "updatedAt": 1791921593002
 };
