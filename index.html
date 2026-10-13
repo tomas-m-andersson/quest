@@ -2048,8 +2048,8 @@ function gritDefs(id){
 var PETBB={"orb":[12,-0.4,88,82.8],"shielddrone":[10,16,92,66.4],"quadcopter":[6,20.6,100,61.8],"wolf":[0,6,116,76.4],"lion":[2,10,120,72.4],"tiger":[0,10,115,72.4],"panther":[4,6,112,76.4],"fox":[-4,4,120,78.4],"bear":[2,18,113,64.4],"rhino":[-4,18,119,64.4],"crystalwolf":[0,-10,122,100],"magmalion":[2,4,112.3,78.4],"shadowpanther":[4,4,110.3,78.4],"falcon":[6,-6,106,88.4],"eagle":[6,-6,106,88.4],"phoenix":[6,-14,106,96.4],"thunderbird":[2,-6,110,88.4],"starphoenix":[4,-22,108,104.4],"owl":[12,2,88,80.4],"cobra":[12,8,92,74.4],"serpent":[0,-4,112,86.4],"scorpion":[0,13.7,107,68.7],"spider":[10,18,92,64.4],"beetle":[0,36,100,46.4],"crab":[-2,8,116,74.4],"turtle":[10,22,99,60.4],"drake":[0,-14,120,96.4],"skydragon":[-14,-14,134,96.4],"eternaldragon":[-14,-26,134,112],"hydra":[1.1,-12,100.9,94.4],"cyclops":[12,-0.4,88,82.8]};
 var PETFLY={falcon:1,eagle:1,phoenix:1,thunderbird:1,starphoenix:1,skydragon:1,eternaldragon:1,orb:1,shielddrone:1,quadcopter:1,owl:1};
 function petPlace(id){
-  var b=PETBB[id]||[0,0,110,80],sc=Math.min(1.2,150/b[2],140/b[3]),lift=PETFLY[id]?36:0;
-  return {sc:sc,x:438-(b[0]+b[2])*sc,y:404-lift-(b[1]+b[3])*sc,cx:352-(b[0]+b[2]/2)*0-(b[2]*sc)/2+b[0]*0,w:b[2]*sc};
+  var b=PETBB[id]||[0,0,110,80],sc=Math.min(1.15,138/b[2],132/b[3]),lift=PETFLY[id]?36:0;
+  return {sc:sc,x:422-(b[0]+b[2])*sc,y:404-lift-(b[1]+b[3])*sc,cx:352-(b[0]+b[2]/2)*0-(b[2]*sc)/2+b[0]*0,w:b[2]*sc};
 }
 function fxBack(id){
   var s='<g class="fxsmoke">';
@@ -2101,7 +2101,7 @@ function mechRender(o,size,vb){
   s+=fxFront(id,K);
   s+='</g>';
   if(o.pet){var pp=petPlace(o.pet);
-    s+='<g transform="translate('+t.tx+' '+t.ty+') scale('+t.k+')"><ellipse cx="'+(438-pp.w/2).toFixed(1)+'" cy="406" rx="'+(pp.w*.5).toFixed(1)+'" ry="6" fill="url(#'+id+'sh)"/><g transform="translate('+pp.x.toFixed(1)+' '+pp.y.toFixed(1)+') scale('+pp.sc.toFixed(3)+')">'+PETS[o.pet](K)+'</g></g>';}
+    s+='<g transform="translate('+t.tx+' '+t.ty+') scale('+t.k+')"><ellipse cx="'+(422-pp.w/2).toFixed(1)+'" cy="406" rx="'+(pp.w*.5).toFixed(1)+'" ry="6" fill="url(#'+id+'sh)"/><g transform="translate('+pp.x.toFixed(1)+' '+pp.y.toFixed(1)+') scale('+pp.sc.toFixed(3)+')">'+PETS[o.pet](K)+'</g></g>';}
   return s+'</svg>';
 }
 function avatarSvg(hid,size,eq,lvl,vb){return mechRender(mechOpts(hid,eq,lvl),size,vb)}
