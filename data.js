@@ -189,7 +189,7 @@ window.SKOLQUEST_DATA = {
         "offhand": "bossrund",
         "aura": "gyllenstorm",
         "bg": "blavulkan",
-        "pet": "phoenix"
+        "pet": "magmalion"
       },
       "seen": 71,
       "pseen": 71,
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921655002
+  "updatedAt": 1791921665790
 };
