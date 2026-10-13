@@ -160,7 +160,7 @@ window.SKOLQUEST_DATA = {
         "weapon": "",
         "offhand": "",
         "aura": "",
-        "bg": "city",
+        "bg": "volcano",
         "pet": "eagle",
         "face": "",
         "body": "",
@@ -195,5 +195,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791915310231
+  "updatedAt": 1791915313112
 };
