@@ -163,36 +163,29 @@ window.SKOLQUEST_DATA = {
     "b": []
   },
   "boosts": {
-    "a": [
-      {
-        "id": "bmv735pgcnuz",
-        "xp": 50000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      }
-    ],
+    "a": [],
     "b": []
   },
   "avatar": {
     "a": {
       "eq": {
-        "pose": "stand",
-        "paint": "blood",
-        "head": "dronare",
-        "torso": "tornbrost",
-        "shoulders": "stormaxlar",
-        "arms": "stormarmar",
-        "waist": "stormkjol",
-        "legs": "stormben",
-        "back": "energywings",
-        "weapon": "guldglaive",
-        "offhand": "drakskld2",
-        "aura": "gyllenstorm",
-        "bg": "blavulkan",
-        "pet": "magmalion"
+        "pose": "",
+        "paint": "",
+        "head": "",
+        "torso": "",
+        "shoulders": "",
+        "arms": "",
+        "waist": "",
+        "legs": "",
+        "back": "",
+        "weapon": "",
+        "offhand": "",
+        "aura": "",
+        "bg": "",
+        "pet": ""
       },
-      "seen": 71,
-      "pseen": 71,
+      "seen": 1,
+      "pseen": 1,
       "petNames": {}
     },
     "b": {
@@ -217,5 +210,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921926342
+  "updatedAt": 1791923248365
 };
