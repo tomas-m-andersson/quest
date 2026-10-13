@@ -275,7 +275,7 @@ window.SKOLQUEST_DATA = {
         "pose": "",
         "paint": "toxic",
         "head": "antennhjalm",
-        "torso": "",
+        "torso": "taggkrage",
         "shoulders": "",
         "arms": "",
         "waist": "",
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923924187
+  "updatedAt": 1791923928421
 };
