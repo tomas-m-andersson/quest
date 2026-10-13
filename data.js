@@ -180,7 +180,7 @@ window.SKOLQUEST_DATA = {
         "paint": "blood",
         "head": "dronare",
         "torso": "tornbrost",
-        "shoulders": "kristallaxlar",
+        "shoulders": "stormaxlar",
         "arms": "",
         "waist": "",
         "legs": "",
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921582086
+  "updatedAt": 1791921584305
 };
