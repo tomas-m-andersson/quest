@@ -191,7 +191,7 @@ window.SKOLQUEST_DATA = {
         "bg": "",
         "pet": "serpent"
       },
-      "seen": 1,
+      "seen": 71,
       "pseen": 71,
       "petNames": {}
     },
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791920443323
+  "updatedAt": 1791920516238
 };
