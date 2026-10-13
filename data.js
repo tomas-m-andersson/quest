@@ -181,7 +181,7 @@ window.SKOLQUEST_DATA = {
         "head": "dronare",
         "torso": "tornbrost",
         "shoulders": "stormaxlar",
-        "arms": "",
+        "arms": "stormarmar",
         "waist": "",
         "legs": "",
         "back": "",
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921584305
+  "updatedAt": 1791921588485
 };
