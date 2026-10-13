@@ -311,7 +311,7 @@ window.SKOLQUEST_DATA = {
         "back": "energywings",
         "weapon": "eternalblade",
         "offhand": "yxskold",
-        "aura": "",
+        "aura": "plasma",
         "bg": "",
         "pet": ""
       },
@@ -320,5 +320,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791924034005
+  "updatedAt": 1791924037717
 };
