@@ -135,39 +135,29 @@ window.SKOLQUEST_DATA = {
     "b": []
   },
   "boosts": {
-    "a": [
-      {
-        "id": "bmv6zz2bastn",
-        "xp": 50000,
-        "note": "Extra boost",
-        "date": "2026-10-13"
-      }
-    ],
+    "a": [],
     "b": []
   },
   "avatar": {
     "a": {
       "eq": {
-        "pose": "stand",
-        "paint": "yellow",
-        "head": "lion",
-        "torso": "reactor",
-        "shoulders": "pods",
-        "arms": "guard",
-        "waist": "bladeskirt",
-        "legs": "heavy",
+        "pose": "",
+        "paint": "",
+        "head": "",
+        "torso": "",
+        "shoulders": "",
+        "arms": "",
+        "waist": "",
+        "legs": "",
         "back": "",
-        "weapon": "staff",
-        "offhand": "tower",
-        "aura": "pulse",
-        "bg": "volcano",
-        "pet": "eagle",
-        "face": "",
-        "body": "",
-        "chest": ""
+        "weapon": "",
+        "offhand": "",
+        "aura": "",
+        "bg": "",
+        "pet": ""
       },
-      "seen": 71,
-      "pseen": 71,
+      "seen": 1,
+      "pseen": 1,
       "petNames": {}
     },
     "b": {
@@ -185,15 +175,12 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
-        "pet": "",
-        "face": "",
-        "body": "",
-        "chest": ""
+        "pet": ""
       },
       "seen": 1,
       "pseen": 1,
       "petNames": {}
     }
   },
-  "updatedAt": 1791915718135
+  "updatedAt": 1791916046009
 };
