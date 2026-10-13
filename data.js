@@ -187,7 +187,7 @@ window.SKOLQUEST_DATA = {
         "back": "energywings",
         "weapon": "guldglaive",
         "offhand": "bossrund",
-        "aura": "",
+        "aura": "gyllenstorm",
         "bg": "",
         "pet": "phoenix"
       },
@@ -217,5 +217,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791921637237
+  "updatedAt": 1791921642826
 };
