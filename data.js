@@ -312,7 +312,7 @@ window.SKOLQUEST_DATA = {
         "weapon": "eternalblade",
         "offhand": "yxskold",
         "aura": "gronplasma",
-        "bg": "",
+        "bg": "desert",
         "pet": ""
       },
       "seen": 134,
@@ -320,5 +320,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791924040279
+  "updatedAt": 1791924046769
 };
