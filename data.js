@@ -283,7 +283,7 @@ window.SKOLQUEST_DATA = {
         "back": "solfjader",
         "weapon": "isspjut",
         "offhand": "mirror",
-        "aura": "",
+        "aura": "starstorm",
         "bg": "",
         "pet": ""
       },
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923950460
+  "updatedAt": 1791923954991
 };
