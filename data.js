@@ -278,7 +278,7 @@ window.SKOLQUEST_DATA = {
         "torso": "taggkrage",
         "shoulders": "ringaxlar",
         "arms": "ventilarmar",
-        "waist": "",
+        "waist": "ringbalte",
         "legs": "",
         "back": "",
         "weapon": "",
@@ -313,5 +313,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791923933360
+  "updatedAt": 1791923935330
 };
