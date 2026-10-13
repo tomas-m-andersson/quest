@@ -365,7 +365,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT E</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT F</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2431,9 +2431,9 @@ function mechRender(o,size,vb){
   function hand(side,d1,d2){var g='<g transform="rotate('+(armC.a1+d1)+' '+armC.p1[0]+' '+armC.p1[1]+')"><g transform="rotate('+(armC.a2+d2)+' '+armC.p2[0]+' '+armC.p2[1]+')"><g clip-path="url(#'+id+'hc)">'+armC.lo+'</g></g></g>';return side?MR(g):g}
   if(o.weapon){var W=WEAPONS[o.weapon];s+='<g transform="'+poseTf(armC,q.L.s,q.L.e)+' rotate('+q.L.w+' 62 277)"><g transform="rotate('+W.ang+' 62 277)">'+W.svg(K)+'</g>'+grip(K,62,277)+'</g>'}
   s+=hand(0,q.L.s,q.L.e);
+  s+=hand(1,q.R.s,q.R.e);
   if(o.offhand){var Q=OFFHANDS[o.offhand];var inner=(Q.ang?'<g transform="rotate('+Q.ang+' 238 277)">':'<g>')+Q.svg(K)+'</g>'+MR(grip(K,62,277));
     s+=MR('<g transform="'+poseTf(armC,q.R.s,q.R.e)+' rotate('+q.R.w+' 62 277)">'+MR(inner)+'</g>')}
-  s+=hand(1,q.R.s,q.R.e);
   s+='</g></g></g></g>';
   s+=fxFront(id,K);
   s+='</g>';
