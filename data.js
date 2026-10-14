@@ -187,7 +187,7 @@ window.SKOLQUEST_DATA = {
         "waist": "",
         "legs": "",
         "back": "",
-        "weapon": "",
+        "weapon": "blodkatana",
         "offhand": "",
         "aura": "",
         "bg": "",
@@ -219,5 +219,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791991335237
+  "updatedAt": 1791991338585
 };
