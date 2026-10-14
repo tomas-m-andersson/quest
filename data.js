@@ -197,7 +197,7 @@ window.SKOLQUEST_DATA = {
         "bg": "",
         "emblem": "dragon",
         "banner": "kungs",
-        "special": "thunder",
+        "special": "nova",
         "vehicle": "board",
         "ride": true,
         "vmotor": "m1",
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791998902230
+  "updatedAt": 1791998904460
 };
