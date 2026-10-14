@@ -156,14 +156,7 @@ window.SKOLQUEST_DATA = {
   },
   "checks": {
     "a": {
-      "2026-10-14": [
-        "q2",
-        "q3",
-        "q4",
-        "q5",
-        "qmv70sqn0y2i",
-        "qmv70tufeq18"
-      ]
+      "2026-10-14": []
     },
     "b": {}
   },
@@ -219,5 +212,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791973424329
+  "updatedAt": 1791973434538
 };
