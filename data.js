@@ -191,7 +191,7 @@ window.SKOLQUEST_DATA = {
         "bg": "",
         "vehicle": "violskepp",
         "ride": false,
-        "vmotor": "m3",
+        "vmotor": "m4",
         "vweapon": "w6",
         "varmor": "a3",
         "vcolor": "c0",
@@ -229,5 +229,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791997898336
+  "updatedAt": 1791997901623
 };
