@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{
   color-scheme:dark;
   --bg:#0b0d11; --p1:#12161d; --p2:#181d26; --line:#252c39; --line2:#323b4c;
@@ -505,7 +506,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AF</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AG</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3909,6 +3910,13 @@ function gmClose(){
   var ov=document.getElementById('gmov');if(ov)ov.remove();GM=null;
   try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}
   try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}
+  gmResetZoom();setTimeout(gmResetZoom,350);setTimeout(gmResetZoom,900);
+}
+function gmResetZoom(){
+  try{var m=document.querySelector('meta[name=viewport]');if(!m)return;var o='width=device-width, initial-scale=1, viewport-fit=cover';
+    m.setAttribute('content',o+', maximum-scale=1, minimum-scale=1');
+    window.scrollTo(0,0);window.dispatchEvent(new Event('resize'));
+    setTimeout(function(){m.setAttribute('content',o)},250)}catch(e){}
 }
 function gmUi(kind){
   var u=document.getElementById('gmui');if(!u||!GM)return;var g=GM;
