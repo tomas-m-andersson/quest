@@ -201,7 +201,7 @@ window.SKOLQUEST_DATA = {
         "vehicle": "eldjet",
         "ride": true,
         "vmotor": "m4",
-        "vweapon": "w6",
+        "vweapon": "w3",
         "varmor": "",
         "vcolor": "c4",
         "pet": "phoenix"
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1792005860480
+  "updatedAt": 1792005866209
 };
