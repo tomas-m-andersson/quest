@@ -198,7 +198,7 @@ window.SKOLQUEST_DATA = {
         "emblem": "dragon",
         "banner": "kungs",
         "special": "thunder",
-        "vehicle": "jet",
+        "vehicle": "blodheli",
         "ride": true,
         "vmotor": "m5",
         "vweapon": "w5",
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1792003970999
+  "updatedAt": 1792003978855
 };
