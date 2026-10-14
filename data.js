@@ -102,7 +102,7 @@ window.SKOLQUEST_DATA = {
         "id": "qmv70t83xdpn",
         "icon": "⭐",
         "name": "Varit snäll med Sally",
-        "xp": 20,
+        "xp": 30,
         "days": [
           true,
           true,
@@ -212,5 +212,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791973434538
+  "updatedAt": 1791973502994
 };
