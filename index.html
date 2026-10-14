@@ -301,7 +301,7 @@ details[open] summary::after{content:"–"}
 .hgtab{flex:none;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:64px;padding:7px 8px;background:var(--p2);border:1px solid var(--line);border-radius:9px;font:700 11px var(--head);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
 .hgtab .ti{font-size:18px;line-height:1.1}
 .hgtab.on{border-color:var(--c);color:var(--text);box-shadow:inset 0 0 0 1px var(--c)}
-.hgchips{flex:1;min-height:150px;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:8px;align-content:start}
+.hgchips{flex:1;min-height:150px;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:8px;align-content:start;grid-auto-rows:max-content}
 .hchip{background:var(--p2);border:1px solid var(--line);border-left:3px solid var(--rc,var(--line));border-radius:9px;padding:8px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:120px}
 .hchip b{font:700 12px var(--head);letter-spacing:.03em;text-align:center;line-height:1.1;overflow-wrap:anywhere}
 .hchip small{font:600 10px var(--head);letter-spacing:.08em;color:var(--mute);text-align:center}
@@ -310,11 +310,11 @@ details[open] summary::after{content:"–"}
 .hchip.lock{cursor:not-allowed}
 .hchip.lock .hth svg{opacity:.4;filter:grayscale(1)}
 .hchip.lock small{color:var(--gold)}
-.hth{display:flex;align-items:center;justify-content:center;width:100%;min-height:78px;position:relative;line-height:0}
+.hth{flex:none;display:flex;align-items:center;justify-content:center;width:100%;min-height:78px;position:relative;line-height:0}
 .hth.tall{min-height:110px;height:110px;overflow:hidden}
 .hth.none{font-size:26px;color:var(--mute);line-height:1}
 .hth .lk{position:absolute;right:4px;bottom:2px;font-size:14px;line-height:1}
-.hth svg{max-width:100%;height:auto}
+.hth svg{display:block;flex:none}
 
 /* effects */
 .pop{position:fixed;transform:translate(-50%,0);font:700 18px var(--head);color:var(--c);text-shadow:0 0 12px var(--c);pointer-events:none;z-index:60;animation:pop 1s ease-out forwards;white-space:nowrap}
@@ -428,7 +428,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT J</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT K</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
