@@ -156,7 +156,8 @@ window.SKOLQUEST_DATA = {
   },
   "base": {
     "l": "",
-    "t": ""
+    "t": "",
+    "g": "g1"
   },
   "checks": {
     "a": {},
@@ -239,5 +240,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791998829217
+  "updatedAt": 1791998832268
 };
