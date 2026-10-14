@@ -207,7 +207,7 @@ window.SKOLQUEST_DATA = {
         "pet": ""
       },
       "seen": 634,
-      "pseen": 1,
+      "pseen": 634,
       "petNames": {}
     },
     "b": {
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791998919198
+  "updatedAt": 1791998940252
 };
