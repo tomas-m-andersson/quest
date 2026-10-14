@@ -198,8 +198,8 @@ window.SKOLQUEST_DATA = {
         "emblem": "dragon",
         "banner": "kungs",
         "special": "thunder",
-        "vehicle": "skuggjet",
-        "ride": false,
+        "vehicle": "guldbrada",
+        "ride": true,
         "vmotor": "m1",
         "vweapon": "w6",
         "varmor": "a3",
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1792000739625
+  "updatedAt": 1792001265946
 };
