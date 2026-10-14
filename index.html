@@ -409,6 +409,12 @@ details[open] summary::after{content:"–"}
 .vrot{animation:vrt .12s linear infinite;transform-box:fill-box;transform-origin:center}
 @keyframes vrt{0%{transform:scaleX(1)}50%{transform:scaleX(.82)}100%{transform:scaleX(1)}}
 @media (prefers-reduced-motion:reduce){.vfl,.vrot{animation:none}}
+
+.garage .gstage{position:relative;flex:none;margin-bottom:8px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.garage .gstage svg{width:100%;height:auto}
+.gempty{position:absolute;left:0;right:0;bottom:22%;text-align:center;font:700 14px var(--head);letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
+.grow2{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex:none;font-size:13px;color:var(--mute)}
+.grow2 b{color:var(--text);font:700 15px var(--head);letter-spacing:.06em;text-transform:uppercase}
 </style>
 </head>
 <body>
@@ -434,7 +440,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT M</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 13 OKT N</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -519,7 +525,7 @@ function normalize(s){
     o.boosts[id]=o.boosts[id]||[];
     if(bonus[id]&&!o.boosts[id].some(function(b){return b.id==='legacy-'+id}))o.boosts[id].push({id:'legacy-'+id,xp:bonus[id],note:'Tidigare justering',date:fmt(new Date())});
     var av=o.avatar[id]||{};
-    av.eq=Object.assign({pose:'',paint:'',head:'',torso:'',shoulders:'',arms:'',waist:'',legs:'',back:'',weapon:'',offhand:'',aura:'',bg:'',vehicle:'',pet:''},av.eq||{});
+    av.eq=Object.assign({pose:'',paint:'',head:'',torso:'',shoulders:'',arms:'',waist:'',legs:'',back:'',weapon:'',offhand:'',aura:'',bg:'',vehicle:'',ride:false,vmotor:'',vweapon:'',varmor:'',vcolor:'',pet:''},av.eq||{});
     av.seen=av.seen||1;av.pseen=av.pseen||1;av.petNames=av.petNames||{};
     o.avatar[id]=av;
   });
@@ -2074,7 +2080,7 @@ var PAINTS=[
  {id:'eternal',name:'Evighet',level:50,m:'#f4f0e0',m2:'#d9a82e',t:'#ffd95e',g:'#ff5d7a'}
 ];
 /* ===== REGISTER & API ===== */
-var AV_SLOTS=[{id:'pose',name:'Pose',icon:'🕺'},{id:'paint',name:'Lackering',icon:'🎨'},{id:'head',name:'Huvud',icon:'🪖'},{id:'torso',name:'Bröst',icon:'🛡️'},{id:'shoulders',name:'Axlar',icon:'🦾'},{id:'arms',name:'Armar',icon:'💪'},{id:'waist',name:'Midja',icon:'🎽'},{id:'legs',name:'Ben',icon:'🦿'},{id:'back',name:'Rygg',icon:'🪽'},{id:'weapon',name:'Vapen',icon:'⚔️'},{id:'offhand',name:'Sköld',icon:'🔰'},{id:'aura',name:'Energi',icon:'✨'},{id:'bg',name:'Miljö',icon:'🌆'},{id:'vehicle',name:'Fordon',icon:'🏍️'},{id:'pet',name:'Följeslagare',icon:'🐾'}];
+var AV_SLOTS=[{id:'pose',name:'Pose',icon:'🕺'},{id:'paint',name:'Lackering',icon:'🎨'},{id:'head',name:'Huvud',icon:'🪖'},{id:'torso',name:'Bröst',icon:'🛡️'},{id:'shoulders',name:'Axlar',icon:'🦾'},{id:'arms',name:'Armar',icon:'💪'},{id:'waist',name:'Midja',icon:'🎽'},{id:'legs',name:'Ben',icon:'🦿'},{id:'back',name:'Rygg',icon:'🪽'},{id:'weapon',name:'Vapen',icon:'⚔️'},{id:'offhand',name:'Sköld',icon:'🔰'},{id:'aura',name:'Energi',icon:'✨'},{id:'bg',name:'Miljö',icon:'🌆'},{id:'pet',name:'Följeslagare',icon:'🐾'}];
 var AV_DEFAULT={pose:'guard',paint:'graphite',head:'scout',torso:'light',shoulders:'round',arms:'std',waist:'skirt',legs:'std',back:'',weapon:'',offhand:'',aura:'',bg:'',pet:''};
 /* ===================== VARIANTER: FLER DELAR ===================== */
 var ACC=[['Guld','#e3b341'],['Röd','#e0403f'],['Cyan','#2fd0f0'],['Lila','#a56bff'],['Grön','#46d37c'],['Orange','#ff8a2a'],['Silver','#e1e7f2'],['Svart','#1c1e26'],['Rosa','#ff5fa8'],['Koppar','#c77b4a']];
@@ -2478,6 +2484,14 @@ VEHICLES.ship={h:70,w:300,fly:1,svg:function(K){
    plate([[56,346],[60,340],[240,340],[244,346],[236,352],[64,352]],K.m,{inn:0,hl:false})+
    glow(K,win)+'<g class="vfl">'+glow(K,'<ellipse cx="150" cy="406" rx="60" ry="7" fill="none" stroke="'+K.g+'" stroke-width="3"/>')+'</g></g>'}};
 var VEHICLE_LIST=[['board','Svävarbräda',2],['bike','Svävarcykel',5],['jeep','Terrängbil',9],['tank','Stridsvagn',15],['walker','Spindelvandrare',21],['heli','Stridshelikopter',29],['jet','Svävarjet',37],['ship','Rymdskepp',45]];
+VEHICLES.board.an={x0:56,x1:250,top:391,bot:406,r:[50,398],f:[250,384]};
+VEHICLES.bike.an={x0:30,x1:272,top:372,bot:404,r:[40,390],f:[270,380]};
+VEHICLES.jeep.an={x0:36,x1:276,top:358,bot:402,r:[38,384],f:[272,374]};
+VEHICLES.tank.an={x0:34,x1:274,top:348,bot:392,r:[38,392],f:[270,364]};
+VEHICLES.walker.an={x0:50,x1:250,top:334,bot:366,r:[62,352],f:[238,352]};
+VEHICLES.heli.an={x0:20,x1:230,top:344,bot:376,r:[22,356],f:[226,360]};
+VEHICLES.jet.an={x0:30,x1:276,top:350,bot:398,r:[30,386],f:[276,386]};
+VEHICLES.ship.an={x0:26,x1:274,top:340,bot:396,r:[34,384],f:[266,384]};
 addVariants(VEHICLE_LIST,[
  ['neonbrada','Neonbräda','board',2,-1,[]],['guldbrada','Guldbräda','board',0,-1,[]],
  ['blodcykel','Blodcykel','bike',1,0,[]],['stormcykel','Stormcykel','bike',3,2,[]],['skuggcykel','Skuggcykel','bike',7,3,[]],
@@ -2489,9 +2503,94 @@ addVariants(VEHICLE_LIST,[
  ['guldskepp','Guldskepp','ship',0,5,[]],['violskepp','Violett skepp','ship',3,2,[]]
 ],function(s,id){
   var b=VEHICLES[s[2]];
-  VEHICLES[id]={h:b.h,w:b.w,fly:b.fly,svg:function(K){return b.svg(vK(K,s[3],s[4]))}};
+  VEHICLES[id]={h:b.h,w:b.w,fly:b.fly,an:b.an,svg:function(K){return b.svg(vK(K,s[3],s[4]))}};
 });
 VEHICLE_LIST.sort(function(a,b){return a[2]-b[2]});
+var VMOTOR_LIST=[['m1','Dubbla boosters',3],['m2','Tryckdysa',10],['m3','Plasmamotor',18],['m4','Fusionskärna',27],['m5','Antimateria',37],['m6','Stjärnmotor',47]];
+var VWEAPON_LIST=[['w1','Kulspruta',5],['w2','Dubbelkanon',12],['w3','Raketställ',20],['w4','Laserkanon',29],['w5','Plasmatorn',39],['w6','Rälskanon',49]];
+var VARMOR_LIST=[['a1','Sidoplåtar',4],['a2','Taggpansar',11],['a3','Reaktivt pansar',19],['a4','Energiskydd',28],['a5','Titanpansar',38],['a6','Kristallpansar',48]];
+var VCOLOR_LIST=ACC.map(function(a,i){return ['c'+i,a[0]+'-detaljer',[2,6,9,14,19,24,30,36,42,50][i]]});
+function vnoz(K,x,y,len,s){s=s||1;return plate([[x+14,y-8*s],[x,y-6*s],[x,y+6*s],[x+14,y+8*s]],K.d,{inn:.6})+'<g class="vfl">'+glow(K,'<path d="M'+x+' '+(y-5*s)+' L'+(x-len)+' '+y+' L'+x+' '+(y+5*s)+'Z" fill="'+K.e+'"/>')+'</g>'}
+var VOV={
+ motor:{
+  m1:function(K,a){return vnoz(K,a.r[0]+4,a.r[1]-9,26)+vnoz(K,a.r[0]+4,a.r[1]+9,26)},
+  m2:function(K,a){return vnoz(K,a.r[0]+4,a.r[1],46,1.6)},
+  m3:function(K,a){return vnoz(K,a.r[0]+4,a.r[1]-9,30)+vnoz(K,a.r[0]+4,a.r[1]+9,30)+glow(K,'<ellipse cx="'+(a.r[0]+12)+'" cy="'+a.r[1]+'" rx="9" ry="22" fill="none" stroke="'+K.g+'" stroke-width="3"/>')},
+  m4:function(K,a){return vnoz(K,a.r[0]+4,a.r[1],40,1.3)+glow(K,'<circle cx="'+(a.x0+44)+'" cy="'+(a.top-12)+'" r="10" fill="'+K.e+'"/><circle cx="'+(a.x0+44)+'" cy="'+(a.top-12)+'" r="18" fill="'+K.o+'"/>')+ci(a.x0+44,a.top-12,5,'#fff',.8)},
+  m5:function(K,a){var s='';[-14,0,14].forEach(function(d){s+=vnoz(K,a.r[0]+4,a.r[1]+d,36+Math.abs(d)*-1)});return s+glow(K,'<path d="M'+(a.r[0]-30)+' '+(a.r[1]-26)+' L'+(a.r[0]-70)+' '+(a.r[1]-6)+' M'+(a.r[0]-30)+' '+(a.r[1]+26)+' L'+(a.r[0]-70)+' '+(a.r[1]+6)+'" stroke="'+K.g+'" stroke-width="3"/>')},
+  m6:function(K,a){var s='';[-18,-6,6,18].forEach(function(d){s+=vnoz(K,a.r[0]+4,a.r[1]+d,44)});return s+glow(K,'<circle cx="'+(a.x0+44)+'" cy="'+(a.top-14)+'" r="12" fill="'+K.e+'"/><circle cx="'+(a.x0+44)+'" cy="'+(a.top-14)+'" r="24" fill="'+K.o+'"/>')+glow(K,'<path d="M'+(a.x0+44)+' '+(a.top-14)+' L'+(a.x0+10)+' '+(a.top-34)+' M'+(a.x0+44)+' '+(a.top-14)+' L'+(a.x0+78)+' '+(a.top-34)+'" stroke="'+K.g+'" stroke-width="2.4"/>')}
+ },
+ weapon:{
+  w1:function(K,a){var x=a.x1-44,y=a.top;return ci(x,y-4,7,K.d)+plate([[x-6,y-6],[x+10,y-6],[x+10,y+2],[x-6,y+2]],K.m,{inn:0})+ln('M'+(x+8)+' '+(y-2)+' H'+(x+36),'#05070b',5,1)+ln('M'+(x+8)+' '+(y-2)+' H'+(x+36),'#9aa6bd',2.4,1)},
+  w2:function(K,a){var x=a.x1-48,y=a.top;return plate([[x-10,y+2],[x+10,y+2],[x+6,y-14],[x-6,y-14]],K.d,{inn:.7})+ln('M'+(x+4)+' '+(y-10)+' H'+(x+44),'#05070b',5,1)+ln('M'+(x+4)+' '+(y-10)+' H'+(x+44),'#9aa6bd',2.4,1)+ln('M'+(x+4)+' '+(y-3)+' H'+(x+44),'#05070b',5,1)+ln('M'+(x+4)+' '+(y-3)+' H'+(x+44),'#9aa6bd',2.4,1)},
+  w3:function(K,a){var x=a.x0+22,y=a.top;var s=plate([[x,y+2],[x+50,y+2],[x+50,y-16],[x,y-16]],K.d,{inn:.7})+plate([[x,y-16],[x+50,y-16],[x+56,y-22],[x+6,y-22]],K.t,{inn:0});for(var i=0;i<4;i++)s+=plate([[x+6+i*11,y-16],[x+12+i*11,y-16],[x+9+i*11,y-30]],K.m,{inn:0,hl:false});return s},
+  w4:function(K,a){var x=a.x1-60,y=a.top;return plate([[x-8,y+2],[x+12,y+2],[x+12,y-12],[x-8,y-12]],K.d,{inn:.7})+ln('M'+(x+10)+' '+(y-5)+' H'+(x+70),'#05070b',6,1)+ln('M'+(x+10)+' '+(y-5)+' H'+(x+70),'#9aa6bd',3,1)+glow(K,'<path d="M'+(x+14)+' '+(y-5)+' H'+(x+68)+'" stroke="'+K.e+'" stroke-width="2"/><circle cx="'+(x+70)+'" cy="'+(y-5)+'" r="3.4" fill="'+K.e+'"/>')},
+  w5:function(K,a){var x=a.x1-52,y=a.top;return '<path d="M'+(x-18)+' '+(y+2)+' A18 18 0 0 1 '+(x+18)+' '+(y+2)+'Z" fill="'+K.m+'" stroke="#05070b" stroke-width="1.4"/>'+ln('M'+(x+12)+' '+(y-10)+' H'+(x+56),'#05070b',7,1)+ln('M'+(x+12)+' '+(y-10)+' H'+(x+56),'#9aa6bd',3.4,1)+glow(K,'<circle cx="'+x+'" cy="'+(y-8)+'" r="6" fill="'+K.e+'"/><circle cx="'+(x+58)+'" cy="'+(y-10)+'" r="4.4" fill="'+K.e+'"/>')},
+  w6:function(K,a){var x=a.x1-70,y=a.top;return plate([[x-12,y+3],[x+16,y+3],[x+12,y-16],[x-8,y-16]],K.d,{inn:.7})+ln('M'+(x+8)+' '+(y-12)+' H'+(x+88),'#05070b',8,1)+ln('M'+(x+8)+' '+(y-12)+' H'+(x+88),'#aab4c8',4,1)+ln('M'+(x+8)+' '+(y-16)+' H'+(x+88)+' M'+(x+8)+' '+(y-8)+' H'+(x+88),K.tc,1.6,.9)+glow(K,'<path d="M'+(x+30)+' '+(y-12)+' l6 -10 l6 10 l6 -10 l6 10" stroke="'+K.e+'" stroke-width="1.6" fill="none"/><circle cx="'+(x+90)+'" cy="'+(y-12)+'" r="4" fill="'+K.e+'"/>')}
+ },
+ armor:{
+  a1:function(K,a){return plate([[a.x0+22,a.top+8],[a.x1-22,a.top+8],[a.x1-34,a.bot-4],[a.x0+34,a.bot-4]],K.m,{inn:.62})+ln('M'+(a.x0+60)+' '+(a.top+10)+' V'+(a.bot-6),'#000',1.2,.4)},
+  a2:function(K,a){var s='';[0,14,28].forEach(function(d){s+=plate([[a.x1-6,a.top+8+d],[a.x1+16,a.top+14+d],[a.x1-6,a.top+20+d]],K.t,{inn:0})});return s+plate([[a.x0+40,a.top+4],[a.x0+54,a.top-12],[a.x0+68,a.top+4]],K.t,{inn:0})+plate([[a.x1-70,a.top+4],[a.x1-56,a.top-12],[a.x1-42,a.top+4]],K.t,{inn:0})},
+  a3:function(K,a){var s='';for(var i=0;i<7;i++)s+=plate([[a.x0+24+i*30,a.top+6],[a.x0+46+i*30,a.top+6],[a.x0+46+i*30,a.top+18],[a.x0+24+i*30,a.top+18]],K.d,{inn:.6,hl:false});return s},
+  a4:function(K,a){var cx=(a.x0+a.x1)/2,cy=(a.top+a.bot)/2-24;return glow(K,'<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+((a.x1-a.x0)/2+26)+'" ry="'+((a.bot-a.top)/2+58)+'" fill="'+K.g+'" fill-opacity=".06" stroke="'+K.g+'" stroke-width="2.4" stroke-opacity=".9"/>')},
+  a5:function(K,a){return plate([[a.x0+14,a.top+6],[a.x1-14,a.top+6],[a.x1-28,a.bot-2],[a.x0+28,a.bot-2]],K.t,{inn:.62,io:.1})+riv5(a)},
+  a6:function(K,a){var s='';for(var i=0;i<6;i++){var x=a.x0+36+i*34;s+=glow(K,'<path d="M'+x+' '+(a.top+6)+' L'+(x+9)+' '+(a.top-18-(i%2)*8)+' L'+(x+18)+' '+(a.top+6)+'Z" fill="'+K.e+'" fill-opacity=".85"/>')}return s+plate([[a.x0+22,a.top+8],[a.x1-22,a.top+8],[a.x1-34,a.bot-4],[a.x0+34,a.bot-4]],K.m,{inn:.62,io:.1})}
+ }
+};
+function riv5(a){var s='';for(var i=0;i<8;i++)s+=bolt(a.x0+30+i*((a.x1-a.x0-60)/7),a.top+12,1.8);return s}
+function vehDraw(vid,vu,K){
+  var V=VEHICLES[vid];if(!V)return '';
+  vu=vu||{};
+  var k=(vu.c&&vu.c.charAt(0)==='c')?vK(K,+vu.c.slice(1),-1):K;
+  var a=V.an||{x0:30,x1:270,top:370,bot:404,r:[40,390],f:[270,380]};
+  var s=V.svg(k);
+  if(vu.m&&VOV.motor[vu.m])s=VOV.motor[vu.m](k,a)+s;
+  if(vu.a&&VOV.armor[vu.a])s+=VOV.armor[vu.a](k,a);
+  if(vu.w&&VOV.weapon[vu.w])s+=VOV.weapon[vu.w](k,a);
+  return s;
+}
+function vupOf(eq,lvl){
+  var o={};
+  [['m','vmotor','vmotor'],['w','vweapon','vweapon'],['a','varmor','varmor'],['c','vcolor','vcolor']].forEach(function(p){var it=findItem(p[1],eq[p[1]]);o[p[0]]=(it&&lvl>=it.level)?it.id:''});
+  return o;
+}
+function garageSvg(vid,vu,w,scene,hid){
+  var P=paintById(mechOpts(hid||selId).paint),id='gg'+(MX.n++)+'_',K=mechK(P,id),vb=scene?'-110 170 520 270':'-95 215 490 215',vp=vb.split(' ').map(Number),s='<svg viewBox="'+vb+'" width="'+w+'" height="'+Math.round(w*vp[3]/vp[2])+'" aria-hidden="true" focusable="false" style="display:block;max-width:100%;height:auto">'+K.defs;
+  if(scene){
+    s+='<defs><linearGradient id="'+id+'bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070a12"/><stop offset="1" stop-color="#1b2234"/></linearGradient><linearGradient id="'+id+'sp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>';
+    s+='<rect x="-110" y="170" width="520" height="270" fill="url(#'+id+'bg)"/>';
+    for(var i=0;i<9;i++)s+='<rect x="'+(-120+i*66)+'" y="176" width="58" height="180" fill="#232b3d" stroke="#000" stroke-opacity=".5"/><rect x="'+(-98+i*66)+'" y="190" width="4" height="150" fill="'+K.g+'" fill-opacity=".55"/>';
+    s+='<polygon points="110,170 190,170 300,400 0,400" fill="url(#'+id+'sp)"/>';
+    s+='<rect x="-110" y="392" width="520" height="48" fill="#0b0f17"/><path d="M-110 392 H410" stroke="#39466a" stroke-width="2"/>';
+    s+='<ellipse cx="150" cy="408" rx="190" ry="20" fill="#141b2b" stroke="'+K.g+'" stroke-opacity=".7" stroke-width="2"/><ellipse cx="150" cy="408" rx="150" ry="14" fill="none" stroke="#fff" stroke-opacity=".12"/>';
+  }
+  if(vid)s+='<ellipse cx="150" cy="408" rx="'+((VEHICLES[vid].w*.5+14)*VSC)+'" ry="9" fill="url(#'+id+'sh)" fill-opacity=".8"/><g transform="translate(150 406) scale('+VSC+') translate(-150 -406)">'+vehDraw(vid,vu,K)+'</g>';
+  return s+'</svg>';
+}
+var gSlot='vehicle';
+var G_TABS=[{id:'vehicle',name:'Fordon',icon:'🏍️'},{id:'vmotor',name:'Motor',icon:'🔥'},{id:'vweapon',name:'Vapen',icon:'💥'},{id:'varmor',name:'Pansar',icon:'🛡️'},{id:'vcolor',name:'Färg',icon:'🎨'}];
+function openGarage(keep){
+  var hid=selId,h=heroById(hid),lvl=levelInfo(totalXp(hid)).level,av=S.avatar[hid],eq=av.eq;
+  var vit=findItem('vehicle',eq.vehicle),vid=(vit&&lvl>=vit.level)?vit.id:'',vu=vupOf(eq,lvl);
+  var prevChips=$('#hgchips'),prevTabs=$('.hgtabs'),st=(keep&&prevChips)?prevChips.scrollTop:0,sl=(keep&&prevTabs)?prevTabs.scrollLeft:0;
+  var o='<div class="sheet hangar garage" style="--c:'+heroColor(h)+'"><div class="hgtop"><h4>🏍️ Garage · '+esc(h.name)+'</h4><button class="btn sm pri" data-act="close">Klar</button></div>';
+  o+='<div class="gstage">'+garageSvg(vid,vu,560,true,hid)+(vid?'':'<div class="gempty">Välj ett fordon nedan</div>')+'</div>';
+  if(vid){var n=VEHICLES[vid];o+='<div class="grow2"><span><b>'+esc(vit.name)+'</b> · '+rarityOf(vit.level).n+'</span><button type="button" class="btn sm'+(eq.ride?' pri':'')+'" data-act="vride">'+(eq.ride?'✓ Mechen åker med':'Låt mechen åka med')+'</button></div>'}
+  o+='<div class="hgtabwrap"><button type="button" class="hgarr" data-act="hscroll" data-dir="-1" aria-label="Bläddra vänster">‹</button><div class="hgtabs">'+G_TABS.map(function(s){return '<button class="hgtab'+(s.id===gSlot?' on':'')+'" data-act="gslot" data-slot="'+s.id+'"><span class="ti">'+s.icon+'</span><span>'+s.name+'</span></button>'}).join('')+'</div><button type="button" class="hgarr" data-act="hscroll" data-dir="1" aria-label="Bläddra höger">›</button></div>';
+  var items=AV_ITEMS.filter(function(i){return i.slot===gSlot}).sort(function(a,b){return a.level-b.level});
+  var curId=gSlot==='vehicle'?vid:vu[{vmotor:'m',vweapon:'w',varmor:'a',vcolor:'c'}[gSlot]];
+  var c='<button class="hchip'+(!curId?' on':'')+'" data-act="geq" data-slot="'+gSlot+'" data-id=""><span class="hth none"><span>∅</span></span><b>'+(gSlot==='vehicle'?'Inget':'Standard')+'</b><small></small></button>';
+  items.forEach(function(it){
+    var locked=lvl<it.level,on=curId===it.id&&!locked,r=rarityOf(it.level),tv,tu;
+    if(gSlot==='vehicle'){tv=it.id;tu={}}
+    else{tv=vid||'tank';tu={};tu[{vmotor:'m',vweapon:'w',varmor:'a',vcolor:'c'}[gSlot]]=it.id}
+    c+='<button class="hchip'+(on?' on':'')+(locked?' lock':'')+'"'+(locked?' disabled':'')+' style="--rc:'+r.c+'" data-act="geq" data-slot="'+gSlot+'" data-id="'+it.id+'"><span class="hth">'+garageSvg(tv,tu,gSlot==='vehicle'?112:112,false,hid)+(locked?'<span class="lk">🔒</span>':'')+'</span><b>'+esc(it.name)+'</b><small>'+(locked?'NIVÅ '+it.level:(on?'PÅ':'NIVÅ '+it.level))+'</small></button>';
+  });
+  o+='<div class="hgchips" id="hgchips">'+c+'</div></div>';
+  openModal(o);
+  var nc=$('#hgchips'),nt=$('.hgtabs');if(nc)nc.scrollTop=st;if(nt)nt.scrollLeft=sl;
+}
+
 
 var POSE_LIST=[['guard','Vaktställning',1],['stand','Stå rakt',1],['advance','Framåt',1],['strike','Hugg',1],['crouch','Böjd',1],['victory','Seger',1]];
 var AV_ITEMS=[];
@@ -2499,7 +2598,7 @@ var AV_ITEMS=[];
   PAINTS.forEach(function(p,i){AV_ITEMS.push({id:p.id,slot:'paint',name:p.name,level:p.level,mk:i+1})});
   POSE_LIST.forEach(function(x,i){AV_ITEMS.push({id:x[0],slot:'pose',name:x[1],level:x[2],mk:i+1})});
   var add=function(slot,list){list.forEach(function(x,i){AV_ITEMS.push({id:x[0],slot:slot,name:x[1],level:x[2],mk:i+1})})};
-  add('head',HEAD_LIST);add('torso',TORSO_LIST);add('shoulders',SHOULDER_LIST);add('arms',ARM_LIST);add('waist',WAIST_LIST);add('legs',LEG_LIST);add('back',BACK_LIST);add('weapon',WEAPON_LIST);add('offhand',OFFHAND_LIST);add('aura',AURA_LIST);add('bg',BG_LIST);add('vehicle',VEHICLE_LIST);add('pet',PET_LIST);
+  add('head',HEAD_LIST);add('torso',TORSO_LIST);add('shoulders',SHOULDER_LIST);add('arms',ARM_LIST);add('waist',WAIST_LIST);add('legs',LEG_LIST);add('back',BACK_LIST);add('weapon',WEAPON_LIST);add('offhand',OFFHAND_LIST);add('aura',AURA_LIST);add('bg',BG_LIST);add('vehicle',VEHICLE_LIST);add('vmotor',VMOTOR_LIST);add('vweapon',VWEAPON_LIST);add('varmor',VARMOR_LIST);add('vcolor',VCOLOR_LIST);add('pet',PET_LIST);
 })();
 function findItem(slot,id){if(!id)return null;for(var i=0;i<AV_ITEMS.length;i++){if(AV_ITEMS[i].slot===slot&&AV_ITEMS[i].id===id)return AV_ITEMS[i]}return null}
 function paintById(id){for(var i=0;i<PAINTS.length;i++)if(PAINTS[i].id===id)return PAINTS[i];return PAINTS[0]}
@@ -2509,6 +2608,7 @@ function mechOpts(hid,eq,lvl){
   if(lvl===undefined)lvl=levelInfo(totalXp(hid)).level;
   var o={};
   AV_SLOTS.forEach(function(sl){var it=findItem(sl.id,eq[sl.id]);o[sl.id]=(it&&lvl>=it.level)?it.id:AV_DEFAULT[sl.id]});
+  var vi=findItem('vehicle',eq.vehicle);o.vehicle=(eq.ride&&vi&&lvl>=vi.level)?vi.id:'';o.vup=vupOf(eq,lvl);
   return o;
 }
 /* ===== POSER, SLITAGE OCH TUFFARE PROPORTIONER ===== */
@@ -2571,7 +2671,7 @@ function mechRender(o,size,vb){
   var sh=o.pet?-6:0;
   s+='<g transform="translate('+(t.tx+sh)+' '+t.ty+') scale('+t.k+')">';
   if(o.aura)s+=AURAS[o.aura](K);
-  if(useV)s+='<ellipse cx="150" cy="406" rx="'+((VH.w*.5+14)*VSC)+'" ry="'+(VH.fly?7:10)+'" fill="url(#'+id+'sh)" fill-opacity="'+(VH.fly?.55:1)+'"/>'+'<g class="vehg" transform="translate(150 406) scale('+VSC+') translate(-150 -406)">'+VH.svg(K)+'</g>';
+  if(useV)s+='<ellipse cx="150" cy="406" rx="'+((VH.w*.5+14)*VSC)+'" ry="'+(VH.fly?7:10)+'" fill="url(#'+id+'sh)" fill-opacity="'+(VH.fly?.55:1)+'"/>'+'<g class="vehg" transform="translate(150 406) scale('+VSC+') translate(-150 -406)">'+vehDraw(o.vehicle,o.vup,K)+'</g>';
   else s+='<ellipse cx="150" cy="406" rx="'+(104+Math.abs(q.L.h-q.R.h)*.8+Math.max(q.L.h,q.R.h)*1.2)+'" ry="8" fill="url(#'+id+'sh)"/>';
   s+=fxBack(id);
   s+='<g filter="url(#'+id+'gr)"><g class="fxbody"><g transform="translate(0 '+(D-Hv).toFixed(1)+')">';
@@ -2661,7 +2761,7 @@ function panelHtml(h){
    '<div class="xpm-foot"><span>XP TOTALT</span><b>'+tx+'</b></div></div>';
   xpLast[h.id]={lvl:li.level,pct:li.pct,cur:li.cur};
   o+='<div class="goalrow"><div class="gl"><span>Veckomål · '+wx+' / '+goal+' XP</span><span>'+(gd?'🎁 Veckochest +'+S.settings.weeklyBonus+' XP!':'🎁 +'+S.settings.weeklyBonus+' XP')+'</span></div><div class="bar"><i style="width:'+Math.min(100,goal?wx/goal*100:0)+'%"></i></div></div>';
-  o+='<div class="pbtns"><button class="btn" data-act="avatar">🛠 Hangar'+(nw?'<span class="newdot">NY'+(nw>1?' ×'+nw:'')+'</span>':'')+'</button><button class="btn" data-act="pets">🐾 Följeslagare'+(np?'<span class="newdot">NY'+(np>1?' ×'+np:'')+'</span>':'')+'<span class="cnt">'+ph+'/'+pl.length+'</span></button></div>';
+  o+='<div class="pbtns"><button class="btn" data-act="avatar">🛠 Hangar'+(nw?'<span class="newdot">NY'+(nw>1?' ×'+nw:'')+'</span>':'')+'</button><button class="btn" data-act="pets">🐾 Följeslagare'+(np?'<span class="newdot">NY'+(np>1?' ×'+np:'')+'</span>':'')+'<span class="cnt">'+ph+'/'+pl.length+'</span></button><button class="btn wide" data-act="garage">🏍️ Garage</button></div>';
   if(bs.length)o+='<div class="boosts">'+bs.map(function(b){var d=parse(b.date);return '<div class="bst"><b>'+(b.xp>0?'+':'')+b.xp+' XP</b> · '+esc(b.note)+' <span style="opacity:.7">· '+d.getDate()+' '+MONTHS[d.getMonth()]+'</span></div>'}).join('')+'</div>';
   return o;
 }
@@ -3102,6 +3202,10 @@ document.addEventListener('click',function(e){
   else if(a==='aeq'){S.avatar[selId].eq[t.dataset.slot]=t.dataset.id;commit();if(t.dataset.slot==='pet')openPets(true);else openAvatar(true)}
   else if(a==='base'){openBase()}
   else if(a==='pets'){openPets()}
+  else if(a==='garage'){openGarage()}
+  else if(a==='gslot'){gSlot=t.dataset.slot;openGarage(false)}
+  else if(a==='geq'){var gm={vehicle:'vehicle',vmotor:'vmotor',vweapon:'vweapon',varmor:'varmor',vcolor:'vcolor'};S.avatar[selId].eq[gm[t.dataset.slot]]=t.dataset.id;commit();openGarage(true)}
+  else if(a==='vride'){S.avatar[selId].eq.ride=!S.avatar[selId].eq.ride;commit();openGarage(true)}
   else if(a==='pname'){namePet()}
   else if(a==='boost'){requirePin().then(function(ok){if(ok)openBoost()})}
   else if(a==='bhero'){t.classList.toggle('on')}
