@@ -212,5 +212,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791973527121
+  "updatedAt": 1791973533321
 };
