@@ -471,7 +471,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT P</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT Q</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2463,7 +2463,7 @@ var VEHICLES={},VEH_VB='-20 160 340 260',VEH_PET_VB='-20 160 460 260',VSC=1;
 function vfl(K,x,y,rx,ry){return '<g class="vfl">'+glow(K,'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="'+K.e+'"/>')+'</g>'}
 function wheel(K,x,y,r){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#0d1018" stroke="#05070b" stroke-width="1.4"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.62)+'" fill="'+K.d+'" stroke="#05070b" stroke-opacity=".6"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.28)+'" fill="'+K.t+'" stroke="#05070b" stroke-opacity=".6"/>'+ln('M'+(x-r*.55)+' '+y+' H'+(x+r*.55)+' M'+x+' '+(y-r*.55)+' V'+(y+r*.55),'#000',1.4,.45)+'<path d="M'+(x-r*.85)+' '+(y-r*.35)+' A'+r*.9+' '+r*.9+' 0 0 1 '+(x-r*.2)+' '+(y-r*.88)+'" stroke="#fff" stroke-opacity=".25" stroke-width="1.4" fill="none"/>'}
 function riv(){return ''}
-VEHICLES.board={h:60,w:310,seat:[130,398,.56],flag:[34,350],
+VEHICLES.board={h:60,w:310,seat:[130,379,.38],flag:[34,350],
  an:{x0:26,x1:312,top:344,bot:398,r:[20,372],f:[312,356]},
  back:function(K){return '<g>'+plate([[8,350],[38,346],[40,400],[10,402]],K.d,{inn:.8})+ln('M12 372 H38','#000',1.4,.5)+vfl(K,6,392,16,6)+
   plate([[44,346],[236,346],[240,362],[44,364]],'#0c0f16',{inn:0,hl:false})+
@@ -2476,7 +2476,7 @@ VEHICLES.board={h:60,w:310,seat:[130,398,.56],flag:[34,350],
   glass(K,'M206 346 L214 314 L230 314 L242 352Z')+ln('M206 346 L214 314 L230 314 L242 352','#aab4c8',2.4,1)+
   plate([[248,348],[274,348],[270,332],[252,332]],K.d,{inn:.7})+ln('M268 340 H318','#05070b',7,1)+ln('M268 340 H318','#9aa6bd',3.4,1)+
   '<path class="vwav" d="M-20 396 Q-4 388 12 396 T44 396 T76 396 T108 396 T140 396 T172 396 T204 396 T236 396 T268 396 T300 396 T332 396 V416 H-20Z" fill="#2a78b8" fill-opacity=".6"/><path class="vwav" d="M-20 396 Q-4 388 12 396 T44 396 T76 396 T108 396 T140 396 T172 396 T204 396 T236 396 T268 396 T300 396 T332 396" fill="none" stroke="#e8f6ff" stroke-opacity=".7" stroke-width="2"/></g>'}};
-VEHICLES.bike={h:60,w:300,seat:[160,400,.56],flag:[48,332],
+VEHICLES.bike={h:60,w:300,seat:[160,381,.38],flag:[48,332],
  an:{x0:40,x1:292,top:346,bot:396,r:[40,372],f:[290,372]},
  back:function(K){return '<g>'+vfl(K,22,372,18,6)+vfl(K,22,384,14,4)+plate([[30,326],[74,320],[76,330],[32,338]],K.s,{inn:.5})+ln('M44 338 V372 M64 330 V372','#9aa6bd',3,1)+
   plate([[60,346],[220,346],[220,388],[60,388]],'#0c0f16',{inn:0,hl:false})+plate([[72,296],[108,296],[114,346],[68,346]],K.t,{inn:.6})+'</g>'},
@@ -2485,7 +2485,7 @@ VEHICLES.bike={h:60,w:300,seat:[160,400,.56],flag:[48,332],
   vents(110,370,70,3,6,'#000',.45)+plate([[60,360],[100,358],[100,366],[60,368]],K.t,{inn:0,hl:false})+
   ln('M90 350 L104 262 H216 L232 346','#05070b',9,1)+ln('M90 350 L104 262 H216 L232 346','#cfd6e6',4.4,1)+ln('M108 300 H212','#05070b',7,1)+ln('M108 300 H212','#cfd6e6',3,1)+
   glass(K,'M232 346 L236 316 L250 320 L256 354Z')+wheel(K,84,382,27)+wheel(K,242,382,27)+'</g>'}};
-VEHICLES.jeep={h:70,w:330,seat:[140,394,.56],flag:[50,340],
+VEHICLES.jeep={h:70,w:330,seat:[140,375,.38],flag:[50,340],
  an:{x0:30,x1:310,top:340,bot:400,r:[28,374],f:[308,370]},
  back:function(K){return '<g>'+wheel(K,40,324,19)+plate([[60,342],[232,342],[232,392],[60,392]],'#0c0f16',{inn:0,hl:false})+plate([[66,290],[108,290],[112,342],[62,342]],K.t,{inn:.6})+
   ln('M84 342 L92 270 H172','#05070b',9,1)+ln('M84 342 L92 270 H172','#cfd6e6',4.4,1)+'</g>'},
@@ -2495,7 +2495,7 @@ VEHICLES.jeep={h:70,w:330,seat:[140,394,.56],flag:[50,340],
   glass(K,'M206 340 L222 304 L238 304 L246 350Z')+ln('M206 340 L222 304 L238 304 L246 350','#aab4c8',2.6,1)+
   plate([[246,342],[268,342],[266,330],[250,330]],K.d,{inn:.7})+ln('M262 336 H318','#05070b',6,1)+ln('M262 336 H318','#9aa6bd',3,1)+ln('M262 330 H318','#05070b',6,1)+ln('M262 330 H318','#9aa6bd',3,1)+
   vents(70,376,100,3,6,'#000',.4)+wheel(K,84,378,31)+wheel(K,252,378,31)+'</g>'}};
-VEHICLES.tank={h:100,w:330,seat:[170,356,.56],flag:[40,350],
+VEHICLES.tank={h:100,w:330,seat:[170,336,.38],flag:[40,350],
  an:{x0:26,x1:320,top:346,bot:402,r:[26,384],f:[320,374]},
  back:function(K){return '<g>'+ln('M230 322 H356','#05070b',12,1)+ln('M230 322 H356','#9aa6bd',6,1)+ln('M230 319 H356','#e6ebf5',1.4,.6)+plate([[352,314],[366,314],[366,330],[352,330]],K.d,{inn:.7})+
   '<ellipse cx="170" cy="306" rx="56" ry="9" fill="#0c0f16" stroke="#05070b"/></g>'},
@@ -2505,7 +2505,7 @@ VEHICLES.tank={h:100,w:330,seat:[170,356,.56],flag:[40,350],
   '<ellipse cx="170" cy="306" rx="56" ry="9" fill="none" stroke="'+K.tc+'" stroke-width="3"/>'+
   plate([[236,318],[262,322],[262,336],[236,336]],K.d,{inn:.7})+glow(K,'<rect x="240" y="326" width="20" height="3" fill="'+K.e+'"/>')+
   ln('M130 330 H220','#000',1.2,.4)+'<rect x="24" y="372" width="292" height="36" rx="18" fill="#0d1018" stroke="#05070b" stroke-width="1.6"/><path d="M40 374 H300" stroke="#fff" stroke-opacity=".15"/>'+w+'</g>'}};
-VEHICLES.walker={h:100,w:270,seat:[150,346,.5],flag:[64,304],
+VEHICLES.walker={h:100,w:270,seat:[150,332,.34],flag:[64,304],
  clip:'M75 306 Q75 172 150 160 Q225 172 225 306Z',
  an:{x0:44,x1:256,top:300,bot:352,r:[44,326],f:[256,326]},
  back:function(K){function leg(a,b,c,wd){return '<path d="M'+a+' L'+b+' L'+c+'" fill="none" stroke="#05070b" stroke-width="'+(wd+4)+'" stroke-linecap="round" stroke-linejoin="round"/><path d="M'+a+' L'+b+' L'+c+'" fill="none" stroke="'+K.d+'" stroke-width="'+wd+'" stroke-linecap="round" stroke-linejoin="round"/>'}
@@ -2517,7 +2517,7 @@ VEHICLES.walker={h:100,w:270,seat:[150,346,.5],flag:[64,304],
   vents(84,332,60,3,5,'#000',.5)+vents(160,332,60,3,5,'#000',.5)+glow(K,'<rect x="104" y="342" width="92" height="4" fill="'+K.e+'"/>')+
   glass(K,'M75 306 Q75 172 150 160 Q225 172 225 306Z')+ln('M75 306 Q75 172 150 160 Q225 172 225 306','#aab4c8',3,1)+ln('M150 160 V306','#aab4c8',2,.6)+
   plate([[70,300],[230,300],[236,308],[64,308]],K.t,{inn:0,hl:false})+ln('M150 160 V138','#9aa6bd',3,1)+ci(150,136,4,K.t)+'</g>'}};
-VEHICLES.heli={h:100,w:340,seat:[190,376,.5],flag:[30,326],
+VEHICLES.heli={h:100,w:340,seat:[190,360,.34],flag:[30,326],
  clip:'M120 338 Q124 196 196 190 Q268 204 306 354 L120 356Z',
  an:{x0:96,x1:316,top:376,bot:392,r:[26,340],f:[314,356]},
  back:function(K){return '<g>'+plate([[120,330],[44,322],[28,336],[120,356]],K.m,{inn:.7})+plate([[44,322],[26,262],[46,262],[66,322]],K.s,{inn:.5})+
@@ -2529,7 +2529,7 @@ VEHICLES.heli={h:100,w:340,seat:[190,376,.5],flag:[30,326],
   glass(K,'M120 338 Q124 196 196 190 Q268 204 306 354 L262 340Z')+ln('M120 338 Q124 196 196 190 Q268 204 306 354','#aab4c8',3,1)+ln('M196 190 V338','#aab4c8',2,.6)+
   plate([[186,190],[206,190],[204,170],[188,170]],K.d,{inn:.6})+ci(196,170,8,K.d)+
   '<g class="vrot"><ellipse cx="196" cy="168" rx="156" ry="9" fill="#cfd8ea" fill-opacity=".2"/><ellipse cx="196" cy="168" rx="156" ry="3" fill="#fff" fill-opacity=".55"/></g></g>'}};
-VEHICLES.jet={h:100,w:340,lift:14,seat:[182,388,.5],flag:[30,350],
+VEHICLES.jet={h:100,w:340,lift:14,seat:[182,378,.34],flag:[30,350],
  clip:'M126 354 Q140 212 196 204 Q250 214 300 364Z',
  an:{x0:10,x1:336,top:350,bot:398,r:[8,388],f:[334,384]},
  back:function(K){return '<g>'+vfl(K,6,386,26,8)+vfl(K,10,398,20,5)+plate([[40,352],[16,262],[70,342]],K.s,{inn:.5})+plate([[56,344],[20,280],[26,276],[66,338]],K.t,{inn:.5})+'</g>'},
@@ -2538,7 +2538,7 @@ VEHICLES.jet={h:100,w:340,lift:14,seat:[182,388,.5],flag:[30,350],
   vents(190,376,80,2,6,'#000',.5)+glow(K,'<path d="M60 396 H300" stroke="'+K.e+'" stroke-width="2.4"/>')+
   glass(K,'M126 354 Q140 212 196 204 Q250 214 300 364Z',.14)+ln('M126 354 Q140 212 196 204 Q250 214 300 364','#aab4c8',3,1)+ln('M196 204 V354','#aab4c8',2,.6)+
   plate([[126,348],[300,358],[304,366],[122,358]],K.t,{inn:0,hl:false})+'</g>'}};
-VEHICLES.ship={h:120,w:320,lift:22,seat:[150,352,.5],flag:[40,330],
+VEHICLES.ship={h:120,w:320,lift:22,seat:[150,348,.34],flag:[40,330],
  clip:'M80 330 Q80 176 150 164 Q220 176 220 330Z',
  an:{x0:6,x1:294,top:318,bot:376,r:[10,346],f:[294,346]},
  back:function(K){return '<g><path d="M80 380 L220 380 L262 480 L38 480Z" fill="'+K.g+'" fill-opacity=".08"/>'+plate([[16,324],[56,320],[56,372],[16,376]],K.d,{inn:.8})+vfl(K,10,346,28,12)+plate([[60,316],[44,262],[100,310]],K.t,{inn:.5})+plate([[240,316],[256,262],[200,310]],K.t,{inn:.5})+'</g>'},
