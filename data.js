@@ -189,7 +189,12 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
-        "vehicle": "blodheli",
+        "vehicle": "okenbil",
+        "ride": false,
+        "vmotor": "",
+        "vweapon": "",
+        "varmor": "",
+        "vcolor": "",
         "pet": ""
       },
       "seen": 634,
@@ -212,6 +217,11 @@ window.SKOLQUEST_DATA = {
         "aura": "",
         "bg": "",
         "vehicle": "",
+        "ride": false,
+        "vmotor": "",
+        "vweapon": "",
+        "varmor": "",
+        "vcolor": "",
         "pet": ""
       },
       "seen": 1,
@@ -219,5 +229,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791997569874
+  "updatedAt": 1791997863407
 };
