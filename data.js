@@ -195,7 +195,7 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
-        "emblem": "sun",
+        "emblem": "dragon",
         "banner": "",
         "special": "",
         "vehicle": "board",
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791998873525
+  "updatedAt": 1791998876977
 };
