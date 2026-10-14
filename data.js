@@ -154,6 +154,9 @@ window.SKOLQUEST_DATA = {
     "weeklyBonus": 75,
     "setupDone": true
   },
+  "base": {
+    "l": "l1"
+  },
   "checks": {
     "a": {},
     "b": {}
@@ -189,6 +192,9 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
+        "emblem": "",
+        "banner": "",
+        "special": "",
         "vehicle": "board",
         "ride": true,
         "vmotor": "m1",
@@ -216,6 +222,9 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
+        "emblem": "",
+        "banner": "",
+        "special": "",
         "vehicle": "",
         "ride": false,
         "vmotor": "",
@@ -229,5 +238,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791997926634
+  "updatedAt": 1791998807286
 };
