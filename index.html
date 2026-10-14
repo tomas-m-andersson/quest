@@ -471,7 +471,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT V</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT W</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2614,18 +2614,75 @@ VEHICLES.ship={h:120,w:350,lift:20,
 var VEHICLE_LIST=[['board','Attackbåt',2],['bike','Sandbuggy',5],['jeep','Attackjeep',9],['tank','Stridsvagn',15],['walker','Spindelvandrare',21],['heli','Helikopter',29],['jet','Stridsjet',37],['ship','Rymdskepp',45]];
 function glass(K,d,op){return '<path d="'+d+'" fill="#0b1f2e" stroke="#05070b" stroke-width="1.4"/><path d="'+d+'" fill="'+K.e+'" fill-opacity="'+(op||.16)+'"/>'}
 function shine(x1,y1,x2,y2){return '<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>'}
+
+function tube(K,x1,y1,x2,y2,w){var d='M'+x1+' '+y1+' L'+x2+' '+y2;return ln(d,'#05070b',w+4,1)+ln(d,K.d,w+1,1)+ln(d,'#aab4c8',w*.35,.8)}
+function flame(x,y){return glow({g:'#ff8a2a'},'<path d="M'+x+' '+(y-9)+' Q'+(x+30)+' '+(y-6)+' '+(x+44)+' '+y+' Q'+(x+30)+' '+(y+6)+' '+x+' '+(y+9)+'Z" fill="#ff7a1a"/><path d="M'+x+' '+(y-5)+' Q'+(x+20)+' '+(y-3)+' '+(x+30)+' '+y+' Q'+(x+20)+' '+(y+3)+' '+x+' '+(y+5)+'Z" fill="#ffe27a"/>')}
+function missile(K,x,y,l){return plate([[x,y-4],[x+l,y-4],[x+l+10,y],[x+l,y+4],[x,y+4]],'#d8dde8',{inn:.5})+plate([[x+l*.55,y-4],[x+l*.55+6,y-4],[x+l*.55+6,y+4],[x+l*.55,y+4]],'#d8452a',{inn:.2,hl:false})+plate([[x,y-4],[x-8,y-9],[x+4,y-4]],K.d,{inn:.6,hl:false})+plate([[x,y+4],[x-8,y+9],[x+4,y+4]],K.d,{inn:.6,hl:false})}
+function legB(K,a,b,c,wd){var d='M'+a+' L'+b+' L'+c;return '<path d="'+d+'" fill="none" stroke="#05070b" stroke-width="'+(wd+4)+'" stroke-linecap="round" stroke-linejoin="round"/><path d="'+d+'" fill="none" stroke="'+K.d+'" stroke-width="'+wd+'" stroke-linecap="round" stroke-linejoin="round"/>'}
+var VX={
+ neonbrada:{f:function(K){return tube(K,126,338,50,314,9)+tube(K,126,350,50,328,9)+plate([[44,306],[58,300],[60,334],[44,332]],K.s,{inn:.6})+
+   plate([[-8,352],[16,348],[18,394],[-8,398]],K.d,{inn:.8})+plate([[-6,346],[14,344],[14,352],[-6,354]],K.t,{inn:.5})+vents(-4,362,16,3,4,'#000',.7)+ci(206,214,13,K.d)+'<ellipse cx="206" cy="214" rx="20" ry="5" fill="none" stroke="#aab4c8" stroke-width="2"/>'+glow(K,'<circle cx="206" cy="214" r="3" fill="'+K.e+'"/>')}},
+ guldbrada:{f:function(K){var s='';for(var i=0;i<8;i++)s+=ln('M'+(138+i*12)+' 302 V328','#05070b',3,.85);
+   return plate([[34,352],[306,352],[318,378],[40,382]],K.d,{inn:.6})+vents(50,360,240,2,6,'#000',.55)+rvr(46,356,250,22)+hz2(60,372,70,5)+s+
+   plate([[286,304],[336,304],[340,332],[282,334]],K.m,{inn:.7})+plate([[286,304],[336,304],[334,312],[288,312]],K.s,{inn:.4})+barrel(K,330,314,40,5)+barrel(K,330,326,38,5)+ln('M250 292 V232','#9aa6bd',3,1)+plate([[250,236],[290,244],[250,254]],'#d8452a',{inn:.3,hl:false})}},
+ blodcykel:{f:function(K){return ln('M122 292 L124 276 M208 292 L208 276','#05070b',6,1)+mpod(K,112,252,110,24,8)+plate([[112,252],[222,252],[222,258],[112,258]],K.s,{inn:.4})+plate([[222,258],[238,264],[222,274]],'#d8452a',{inn:.3,hl:false})+
+   ln('M40 320 V292','#05070b',9,1)+ln('M40 320 V292','#aab4c8',4.6,1)+ln('M24 320 V300','#05070b',9,1)+ln('M24 320 V300','#aab4c8',4.6,1)+glow(K,'<ellipse cx="40" cy="290" rx="5" ry="3" fill="#ff8a2a"/><ellipse cx="24" cy="298" rx="5" ry="3" fill="#ff8a2a"/>')}},
+ stormcykel:{f:function(K){return '<path d="M52 372 Q86 332 122 372 L108 372 Q86 346 66 372Z" fill="'+K.d+'" stroke="#05070b" stroke-width="1.4"/><path d="M220 372 Q254 332 290 372 L276 372 Q254 346 234 372Z" fill="'+K.d+'" stroke="#05070b" stroke-width="1.4"/>'+
+   plate([[300,358],[344,380],[346,406],[300,406]],K.s,{inn:.6})+plate([[316,372],[346,380],[346,392]],K.t,{inn:.4})+'<path d="M330 402 L346 392 L346 406Z M320 402 L328 388" fill="#cfd6e6" stroke="#05070b"/>'+
+   ci(34,332,17,'#0d1018')+ci(34,332,8,'#9aa6bd')+ln('M96 292 L226 292','#05070b',5,1)+lamp2(K,110,284,14)+lamp2(K,140,284,14)+lamp2(K,170,284,14)+lamp2(K,200,284,14)+ln('M300 372 L312 232','#9aa6bd',1.6,1)+glow(K,'<circle cx="312" cy="230" r="2.6" fill="#ff4a4a"/>')}},
+ skuggcykel:{f:function(K){return ln('M30 322 V300 M70 318 V304','#05070b',7,1)+plate([[8,292],[96,284],[100,296],[12,304]],K.t,{inn:.5})+plate([[8,292],[96,284],[92,280],[12,288]],K.s,{inn:.4})+
+   plate([[100,358],[220,358],[226,396],[96,396]],K.d,{inn:.6})+vents(110,368,100,3,5,'#000',.6)+glow(K,'<rect x="112" y="388" width="100" height="2.6" fill="'+K.e+'"/>')+
+   ln('M222 296 L244 276','#05070b',7,1)+ln('M222 296 L244 276','#aab4c8',3,1)+plate([[240,270],[262,266],[262,276],[244,282]],K.d,{inn:.6})}},
+ okenbil:{f:function(K){return ln('M92 290 L194 286','#05070b',4,1)+ln('M100 290 V272 M184 288 V270','#9aa6bd',2.4,1)+
+   '<rect x="156" y="262" width="14" height="22" rx="2" fill="#4a5a34" stroke="#05070b"/><rect x="172" y="262" width="14" height="22" rx="2" fill="#6a4a2a" stroke="#05070b"/><path d="M158 270 H168 M174 270 H184" stroke="#05070b" stroke-width="2"/>'+
+   ln('M232 346 V270 Q232 262 240 262','#05070b',8,1)+ln('M232 346 V270 Q232 262 240 262','#cfd6e6',3.4,1)+
+   plate([[56,372],[200,372],[200,380],[56,380]],K.d,{inn:.4,hl:false})+rvr(60,376,136,10)+ci(226,330,0.1,'#000')+
+   plate([[24,330],[44,326],[48,372],[22,372]],K.d,{inn:.7})+lamp2(K,26,340,10)}},
+ skogsbil:{f:function(K){return plate([[96,276],[190,272],[192,280],[98,284]],K.d,{inn:.7})+lamp2(K,104,272,14)+lamp2(K,124,271,14)+lamp2(K,144,270,14)+lamp2(K,164,269,14)+
+   ln('M312 366 H336 V400 H312','#05070b',8,1)+ln('M312 366 H336 V400 H312','#9aa6bd',3.4,1)+plate([[308,386],[338,386],[338,404],[308,404]],K.d,{inn:.7})+ci(322,395,6,'#9aa6bd')+ci(322,395,2.4,'#05070b')+
+   ln('M312 372 L322 395','#cfd6e6',1.4,.9)+mpod(K,150,248,46,14,4)+plate([[154,262],[192,262],[192,268],[154,268]],K.d,{inn:.5,hl:false})+
+   plate([[26,336],[8,330],[8,362],[26,368]],K.d,{inn:.7})+glow(K,'<ellipse cx="12" cy="346" rx="3" ry="5" fill="#ff4a4a"/>')}},
+ vulkantank:{f:function(K){return plate([[256,306],[324,306],[324,326],[256,326]],K.d,{inn:.7})+vents(262,310,56,3,4,'#000',.7)+plate([[324,310],[336,310],[336,322],[324,322]],K.t,{inn:.4})+flame(340,316)+
+   '<rect x="38" y="316" width="22" height="28" rx="9" fill="'+K.t+'" stroke="#05070b"/><rect x="64" y="316" width="22" height="28" rx="9" fill="'+K.t+'" stroke="#05070b"/>'+ln('M44 322 V338 M70 322 V338','#fff',1.4,.3)+ln('M60 328 H64','#05070b',3,1)+ln('M86 326 Q100 326 108 318','#05070b',3,1)}},
+ istank:{f:function(K){return plate([[322,348],[352,338],[352,408],[322,404]],K.s,{inn:.6})+plate([[342,338],[352,338],[352,408],[344,406]],'#d8dde8',{inn:.3,hl:false})+ln('M300 362 L324 362 M300 386 L324 386','#05070b',7,1)+ln('M300 362 L324 362 M300 386 L324 386','#9aa6bd',3,1)+
+   mpod(K,128,270,76,20,6)+plate([[124,288],[208,288],[200,298],[132,298]],K.d,{inn:.6})+ln('M214 270 V248','#9aa6bd',1.8,1)+ci(214,246,2.4,'#ff4a4a')}},
+ guldtank:{f:function(K){var s='';for(var i=0;i<12;i++)s+=ln('M'+(52+i*24)+' 374 V392','#05070b',1.8,.8);
+   return plate([[30,372],[322,372],[318,394],[34,394]],K.m,{inn:.6})+plate([[30,372],[322,372],[322,378],[30,378]],K.s,{inn:.4,hl:false})+s+rvr(40,376,276,16)+
+   ci(66,326,15,K.d)+plate([[48,306],[92,306],[96,326],[48,330]],K.m,{inn:.72})+plate([[48,306],[92,306],[90,312],[50,312]],K.s,{inn:.4})+tube(K,90,314,138,286,5)+tube(K,90,322,142,296,5)+'<rect x="136" y="280" width="8" height="8" fill="#10131a" stroke="#05070b" transform="rotate(-35 140 284)"/>'}},
+ jaktspindel:{b:function(K){return legB(K,'136 336','112 300','108 398',9)+legB(K,'168 336','192 300','198 398',9)+'<path d="M98 404 L108 396 L118 404Z M188 404 L198 396 L208 404Z" fill="'+K.d+'" stroke="#05070b"/>'},
+   f:function(K){return plate([[116,250],[184,250],[190,270],[110,270]],K.m,{inn:.72})+barrel(K,184,258,56,6)+glow(K,'<circle cx="130" cy="258" r="3" fill="'+K.e+'"/>')+vents(140,256,36,2,5,'#000',.7)+plate([[40,296],[74,296],[78,312],[40,314]],K.d,{inn:.7})+barrel(K,22,304,18,4)}},
+ blodheli:{f:function(K){return plate([[170,350],[276,350],[282,358],[166,360]],K.m,{inn:.6})+plate([[166,358],[282,358],[282,362],[166,362]],K.d,{inn:.5,hl:false})+
+   mpod(K,176,362,38,14,3)+mpod(K,222,362,38,14,3)+plate([[260,362],[274,369],[260,376]],'#d8452a',{inn:.3,hl:false})+plate([[214,362],[222,369],[214,376]],'#d8452a',{inn:.3,hl:false})+
+   ci(318,386,7,K.d)+ci(318,386,2.4,K.e)+ln('M112 348 L96 330','#9aa6bd',2,1)}},
+ isheli:{f:function(K){return plate([[120,398],[318,398],[336,408],[336,416],[116,416]],K.m,{inn:.7})+plate([[120,398],[318,398],[322,402],[120,404]],K.s,{inn:.4})+ln('M166 380 L172 400 M276 380 L270 400','#05070b',6,1)+ln('M166 380 L172 400 M276 380 L270 400','#9aa6bd',3,1)+
+   plate([[190,334],[230,334],[230,368],[190,368]],K.d,{inn:.6})+ln('M210 334 V368','#05070b',2,1)+'<rect x="204" y="348" width="4" height="8" fill="#9aa6bd"/><rect x="212" y="348" width="4" height="8" fill="#9aa6bd"/>'+
+   plate([[240,304],[262,304],[262,314],[240,314]],K.d,{inn:.7})+lamp2(K,250,306,10)+vents(130,396,150,1,5,'#000',.3)}},
+ skuggjet:{f:function(K){return plate([[100,404],[250,404],[262,412],[250,416],[100,416]],K.d,{inn:.7})+missile(K,106,420,56)+missile(K,176,420,56)+ln('M120 410 V416 M190 410 V416','#05070b',3,1)+
+   plate([[300,360],[344,384],[330,390]],K.d,{inn:.5})+plate([[120,346],[190,340],[196,350],[122,352]],K.d,{inn:.7})+vents(130,343,52,2,6,'#000',.6)}},
+ eldjet:{b:function(K){return plate([[110,352],[94,262],[142,350]],K.t,{inn:.5})+glow(K,'<rect x="92" y="260" width="3" height="9" fill="#ff4a4a"/>')},
+   f:function(K){return plate([[262,364],[296,340],[308,346],[282,370]],K.s,{inn:.55})+plate([[262,368],[292,392],[274,396]],K.s,{inn:.5})+ln('M334 384 L360 388','#cfd6e6',2.2,1)+glow(K,'<circle cx="360" cy="388" r="2" fill="#ff4a4a"/>')+
+   plate([[140,350],[200,346],[210,352],[140,356]],K.d,{inn:.7})+ln('M30 372 L150 362','#fff',1,.3)+glow(K,'<ellipse cx="14" cy="372" rx="10" ry="12" fill="'+K.g+'" fill-opacity=".6"/>')}},
+ guldskepp:{f:function(K){return plate([[92,328],[180,322],[188,330],[96,338]],K.d,{inn:.7})+plate([[104,314],[176,310],[180,324],[100,326]],K.m,{inn:.72})+plate([[104,314],[176,310],[176,316],[104,320]],K.s,{inn:.4})+barrel(K,170,318,56,5)+barrel(K,170,326,54,5)+
+   ln('M130 312 V272','#05070b',5,1)+ln('M130 312 V272','#9aa6bd',2.4,1)+plate([[112,268],[148,264],[142,276],[116,278]],K.m,{inn:.6})+ln('M130 264 V246','#9aa6bd',1.6,1)+glow(K,'<circle cx="130" cy="244" r="2.6" fill="#ff4a4a"/>')+
+   plate([[40,372],[80,372],[80,388],[40,388]],K.d,{inn:.6})+ln('M60 372 V388','#05070b',2,1)}},
+ violskepp:{b:function(K){return plate([[96,330],[150,282],[190,326]],K.s,{inn:.5})+plate([[120,330],[146,300],[160,330]],K.t,{inn:.5})},
+   f:function(K){return plate([[20,326],[116,320],[122,346],[16,352]],K.d,{inn:.7})+vents(30,330,76,3,5,'#000',.7)+glow(K,'<ellipse cx="14" cy="339" rx="8" ry="12" fill="'+K.g+'" fill-opacity=".75"/>')+
+   plate([[276,372],[336,398],[296,400]],K.s,{inn:.5})+plate([[60,330],[44,258],[94,326]],K.t,{inn:.5})+glow(K,'<rect x="42" y="256" width="3" height="8" fill="#ff4a4a"/>')}}
+};
 addVariants(VEHICLE_LIST,[
- ['neonbrada','Neonbåt','board',2,-1,[]],['guldbrada','Guldbåt','board',0,-1,[]],
- ['blodcykel','Blodbuggy','bike',1,0,[]],['stormcykel','Stormbuggy','bike',3,2,[]],['skuggcykel','Skuggbuggy','bike',7,3,[]],
- ['okenbil','Ökenjeep','jeep',9,-1,[]],['skogsbil','Skogsjeep','jeep',4,1,[]],
- ['vulkantank','Vulkantank','tank',5,3,[]],['istank','Istank','tank',2,4,[]],['guldtank','Guldtank','tank',0,-1,[]],
- ['jaktspindel','Jaktspindel','walker',4,0,[]],
- ['blodheli','Blodhelikopter','heli',1,3,[]],['isheli','Isheli','heli',6,4,[]],
- ['skuggjet','Skuggjet','jet',7,2,[]],['eldjet','Eldjet','jet',5,0,[]],
- ['guldskepp','Guldskepp','ship',0,5,[]],['violskepp','Violett skepp','ship',3,2,[]]
+ ['neonbrada','Torpedbåt','board'],['guldbrada','Pansarbåt','board'],
+ ['blodcykel','Raketbuggy','bike'],['stormcykel','Rambuggy','bike'],['skuggcykel','Spoilerbuggy','bike'],
+ ['okenbil','Ökenjeep','jeep'],['skogsbil','Terrängjeep','jeep'],
+ ['vulkantank','Eldtank','tank'],['istank','Brytartank','tank'],['guldtank','Tungtank','tank'],
+ ['jaktspindel','Jaktspindel','walker'],
+ ['blodheli','Raketheli','heli'],['isheli','Flottörhelikopter','heli'],
+ ['skuggjet','Bombplan','jet'],['eldjet','Interceptor','jet'],
+ ['guldskepp','Kryssare','ship'],['violskepp','Skuggfarkost','ship']
 ],function(s,id){
-  var b=VEHICLES[s[2]];
-  VEHICLES[id]=Object.assign({},b,{back:function(K){return b.back(vK(K,s[3],s[4]))},front:function(K){return b.front(vK(K,s[3],s[4]))}});
+  var b=VEHICLES[s[2]],x=VX[id]||{};
+  VEHICLES[id]=Object.assign({},b,{
+    back:function(K){return (x.b?x.b(K):'')+b.back(K)},
+    front:function(K){return b.front(K)+(x.f?x.f(K):'')}});
 });
 VEHICLE_LIST.sort(function(a,b){return a[2]-b[2]});
 var VMOTOR_LIST=[['m1','Dubbla boosters',3],['m2','Tryckdysa',10],['m3','Plasmamotor',18],['m4','Fusionskärna',27],['m5','Antimateria',37],['m6','Stjärnmotor',47]];
