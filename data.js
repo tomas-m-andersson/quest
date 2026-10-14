@@ -180,7 +180,7 @@ window.SKOLQUEST_DATA = {
       "eq": {
         "pose": "",
         "paint": "",
-        "head": "",
+        "head": "kamhjalm",
         "torso": "",
         "shoulders": "",
         "arms": "",
@@ -219,5 +219,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791991291009
+  "updatedAt": 1791991331549
 };
