@@ -189,6 +189,7 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
+        "vehicle": "blodheli",
         "pet": ""
       },
       "seen": 634,
@@ -210,6 +211,7 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
+        "vehicle": "",
         "pet": ""
       },
       "seen": 1,
@@ -217,5 +219,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791995458011
+  "updatedAt": 1791997569874
 };
