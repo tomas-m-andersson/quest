@@ -197,6 +197,8 @@ h3.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 #gmov.rot .gmflip{display:block}.gmflip{display:none;right:66px}
 #gmov{overflow:hidden}
 #gmfire{position:absolute;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(30px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:radial-gradient(circle at 35% 30%,rgba(255,120,90,.95),rgba(190,40,40,.92));color:#fff;font-size:38px;line-height:1;touch-action:none;box-shadow:0 6px 22px rgba(0,0,0,.55);z-index:3;-webkit-tap-highlight-color:transparent}
+#gmjoy{position:absolute;left:calc(26px + env(safe-area-inset-left,0px));bottom:calc(30px + env(safe-area-inset-bottom,0px));width:120px;height:120px;border-radius:50%;border:2px solid rgba(255,255,255,.45);background:radial-gradient(circle,rgba(255,255,255,.10),rgba(255,255,255,.04));touch-action:none;z-index:3;box-shadow:0 6px 22px rgba(0,0,0,.45);-webkit-tap-highlight-color:transparent}
+#gmjoy i{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.95),rgba(150,190,255,.85));box-shadow:0 3px 12px rgba(0,0,0,.5);pointer-events:none}
 #gmfire:active{transform:scale(.93);filter:brightness(1.2)}
 @media(max-width:380px){.gmcards{grid-template-columns:1fr}}
 
@@ -503,7 +505,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AC</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AD</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3823,7 +3825,7 @@ function gmStart(which){
   var mode=which==='bot'?'shoot':gmModeOf(vit.id);
   var old=document.getElementById('gmov');if(old)old.remove();
   var ov=document.createElement('div');ov.id='gmov';
-  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>';
+  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>'+(mode==='shoot'?'<div id="gmjoy"><i></i></div>':'');
   document.body.appendChild(ov);
   var cv=ov.querySelector('#gmc');
   var g={mode:mode,hid:hid,vid:vit?vit.id:'',vname:vit?vit.name:'Mech',kind:vit?(VEHICLES[vit.id].kind||'ground'):'bot',col:heroColor(h),cv:cv,ctx:cv.getContext('2d'),spr:null,state:'load',score:0,t:0,raf:0,last:0,best:gmBest(hid,mode),hold:false,flash:0,cx:0,ty:320};
@@ -3854,12 +3856,27 @@ function gmStart(which){
   };
   g.onKeyUp=function(e){var k=e.key;if(k==='f'||k==='x'||k==='Enter'){g.firing=false;return}if(k==='ArrowLeft'||k==='a'||k==='ArrowRight'||k==='d'){g.keyX=0;return}if(k===' '||k==='ArrowUp'||k==='w'){if(g.mode!=='shoot')g.hold=false;else g.keyY=0}else if(k==='ArrowDown'||k==='s'){g.keyY=0}};
   window.addEventListener('keydown',g.onKey);window.addEventListener('keyup',g.onKeyUp);
-  cv.addEventListener('pointerdown',function(e){e.preventDefault();if(g.mode==='shoot')gmMove(e);gmPress(true)});
-  cv.addEventListener('pointermove',function(e){if(g.mode==='shoot'&&(e.buttons||e.pointerType==='touch'))gmMove(e)});
+  cv.addEventListener('pointerdown',function(e){e.preventDefault();gmPress(true)});
   cv.addEventListener('pointerup',function(){g.hold=false});
   cv.addEventListener('pointercancel',function(){g.hold=false});
   ov.querySelector('#gmx').addEventListener('click',gmClose);
   ov.querySelector('#gmflip').addEventListener('click',function(e){e.stopPropagation();g.flip=!g.flip;try{localStorage.setItem('mq.flip',g.flip?'1':'0')}catch(x){}g.resize()});
+  var jy=ov.querySelector('#gmjoy');g.jx=0;g.jy=0;
+  if(jy){
+    var jk=jy.firstChild,jid=null,jcx=0,jcy=0,JR=46;
+    var jset=function(e){
+      var dx=e.clientX-jcx,dy=e.clientY-jcy,lx,ly;
+      if(g.vrot){if(g.flip){lx=-dy;ly=dx}else{lx=dy;ly=-dx}}else{lx=dx;ly=dy}
+      var d=Math.sqrt(lx*lx+ly*ly);if(d>JR){lx=lx*JR/d;ly=ly*JR/d;d=JR}
+      jk.style.transform='translate('+lx+'px,'+ly+'px)';
+      var m=d/JR;if(m<.18){g.jx=0;g.jy=0}else{g.jx=lx/JR;g.jy=ly/JR}
+    };
+    jy.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();if(g.state==='ready')gmBegin();
+      jid=e.pointerId;try{jy.setPointerCapture(jid)}catch(x){}
+      var r=jy.getBoundingClientRect();jcx=r.left+r.width/2;jcy=r.top+r.height/2;jset(e)});
+    jy.addEventListener('pointermove',function(e){if(e.pointerId===jid)jset(e)});
+    ['pointerup','pointercancel'].forEach(function(ev){jy.addEventListener(ev,function(e){if(e.pointerId!==jid)return;jid=null;g.jx=0;g.jy=0;jk.style.transform=''})});
+  }
   var fb=ov.querySelector('#gmfire');
   if(fb){
     fb.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();if(g.state==='ready'){gmBegin()}if(g.state==='play'){g.firing=true;if(g.mode==='run'){if(g.fcd<=0)gmRunFire()}else gmSwing(true)}});
@@ -3895,7 +3912,7 @@ function gmClose(){
 }
 function gmUi(kind){
   var u=document.getElementById('gmui');if(!u||!GM)return;var g=GM;
-  var how=g.mode==='flap'?'Tryck för att flaxa':g.mode==='run'?'Tryck för att hoppa (håll för högre hopp) · 🔫-knappen skjuter lådor och drönare':'Dra för att flyga · håll ⚔️-knappen för att slå med '+(g.wname||'nävarna');
+  var how=g.mode==='flap'?'Tryck för att flaxa':g.mode==='run'?'Tryck för att hoppa (håll för högre hopp) · 🔫-knappen skjuter lådor och drönare':'Joysticken till vänster styr · håll ⚔️-knappen för att slå med '+(g.wname||'nävarna');
   if(kind==='load'){u.innerHTML='<div class="gmcen"><b>Laddar…</b></div>';return}
   if(kind==='ready'||kind==='pause'){u.innerHTML='<div class="gmcen"><b>'+esc(g.vname)+'</b><span>'+how+'</span>'+(g.vrot?'<span>↻ Vrid telefonen åt sidan – knappen uppe till höger vänder om bilden</span>':'')+'<span class="gmtap">'+(kind==='pause'?'Pausad – tryck för att fortsätta':'Tryck för att starta')+'</span></div>';return}
   if(kind==='play'){u.innerHTML='';return}
@@ -3905,7 +3922,7 @@ function gmUi(kind){
     document.getElementById('gmmenu').onclick=function(e){e.stopPropagation();gmClose();gameMenu()};
   }
 }
-function gmReset(){var g=GM;if(!g)return;var fbb=document.getElementById('gmfire');if(fbb)fbb.style.display='';gmInit();g.state='ready';g.newBest=false;gmUi('ready');g.last=performance.now()}
+function gmReset(){var g=GM;if(!g)return;var fbb=document.getElementById('gmfire');if(fbb)fbb.style.display='';var jjj=document.getElementById('gmjoy');if(jjj)jjj.style.display='';g.jx=g.jy=0;gmInit();g.state='ready';g.newBest=false;gmUi('ready');g.last=performance.now()}
 function gmBegin(){var g=GM;g.state='play';gmUi('play');g.last=performance.now()}
 function gmPress(down){
   var g=GM;if(!g)return;
@@ -3919,7 +3936,7 @@ function gmPress(down){
 }
 function gmDie(){
   var g=GM;g.state='over';g.flash=1;
-  g.firing=false;var fbb=document.getElementById('gmfire');if(fbb)fbb.style.display='none';
+  g.firing=false;var fbb=document.getElementById('gmfire');if(fbb)fbb.style.display='none';var jjj=document.getElementById('gmjoy');if(jjj)jjj.style.display='none';g.jx=g.jy=0;
   g.newBest=gmSetBest(g.hid,g.mode,g.score);if(g.newBest)g.best=g.score;
   document.getElementById('gmbest').textContent='Rekord '+g.best;
   setTimeout(function(){if(GM===g&&g.state==='over')gmUi('over')},450);
@@ -4102,6 +4119,7 @@ function gmSwing(manual){
 function gmBurstS(x,y,c,n){var g=GM;for(var j=0;j<n;j++)g.parts.push({x:x,y:y,vx:gmRnd(-170,170),vy:gmRnd(-170,170),l:.5,c:c})}
 function gmShoot(dt){
   var g=GM,LW=g.LW,mw=g.mw,i,j;g.sx=(g.sx||0)+120*dt;
+  if(g.jx||g.jy){g.tx+=g.jx*440*dt;g.ty+=g.jy*440*dt}
   if(g.keyY)g.ty=Math.max(60,Math.min(580,g.ty+g.keyY*420*dt));
   if(g.keyX)g.tx=g.tx+g.keyX*420*dt;
   var minx=g.tw*.5+8,maxx=Math.max(minx+40,LW*.66);
