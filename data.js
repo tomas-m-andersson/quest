@@ -201,7 +201,7 @@ window.SKOLQUEST_DATA = {
         "vehicle": "neonbrada",
         "ride": true,
         "vmotor": "m1",
-        "vweapon": "w6",
+        "vweapon": "w5",
         "varmor": "a3",
         "vcolor": "c2",
         "pet": "magmalion"
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1792001823248
+  "updatedAt": 1792001826085
 };
