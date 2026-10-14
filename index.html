@@ -471,7 +471,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT R</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT S</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -1935,10 +1935,49 @@ var PETS={};
 function eyeGlow(K,x,y,w){w=w||7;return glow(K,'<path d="M'+x+' '+y+' L'+(x+w)+' '+(y-2)+' L'+(x+w-1.5)+' '+(y+3.5)+' L'+x+' '+(y+3.5)+'Z" fill="'+K.e+'"/>')}
 function petShadow(){return '<ellipse cx="56" cy="79" rx="44" ry="3.4" fill="#000" fill-opacity=".4"/>'}
 function qLeg(K,x,o){
-  var D=o.far?K.d:K.m;
-  return plate([[x,38],[x+16,38],[x+14,58],[x+2,58]],o.far?K.d:K.s,{inn:o.far?0:.7,hl:!o.far,sw:1})+
-    ci(x+8,58,4,K.d)+plate([[x+1,58],[x+13,58],[x+14,72],[x+4,74]],D,{inn:o.far?0:.7,hl:false,sw:1})+
-    plate([[x-2,72],[x+16,72],[x+19,78],[x-5,78]],o.far?K.d:K.t,{inn:0,hl:false,sw:1});
+  var far=!!o.far,M=far?K.d:K.m,S=far?K.d:K.s,Tt=far?K.d:K.t,i=far?0:.7;
+  return plate([[x-3,33],[x+18,33],[x+23,50],[x+8,57],[x-3,48]],M,{inn:i,hl:!far,sw:1})+
+    (far?'':piston(x+17,40,x+11,60)+rvr(x,38,14,3))+ci(x+9,57,4.8,K.d)+
+    plate([[x+1,58],[x+14,58],[x+18,70],[x+5,72]],M,{inn:i,hl:false,sw:1})+
+    (far?'':plate([[x+2,61],[x+13,61],[x+14,66],[x+4,68]],S,{inn:0,hl:false,sw:.8}))+
+    plate([[x-5,71],[x+20,70],[x+26,79],[x+18,76],[x+12,80],[x+6,76],[x-1,80],[x-8,78]],Tt,{inn:0,hl:false,sw:1});
+}
+function brow(K,x,y,s){s=s||1;return plate([[x-5*s,y-3*s],[x+10*s,y-8*s],[x+10*s,y-3.5*s],[x-5*s,y+1*s]],K.d,{inn:.8,hl:false,sw:.8})}
+function turretP(K,x,y,len,th){return plate([[x-8,y+6],[x+10,y+6],[x+8,y-6],[x-6,y-6]],K.d,{inn:.8,sw:1})+ci(x+1,y,4.6,K.m)+'<g transform="translate('+(2*x-2)+' 0) scale(-1 1)">'+barrel(K,x-2,y-1,len,th)+'</g>'}
+var QEYE={wolf:[16,33],fox:[17,34],lion:[16,35],tiger:[16,33],panther:[17,34],bear:[18,32],rhino:[22,36]};
+var QKIT={wolf:'pod',lion:'cannon',tiger:'blades',panther:'cannon',fox:'pod',bear:'plates',rhino:'plates'};
+function quadX(K,o){
+  var T=o.trim||K.t,e=QEYE[o.head]||[16,33],kit=o.kit||QKIT[o.head]||'pod',s='';
+  s+=plate([[76,30],[96,34],[95,52],[78,54]],K.d,{inn:.8,sw:1})+rvr(80,38,12,3)+vents(80,44,12,2,4,'#000',.6);
+  s+=plate([[26,30],[36,26],[42,46],[28,50]],K.d,{inn:.8,sw:1})+glow(K,'<circle cx="33" cy="42" r="2.8" fill="'+K.e+'"/>');
+  if(kit==='pod')s+=mpod(K,50,12,28,14,4)+plate([[50,26],[78,26],[74,30],[54,30]],K.d,{inn:.5,hl:false});
+  else if(kit==='cannon')s+=turretP(K,64,22,34,4.4);
+  else if(kit==='blades')[0,1,2,3].forEach(function(i){s+=plate([[48+i*12,28],[52+i*12,0],[60+i*12,28]],T,{inn:.6,sw:.9})});
+  else s+=plate([[44,26],[84,24],[88,32],[42,32]],K.d,{inn:.8})+rvr(48,28,36,6)+plate([[48,24],[56,14],[62,24]],T,{inn:0,hl:false,sw:.8})+plate([[70,24],[78,14],[84,24]],T,{inn:0,hl:false,sw:.8});
+  s+=brow(K,e[0],e[1],1)+plate([[e[0]+14,e[1]+10],[e[0]+27,e[1]+16],[e[0]+13,e[1]+18]],T,{inn:0,hl:false,sw:.8});
+  return s;
+}
+function bird(K,o){
+  var B=o.body||K.m,A=o.acc||K.s,T=o.trim||K.t,s=petShadow(),i;
+  if(o.wings==='flame'){s+=glow(K,'<path d="M56 38 C40 20 30 0 38 -10 C50 0 60 10 70 28Z" fill="'+K.e+'" fill-opacity=".9"/><path d="M62 38 C56 14 56 -6 70 -14 C76 6 80 16 88 34Z" fill="'+K.e+'" fill-opacity=".8"/><path d="M70 40 C74 20 86 4 100 -2 C100 14 96 28 90 42Z" fill="'+K.e+'" fill-opacity=".7"/>','F')}
+  else{var tips=[[16,8],[30,-8],[48,-15],[68,-14],[88,-5],[106,12]];
+    for(i=0;i<tips.length;i++){var t=tips[i];s+=plate([[58,40],[t[0],t[1]],[t[0]+12,t[1]+18],[68,46]],i%2?A:B,{inn:.7,hl:false,sw:.9})+plate([[t[0],t[1]],[t[0]+4,t[1]+6],[t[0]+10,t[1]+14],[t[0]+12,t[1]+18]],T,{inn:0,hl:false,sw:.6})}
+    s+=ln('M60 40 L34 -6 M64 42 L70 -14 M66 44 L100 4','#000',1,.4)}
+  s+=plate([[90,50],[122,56],[96,58]],T,{inn:.4,sw:.8})+plate([[92,46],[124,44],[96,52]],A,{inn:.5,sw:.8})+plate([[90,54],[116,70],[94,60]],T,{inn:.4,sw:.8});
+  [0,1].forEach(function(k){var x=48+k*16;s+=plate([[x,56],[x+10,56],[x+12,68],[x+2,68]],K.d,{inn:.7,hl:false,sw:.9})+piston(x+9,58,x+6,68)+plate([[x-8,69],[x+16,69],[x+20,78],[x+14,75],[x+9,79],[x+4,75],[x-1,79],[x-6,76],[x-10,78]],T,{inn:0,hl:false,sw:.9})});
+  s+=plate([[30,42],[58,34],[90,40],[106,54],[64,63],[38,57]],B)+plate([[36,44],[60,38],[84,44],[92,52],[62,57],[44,53]],A,{inn:.72,io:.08})+vents(52,48,26,3,3.4,'#000',.5)+glow(K,'<path d="M46 52 H80" stroke="'+K.e+'" stroke-width="1.8" stroke-linecap="round"/>');
+  s+=plate([[42,32],[64,28],[68,42],[46,44]],K.d,{inn:.8,sw:1})+rvr(48,35,14,3);
+  s+=plate([[22,32],[40,24],[50,34],[46,52],[28,50]],B)+plate([[24,40],[38,36],[44,48],[28,50]],A,{inn:.6,hl:false});
+  if(o.crest)s+=plate([[36,26],[42,4],[50,28]],T,{inn:.5})+plate([[44,28],[62,8],[60,32]],T,{inn:.5});
+  s+=plate([[28,38],[2,43],[9,56],[14,49],[30,48]],T,{inn:.6,sw:1})+plate([[12,49],[8,62],[18,54]],T,{inn:0,hl:false,sw:.8})+brow(K,29,33,1.1)+eyeGlow(K,32,35,6);
+  return s;
+}
+function dragonX(K,o){
+  var T=o.trim||K.t,s='';
+  s+=plate([[76,28],[98,34],[96,52],[78,54]],K.d,{inn:.8,sw:1})+rvr(80,38,14,3)+plate([[26,30],[36,26],[42,46],[28,50]],K.d,{inn:.8,sw:1})+glow(K,'<circle cx="33" cy="42" r="2.8" fill="'+K.e+'"/>');
+  [0,1,2,3,4].forEach(function(i){s+=plate([[44+i*10,28],[48+i*10,8-(i%2)*4],[52+i*10,28]],T,{inn:0,hl:false,sw:.8})});
+  s+=brow(K,17,34,1)+plate([[30,44],[44,50],[30,54]],T,{inn:0,hl:false,sw:.8});
+  return s;
 }
 var QHEADS={
  wolf:function(K,B,A,T){return plate([[22,28],[24,10],[30,28]],B,{inn:.6})+plate([[28,28],[34,12],[36,30]],B,{inn:.6})+plate([[2,42],[10,31],[26,26],[36,32],[34,48],[20,52],[6,50]],B)+plate([[0,42],[12,38],[14,48],[2,50]],A,{inn:.7})+eyeGlow(K,16,33)+'<path d="M2 48 l3 4 l3 -4 M8 49 l3 4 l3 -4" fill="#eef1f7" stroke="#000" stroke-opacity=".4" stroke-width=".4"/>'},
@@ -1949,11 +1988,12 @@ var QHEADS={
  bear:function(K,B,A,T){return ci(20,26,6,B)+ci(38,28,6,B)+plate([[4,38],[14,26],[34,24],[44,34],[40,52],[18,54],[4,48]],B)+plate([[2,40],[14,38],[14,50],[2,50]],A,{inn:.7})+eyeGlow(K,18,32,6)},
  rhino:function(K,B,A,T){return plate([[-2,54],[4,36],[30,28],[42,42],[34,56],[8,58]],B)+plate([[6,44],[-4,20],[16,40]],T,{inn:.5})+plate([[18,40],[16,28],[24,40]],T,{inn:.5})+eyeGlow(K,22,36,6)+plate([[28,28],[36,20],[40,32]],B,{inn:.6})}
 };
-function quad(K,o){
+function quad(K,o){var r=quad0(K,o);return r+quadX(K,o)}
+function quad0(K,o){
   var B=o.body||K.m,A=o.acc||K.s,T=o.trim||K.t,s=petShadow();
   s+=qLeg(K,38,{far:1})+qLeg(K,80,{far:1});
   // svans
-  if(o.tail==='bushy')s+=plate([[96,34],[112,22],[116,6],[106,12],[98,22]],B,{inn:.6})+plate([[108,16],[116,6],[110,22]],T,{inn:.5,hl:false});
+  if(o.tail==='bushy')s+=plate([[96,34],[108,28],[116,10],[124,-4],[112,14],[102,40]],B,{inn:.6})+plate([[112,12],[124,-4],[118,16]],T,{inn:.5,hl:false})+plate([[98,36],[106,32],[104,40]],K.d,{inn:.8,hl:false});
   else if(o.tail==='spike')s+=plate([[96,36],[110,34],[118,24],[112,40],[98,44]],B,{inn:.6})+plate([[110,34],[122,22],[112,42]],T,{inn:0,sw:1});
   else if(o.tail==='flame')s+=glow(K,'<path d="M98 34 C112 30 118 18 112 4 C108 16 100 20 96 28Z" fill="'+K.e+'" fill-opacity=".9"/>');
   else s+=plate([[96,36],[112,40],[110,46],[96,46]],A,{inn:.6})+ci(112,43,3,K.d);
@@ -1969,27 +2009,6 @@ function quad(K,o){
   return s;
 }
 function wing(K,pts,fill,n,dx,dy){var s='';for(var i=0;i<n;i++){var k=i/(n-1||1);s+=plate([[pts[0][0],pts[0][1]],[pts[1][0]+dx*k,pts[1][1]+dy*k],[pts[2][0]+dx*k,pts[2][1]+dy*k]],i%2?K.s:fill,{inn:.7,hl:false,sw:.9})}return s}
-function bird(K,o){
-  var B=o.body||K.m,A=o.acc||K.s,T=o.trim||K.t,s=petShadow();
-  // vingar
-  var wl='';
-  if(o.wings==='flame'){wl=glow(K,'<path d="M56 38 C40 20 30 0 38 -10 C50 0 60 10 70 28Z" fill="'+K.e+'" fill-opacity=".9"/><path d="M62 38 C56 14 56 -6 70 -14 C76 6 80 16 88 34Z" fill="'+K.e+'" fill-opacity=".8"/><path d="M70 40 C74 20 86 4 100 -2 C100 14 96 28 90 42Z" fill="'+K.e+'" fill-opacity=".7"/>','F')}
-  else{
-    wl+=plate([[56,38],[34,14],[30,0],[48,6],[62,22]],A,{inn:.7})+plate([[60,38],[48,10],[58,-6],[70,6],[74,28]],B,{inn:.7})+plate([[68,40],[66,12],[82,0],[92,14],[86,38]],A,{inn:.7})+plate([[76,42],[86,22],[104,16],[100,36]],B,{inn:.7});
-    wl+=ln('M44 10 L60 30 M60 0 L68 26 M84 6 L82 30','#000',1,.4);
-  }
-  s+=wl;
-  // svansfjädrar
-  s+=plate([[88,50],[108,62],[104,70],[86,58]],T,{inn:.5})+plate([[88,46],[112,52],[110,58],[88,54]],A,{inn:.6});
-  // ben
-  s+='<path d="M54 56 L52 70 M64 56 L66 70" stroke="'+K.dc+'" stroke-width="3" stroke-linecap="round"/>'+plate([[46,70],[60,70],[58,76],[42,76]],T,{inn:0,sw:.8})+plate([[62,70],[76,70],[74,76],[60,76]],T,{inn:0,sw:.8});
-  s+=plate([[34,40],[60,32],[86,38],[98,52],[62,60],[40,54]],B);
-  s+=plate([[44,42],[66,38],[82,42],[88,50],[60,54],[48,50]],A,{inn:.7,io:.08});
-  s+=plate([[24,30],[36,22],[46,32],[42,46],[28,46]],B);
-  if(o.crest)s+=plate([[34,24],[40,8],[44,26]],T,{inn:.5})+plate([[40,26],[50,10],[50,28]],T,{inn:.5});
-  s+=plate([[26,34],[6,42],[26,44]],T,{inn:.6})+eyeGlow(K,30,33,6);
-  return s;
-}
 function drone(K,x,y,r,o){o=o||{};var s='';s+=glow(K,'<ellipse cx="'+x+'" cy="'+(y+r+4)+'" rx="'+(r*.8)+'" ry="3" fill="'+K.e+'" fill-opacity=".6"/>');
   s+='<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+K.d+'" stroke="#000" stroke-opacity=".7" stroke-width="1.2"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.82)+'" fill="'+K.m+'" stroke="#000" stroke-opacity=".5" stroke-width="1"/><ellipse cx="'+x+'" cy="'+y+'" rx="'+(r*1.35)+'" ry="'+(r*.3)+'" fill="none" stroke="'+K.tc+'" stroke-width="2.2"/>'+ci(x,y,r*.38,'#0a0e14')+glow(K,'<circle cx="'+x+'" cy="'+y+'" r="'+(r*.22)+'" fill="'+K.e+'"/>');
   return s}
@@ -2077,7 +2096,8 @@ PETS.turtle=function(K){
   s+=ln('M50 38 L52 62 M66 36 L68 62 M80 42 L80 62','#000',1.2,.5);
   s+=plate([[56,22],[74,22],[76,34],[54,34]],K.d,{inn:.8})+plate([[72,24],[104,22],[104,28],[72,30]],K.t,{inn:.5,hl:false})+glow(K,'<circle cx="106" cy="25" r="3" fill="'+K.e+'"/>');
   return s};
-function dragon(K,o){
+function dragon(K,o){return dragon0(K,o)+dragonX(K,o)}
+function dragon0(K,o){
   var B=o.body||K.m,A=o.acc||K.s,T=o.trim||K.t,s=petShadow();
   if(o.halo)s+='<circle cx="40" cy="22" r="22" fill="none" stroke="'+K.tc+'" stroke-width="2.4"/><circle cx="40" cy="22" r="26" fill="none" stroke="'+K.g+'" stroke-width="1" stroke-dasharray="3 4"/>';
   // vingar
@@ -2105,6 +2125,22 @@ PETS.hydra=function(K){
   s+=head(22,12,-14)+head(50,2,0)+head(78,10,14);
   return s};
 PETS.cyclops=PETS.orb;
+
+(function(){
+  function wrap(id,f){var o=PETS[id];PETS[id]=function(K){return o(K)+f(K)}}
+  wrap('orb',function(K){var s='';[[-1,0],[1,0]].forEach(function(d){var x=56+d[0]*28;s+=plate([[x-5,32],[x+5,32],[x+5,44],[x-5,44]],K.d,{inn:.8,sw:1})+'<path d="M'+x+' 44 V54" stroke="#05070b" stroke-width="4"/><path d="M'+x+' 44 V54" stroke="#aab4c8" stroke-width="2"/>'});for(var i=0;i<6;i++){var a=(-150+i*24)*Math.PI/180;s+=plate([[56+Math.cos(a)*22,34+Math.sin(a)*22],[56+Math.cos(a)*34,34+Math.sin(a)*34],[56+Math.cos(a+.14)*22,34+Math.sin(a+.14)*22]],K.t,{inn:0,hl:false,sw:.7})}return s});
+  wrap('shielddrone',function(K){return turretP(K,56,22,26,3.4)+plate([[18,38],[0,44],[18,52]],K.t,{inn:.4,sw:.8})+plate([[94,38],[112,44],[94,52]],K.t,{inn:.4,sw:.8})+rvr(30,40,52,8)});
+  wrap('quadcopter',function(K){return '<g transform="translate(112 0) scale(-1 1)">'+barrel(K,52,62,22,3)+'</g>'+mpod(K,36,54,12,8,2)+mpod(K,64,54,12,8,2)});
+  wrap('owl',function(K){return brow(K,32,20,1.4)+'<g transform="translate(112 0) scale(-1 1)">'+brow(K,32,20,1.4)+'</g>'+plate([[28,72],[22,80],[34,76]],K.t,{inn:0,hl:false,sw:.8})+plate([[84,72],[90,80],[78,76]],K.t,{inn:0,hl:false,sw:.8})+rvr(40,52,32,6)});
+  wrap('cobra',function(K){return plate([[40,10],[46,-4],[54,10]],K.t,{inn:.5,sw:.8})+plate([[52,12],[62,0],[62,16]],K.t,{inn:.5,sw:.8})+brow(K,32,21,1)});
+  wrap('serpent',function(K){return brow(K,22,15,1)});
+  wrap('scorpion',function(K){return turretP(K,66,38,26,3.6)+plate([[84,22],[96,10],[92,28]],K.t,{inn:.4,sw:.8})});
+  wrap('spider',function(K){return turretP(K,56,22,24,3.4)+plate([[48,40],[44,52],[54,44]],K.t,{inn:0,hl:false,sw:.8})+plate([[64,40],[68,52],[58,44]],K.t,{inn:0,hl:false,sw:.8})});
+  wrap('beetle',function(K){return plate([[26,46],[0,34],[4,50],[24,56]],K.t,{inn:.4,sw:1})+turretP(K,64,34,24,3.6)+rvr(40,44,50,9)});
+  wrap('crab',function(K){return turretP(K,56,42,26,3.6)+rvr(30,60,52,9)});
+  wrap('turtle',function(K){var s='';[0,1,2,3].forEach(function(i){s+=plate([[40+i*14,38+(i%2)*-2],[45+i*14,24+(i%2)*-2],[50+i*14,38]],K.t,{inn:0,hl:false,sw:.8})});return s+rvr(34,62,58,9)});
+  wrap('hydra',function(K){return brow(K,16,15,1)+brow(K,44,5,1)+brow(K,72,13,1)+plate([[76,30],[96,34],[95,52],[78,54]],K.d,{inn:.8,sw:1})});
+})();
 var PET_LIST=[['orb','Spaningsdrönare',2],['wolf','Mech-varg',3],['falcon','Mech-falk',4],['shielddrone','Skölddrönare',5],['cobra','Mech-kobra',6],['lion','Mech-lejon',7],['scorpion','Mech-skorpion',8],['quadcopter','Kvadrokopter',9],['eagle','Mech-örn',10],['tiger','Mech-tiger',11],['spider','Mech-spindel',12],['panther','Mech-panter',13],['fox','Mech-räv',14],['crab','Mech-krabba',15],['owl','Mech-uggla',16],['serpent','Mech-orm',17],['bear','Mech-björn',18],['beetle','Mech-skalbagge',20],['rhino','Mech-noshörning',22],['turtle','Mech-sköldpadda',24],['phoenix','Fenix',26],['drake','Mech-drake',28],['hydra','Hydra',31],['thunderbird','Åskfågel',34],['shadowpanther','Skuggpanter',37],['crystalwolf','Kristallvarg',40],['skydragon','Himmelsdrake',43],['magmalion','Magmalejon',46],['starphoenix','Stjärnfenix',48],['eternaldragon','Evighetsdrake',50]];
 
 var PAINTS=[
