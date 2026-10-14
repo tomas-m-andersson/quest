@@ -155,7 +155,11 @@ window.SKOLQUEST_DATA = {
     "setupDone": true
   },
   "checks": {
-    "a": {},
+    "a": {
+      "2026-10-14": [
+        "q2"
+      ]
+    },
     "b": {}
   },
   "claimed": {
@@ -210,5 +214,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791924165471
+  "updatedAt": 1791973362426
 };
