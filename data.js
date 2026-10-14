@@ -204,7 +204,7 @@ window.SKOLQUEST_DATA = {
         "vweapon": "w6",
         "varmor": "a3",
         "vcolor": "c0",
-        "pet": "eternaldragon"
+        "pet": "panther"
       },
       "seen": 634,
       "pseen": 634,
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1792001285330
+  "updatedAt": 1792001306341
 };
