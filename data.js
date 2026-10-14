@@ -155,9 +155,7 @@ window.SKOLQUEST_DATA = {
     "setupDone": true
   },
   "checks": {
-    "a": {
-      "2026-10-14": []
-    },
+    "a": {},
     "b": {}
   },
   "claimed": {
@@ -165,14 +163,7 @@ window.SKOLQUEST_DATA = {
     "b": []
   },
   "boosts": {
-    "a": [
-      {
-        "id": "bmv89bw29jvi",
-        "xp": 500000,
-        "note": "Extra boost",
-        "date": "2026-10-14"
-      }
-    ],
+    "a": [],
     "b": []
   },
   "avatar": {
@@ -180,21 +171,21 @@ window.SKOLQUEST_DATA = {
       "eq": {
         "pose": "",
         "paint": "",
-        "head": "kamhjalm",
-        "torso": "samurai",
+        "head": "",
+        "torso": "",
         "shoulders": "",
-        "arms": "kanonarm",
+        "arms": "",
         "waist": "",
         "legs": "",
         "back": "",
-        "weapon": "blodkatana",
+        "weapon": "",
         "offhand": "",
         "aura": "",
         "bg": "",
-        "pet": "scorpion"
+        "pet": ""
       },
-      "seen": 634,
-      "pseen": 634,
+      "seen": 1,
+      "pseen": 1,
       "petNames": {}
     },
     "b": {
@@ -219,5 +210,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791991338585
+  "updatedAt": 1791991356753
 };
