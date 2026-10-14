@@ -190,7 +190,7 @@ window.SKOLQUEST_DATA = {
         "aura": "",
         "bg": "",
         "vehicle": "board",
-        "ride": false,
+        "ride": true,
         "vmotor": "m1",
         "vweapon": "w6",
         "varmor": "a3",
@@ -229,5 +229,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791997907229
+  "updatedAt": 1791997926634
 };
