@@ -1,5 +1,5 @@
 /* Mech Quest service worker: appen startar offline, men nya versioner hämtas först när det finns nät. */
-var CACHE = 'mechquest-v2';
+var CACHE = 'mechquest-v3';
 var SHELL = ['./', './index.html', './data.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {
