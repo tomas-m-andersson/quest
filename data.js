@@ -181,9 +181,9 @@ window.SKOLQUEST_DATA = {
         "pose": "",
         "paint": "",
         "head": "kamhjalm",
-        "torso": "",
+        "torso": "samurai",
         "shoulders": "",
-        "arms": "",
+        "arms": "kanonarm",
         "waist": "",
         "legs": "",
         "back": "",
@@ -219,5 +219,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791991331549
+  "updatedAt": 1791991335237
 };
