@@ -262,7 +262,7 @@ details[open] summary::after{content:"–"}
 .stage{position:relative;max-width:440px;margin:0 auto 12px;border-radius:14px;overflow:hidden;border:1px solid var(--line2);
   background:radial-gradient(120% 90% at 50% 38%,color-mix(in srgb,var(--c) 26%,#10141c),#07090e 78%);box-shadow:0 0 36px -14px var(--c)}
 .stagefx svg{display:block;width:100%;height:auto}
-.stagetop{position:absolute;left:0;right:0;top:0;padding:12px 12px 26px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;background:linear-gradient(180deg,rgba(5,7,12,.88),rgba(5,7,12,0))}
+.stage{display:flex;flex-direction:column}.stagefx{order:2}.stagetop{order:1;position:relative;padding:12px 12px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .sinfo{min-width:0}
 .stagetop .pname{text-shadow:0 2px 8px #000}
 .stagetop .prank{margin:1px 0 4px}
@@ -471,7 +471,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT S</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT U</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2495,7 +2495,7 @@ addVariants(BG_LIST,[
 [HEAD_LIST,TORSO_LIST,SHOULDER_LIST,ARM_LIST,WAIST_LIST,LEG_LIST,BACK_LIST,WEAPON_LIST,OFFHAND_LIST,AURA_LIST,BG_LIST].forEach(function(l){l.sort(function(a,b){return a[2]-b[2]})});
 
 /* ===================== FORDON ===================== */
-var VEHICLES={},VEH_VB='-20 160 340 260',VEH_PET_VB='-20 160 460 260',VSC=1;
+var VEHICLES={},VEH_VB='-20 160 340 260',VEH_PET_VB='-95 160 415 260',VSC=1;
 function vfl(K,x,y,rx,ry){return '<g class="vfl">'+glow(K,'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="'+K.e+'"/>')+'</g>'}
 function wheel(K,x,y,r){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#0d1018" stroke="#05070b" stroke-width="1.4"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.62)+'" fill="'+K.d+'" stroke="#05070b" stroke-opacity=".6"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.28)+'" fill="'+K.t+'" stroke="#05070b" stroke-opacity=".6"/>'+ln('M'+(x-r*.55)+' '+y+' H'+(x+r*.55)+' M'+x+' '+(y-r*.55)+' V'+(y+r*.55),'#000',1.4,.45)+'<path d="M'+(x-r*.85)+' '+(y-r*.35)+' A'+r*.9+' '+r*.9+' 0 0 1 '+(x-r*.2)+' '+(y-r*.88)+'" stroke="#fff" stroke-opacity=".25" stroke-width="1.4" fill="none"/>'}
 function riv(){return ''}
@@ -2907,7 +2907,7 @@ function mechOpts(hid,eq,lvl){
 }
 /* ===== POSER, SLITAGE OCH TUFFARE PROPORTIONER ===== */
 var T2={d:34,sy:1.16,sxL:.9,sxU:.95,head:.88,k:.84,tx:24,ty:44};
-var DEF_VB='-25 -85 350 505',PET_VB='-25 -85 420 505';
+var DEF_VB='-25 -85 350 505',PET_VB='-85 -85 395 505';
 function vbFor(o){return o&&o.vehicle?(o.pet?VEH_PET_VB:VEH_VB):(o&&o.pet?PET_VB:DEF_VB)}
 function rotPt(pt,a,c){var r=a*Math.PI/180,dx=pt[0]-c[0],dy=pt[1]-c[1];return [c[0]+dx*Math.cos(r)-dy*Math.sin(r),c[1]+dx*Math.sin(r)+dy*Math.cos(r)]}
 function capOf(fn,K){CAP=null;fn(K);var c=CAP;c.K=K;return c}
@@ -2962,7 +2962,7 @@ function mechRender(o,size,vb){
   var LO='translate(150 406) scale('+t.sxL+' '+t.sy+') translate(-150 -406)';
   var s='<svg viewBox="'+vb+'" width="'+size+'" height="'+Math.round(size*p[3]/p[2])+'" aria-hidden="true" focusable="false">'+K.defs.replace('</defs>',gritDefs(id)+'</defs>');
   if(o.bg){var bk=Math.max(p[2]/300,p[3]/420);s+='<g transform="translate('+(p[0]+(p[2]-300*bk)/2).toFixed(1)+' '+(p[1]+(p[3]-420*bk)/2).toFixed(1)+') scale('+bk.toFixed(3)+')">'+BGS[o.bg](K)+'</g>'}
-  var sh=o.pet?-6:0;
+  var sh=0;
   s+='<g transform="translate('+(t.tx+sh)+' '+t.ty+') scale('+t.k+')">';
   if(o.aura)s+=AURAS[o.aura](K);
   if(useV)s+='<ellipse cx="150" cy="406" rx="'+(VH.w*.5+18)+'" ry="'+(VH.lift?8:11)+'" fill="url(#'+id+'sh)" fill-opacity="'+(VH.lift?.6:1)+'"/>';
@@ -3005,8 +3005,8 @@ function mechRender(o,size,vb){
     s+=fxFront(id,K);s+=formFx(K,o.form||0);
   }
   s+='</g>';
-  if(o.pet){var pp=petPlace(o.pet);
-    s+='<g transform="translate('+(t.tx+(useV?70:0))+' '+t.ty+') scale('+t.k+')"><ellipse cx="'+(408-pp.w/2).toFixed(1)+'" cy="406" rx="'+(pp.w*.5).toFixed(1)+'" ry="6" fill="url(#'+id+'sh)"/><g transform="translate('+pp.x.toFixed(1)+' '+pp.y.toFixed(1)+') scale('+pp.sc.toFixed(3)+')">'+PETS[o.pet](K)+'</g></g>';}
+  if(o.pet){var pp=petPlace(o.pet),pb=PETBB[o.pet]||[0,0,110,80],R=useV?-4:52,xr=R+pb[0]*pp.sc;
+    s+='<g transform="translate('+t.tx+' '+t.ty+') scale('+t.k+')"><ellipse cx="'+(R-pp.w/2).toFixed(1)+'" cy="406" rx="'+(pp.w*.5).toFixed(1)+'" ry="6" fill="url(#'+id+'sh)"/><g transform="translate('+xr.toFixed(1)+' '+pp.y.toFixed(1)+') scale('+(-pp.sc).toFixed(3)+' '+pp.sc.toFixed(3)+')">'+PETS[o.pet](K)+'</g></g>';}
   return s+'</svg>';
 }
 function avatarSvg(hid,size,eq,lvl,vb){return mechRender(mechOpts(hid,eq,lvl),size,vb)}
