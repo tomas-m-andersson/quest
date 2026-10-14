@@ -191,7 +191,7 @@ window.SKOLQUEST_DATA = {
         "bg": "",
         "vehicle": "okenbil",
         "ride": false,
-        "vmotor": "",
+        "vmotor": "m3",
         "vweapon": "",
         "varmor": "",
         "vcolor": "",
@@ -229,5 +229,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791997863407
+  "updatedAt": 1791997867199
 };
