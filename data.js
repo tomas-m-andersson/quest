@@ -189,7 +189,7 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "",
         "bg": "",
-        "vehicle": "violskepp",
+        "vehicle": "board",
         "ride": false,
         "vmotor": "m1",
         "vweapon": "w6",
@@ -229,5 +229,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1791997904557
+  "updatedAt": 1791997907229
 };
