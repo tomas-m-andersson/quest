@@ -202,7 +202,7 @@ window.SKOLQUEST_DATA = {
         "ride": true,
         "vmotor": "m5",
         "vweapon": "w5",
-        "varmor": "a4",
+        "varmor": "",
         "vcolor": "c2",
         "pet": "magmalion"
       },
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1792001830173
+  "updatedAt": 1792001834754
 };
