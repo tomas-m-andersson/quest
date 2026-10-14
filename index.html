@@ -501,7 +501,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT Z</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT Å</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3789,7 +3789,7 @@ function gmStart(which){
   var mode=which==='bot'?'shoot':gmModeOf(vit.id);
   var old=document.getElementById('gmov');if(old)old.remove();
   var ov=document.createElement('div');ov.id='gmov';
-  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><div id="gmui"></div>'+(mode==='run'?'<button class="gmfire" id="gmfire" aria-label="Skjut">🔫</button>':'');
+  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><div id="gmui"></div>'+'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>';
   document.body.appendChild(ov);
   var cv=ov.querySelector('#gmc');
   var g={mode:mode,hid:hid,vid:vit?vit.id:'',vname:vit?vit.name:'Mech',kind:vit?(VEHICLES[vit.id].kind||'ground'):'bot',col:heroColor(h),cv:cv,ctx:cv.getContext('2d'),spr:null,state:'load',score:0,t:0,raf:0,last:0,best:gmBest(hid,mode),hold:false,flash:0,cx:0,ty:320};
@@ -3805,7 +3805,7 @@ function gmStart(which){
   window.addEventListener('resize',g.resize);
   g.onKey=function(e){
     var k=e.key;if(k==='Escape'){gmClose();return}
-    if((k==='f'||k==='x'||k==='Enter')&&g.mode==='run'){e.preventDefault();if(g.state==='ready')gmBegin();g.firing=true;return}
+    if(k==='f'||k==='x'||k==='Enter'){e.preventDefault();if(g.state==='ready')gmBegin();g.firing=true;if(g.mode==='shoot'&&g.state==='play')gmSwing(true);return}
     if(k===' '&&g.mode==='shoot'){e.preventDefault();if(g.state==='ready')gmBegin();else gmSwing(true);return}
     if(k==='ArrowLeft'||k==='a'){e.preventDefault();g.keyX=-1;return}
     if(k==='ArrowRight'||k==='d'){e.preventDefault();g.keyX=1;return}
@@ -3821,7 +3821,7 @@ function gmStart(which){
   ov.querySelector('#gmx').addEventListener('click',gmClose);
   var fb=ov.querySelector('#gmfire');
   if(fb){
-    fb.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();if(g.state==='ready'){gmBegin()}if(g.state==='play'){g.firing=true;if(g.fcd<=0)gmRunFire()}});
+    fb.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();if(g.state==='ready'){gmBegin()}if(g.state==='play'){g.firing=true;if(g.mode==='run'){if(g.fcd<=0)gmRunFire()}else gmSwing(true)}});
     ['pointerup','pointerleave','pointercancel'].forEach(function(ev){fb.addEventListener(ev,function(){g.firing=false})});
   }
   g.vis=function(){if(document.hidden&&g.state==='play'){g.state='ready';gmUi('pause')}};
@@ -3835,7 +3835,7 @@ function gmStart(which){
   });
   gmUi('load');
 }
-function gmMove(e){var g=GM;if(!g)return;g.tx=e.clientX/g.s-14;g.ty=e.clientY/g.s-46}
+function gmMove(e){var g=GM;if(!g)return;g.tx=e.clientX/g.s-14;g.ty=e.clientY/g.s-((g.thh||112)/2+40)}
 function gmClose(){
   var g=GM;if(!g)return;cancelAnimationFrame(g.raf);
   window.removeEventListener('resize',g.resize);window.removeEventListener('keydown',g.onKey);window.removeEventListener('keyup',g.onKeyUp);document.removeEventListener('visibilitychange',g.vis);
@@ -3843,7 +3843,7 @@ function gmClose(){
 }
 function gmUi(kind){
   var u=document.getElementById('gmui');if(!u||!GM)return;var g=GM;
-  var how=g.mode==='flap'?'Tryck för att flaxa':g.mode==='run'?'Tryck för att hoppa (håll för högre hopp) · 🔫-knappen skjuter lådor och drönare':'Dra för att flyga · mechen slår automatiskt med '+(g.wname||'nävarna')+' – tryck för att slå själv';
+  var how=g.mode==='flap'?'Tryck för att flaxa':g.mode==='run'?'Tryck för att hoppa (håll för högre hopp) · 🔫-knappen skjuter lådor och drönare':'Dra för att flyga · mechen slår automatiskt med '+(g.wname||'nävarna')+' – eller håll ⚔️-knappen för att slå själv';
   if(kind==='load'){u.innerHTML='<div class="gmcen"><b>Laddar…</b></div>';return}
   if(kind==='ready'||kind==='pause'){u.innerHTML='<div class="gmcen"><b>'+esc(g.vname)+'</b><span>'+how+'</span><span class="gmtap">'+(kind==='pause'?'Pausad – tryck för att fortsätta':'Tryck för att starta')+'</span></div>';return}
   if(kind==='play'){u.innerHTML='';return}
@@ -4032,6 +4032,7 @@ function gmShoot(dt){
   g.x+=(g.tx-g.x)*Math.min(1,dt*10);g.y+=(g.ty-g.y)*Math.min(1,dt*10);
   if(g.inv>0)g.inv-=dt;
   if(g.cdT>0)g.cdT-=dt;
+  if(g.firing&&g.cdT<=0)gmSwing(true);
   if(g.atk>=0){g.atk+=dt;if(g.atk>.2)g.atk=-1}
   var hx=g.x+g.tw*.16,hy=g.y;
   if(g.cdT<=0){var near=false;
