@@ -635,7 +635,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BH</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BI</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3842,6 +3842,7 @@ function petPlay(g,cls){
 }
 var pbT=0;
 function petBubble(g,html,ms){
+  return; /* pratbubblor borttagna */
   var b=document.getElementById('pbub');if(!b){b=document.createElement('div');b.id='pbub';document.body.appendChild(b)}
   b.innerHTML=html;var r=g.getBoundingClientRect(),x=Math.max(104,Math.min(window.innerWidth-104,r.left+r.width/2)),below=r.top<70;
   b.className=below?'below':'';b.style.left=x+'px';b.style.top=(below?r.bottom+8:r.top-6)+'px';
