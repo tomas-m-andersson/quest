@@ -204,12 +204,18 @@ window.SKOLQUEST_DATA = {
         "vweapon": "w3",
         "varmor": "",
         "vcolor": "c6",
-        "pet": "phoenix"
+        "pet": "phoenix",
+        "petacc": "ring"
       },
       "seen": 634,
       "pseen": 634,
       "petNames": {
         "phoenix": "Olle"
+      },
+      "care": {
+        "bond": 0,
+        "fed": "",
+        "played": ""
       }
     },
     "b": {
@@ -236,12 +242,18 @@ window.SKOLQUEST_DATA = {
         "vweapon": "",
         "varmor": "",
         "vcolor": "",
-        "pet": ""
+        "pet": "",
+        "petacc": ""
       },
       "seen": 1,
       "pseen": 1,
-      "petNames": {}
+      "petNames": {},
+      "care": {
+        "bond": 0,
+        "fed": "",
+        "played": ""
+      }
     }
   },
-  "updatedAt": 1792087741455
+  "updatedAt": 1792088190474
 };
