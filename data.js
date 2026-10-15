@@ -238,7 +238,7 @@ window.SKOLQUEST_DATA = {
         "back": "raketpack",
         "weapon": "gatling",
         "offhand": "",
-        "aura": "",
+        "aura": "pulse",
         "bg": "",
         "emblem": "",
         "banner": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088732228
+  "updatedAt": 1792088735836
 };
