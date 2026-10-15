@@ -232,7 +232,7 @@ window.SKOLQUEST_DATA = {
         "head": "valkyria",
         "torso": "kedjebrost",
         "shoulders": "horned",
-        "arms": "",
+        "arms": "ljusarmar",
         "waist": "",
         "legs": "",
         "back": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088693090
+  "updatedAt": 1792088696694
 };
