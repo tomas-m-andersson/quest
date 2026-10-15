@@ -231,7 +231,7 @@ window.SKOLQUEST_DATA = {
         "paint": "blue",
         "head": "valkyria",
         "torso": "kedjebrost",
-        "shoulders": "",
+        "shoulders": "stapelplat",
         "arms": "",
         "waist": "",
         "legs": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088683859
+  "updatedAt": 1792088689600
 };
