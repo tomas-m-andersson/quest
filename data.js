@@ -229,7 +229,7 @@ window.SKOLQUEST_DATA = {
       "eq": {
         "pose": "",
         "paint": "blue",
-        "head": "",
+        "head": "valkyria",
         "torso": "",
         "shoulders": "",
         "arms": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088673700
+  "updatedAt": 1792088680392
 };
