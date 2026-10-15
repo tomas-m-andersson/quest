@@ -246,7 +246,7 @@ window.SKOLQUEST_DATA = {
         "vehicle": "",
         "ride": false,
         "vmotor": "m2",
-        "vweapon": "",
+        "vweapon": "w2",
         "varmor": "",
         "vcolor": "c10",
         "pet": "spider",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088807925
+  "updatedAt": 1792088809590
 };
