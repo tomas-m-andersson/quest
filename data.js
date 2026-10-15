@@ -198,7 +198,7 @@ window.SKOLQUEST_DATA = {
         "emblem": "dragon",
         "banner": "kungs",
         "special": "thunder",
-        "vehicle": "guldbrada",
+        "vehicle": "okenbil",
         "ride": true,
         "vmotor": "m4",
         "vweapon": "w3",
@@ -255,5 +255,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088586950
+  "updatedAt": 1792088589013
 };
