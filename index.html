@@ -244,6 +244,11 @@ h3.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 .frow .num{width:72px}
 .frow label{color:var(--mute);font-size:15.5px;flex:1}
 .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.kpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 4px}
+.kk{height:58px;display:grid;place-items:center;font:700 24px var(--head);color:var(--text);background:var(--p2);border:1px solid var(--line2);border-radius:10px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.kk:active{background:rgba(43,212,240,.18);border-color:var(--c);transform:scale(.95)}
+.kk.kx{color:var(--mute);font-size:20px}
+.pin[readonly]{caret-color:transparent}
 .pin{font-size:26px!important;letter-spacing:.4em;text-align:center;width:100%}
 .err{color:var(--red);text-align:center;min-height:20px;font-size:15px;margin-top:6px}
 .shake{animation:shake .3s}
@@ -630,7 +635,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BG</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BH</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3549,7 +3554,18 @@ function requirePin(){
   return new Promise(function(res){
     if(Date.now()<parentUntil){res(true);return}
     openModal('<div class="sheet" style="max-width:360px"><h4>🔐 Föräldrakod</h4><input class="pin" id="pinin" type="password" inputmode="numeric" autocomplete="off" maxlength="12" style="width:100%"><div class="err" id="pinerr"></div><div class="acts"><button class="btn" id="pincancel">Avbryt</button><button class="btn pri" id="pinok">OK</button></div></div>');
-    var inp=$('#pinin');inp.focus();
+    var inp=$('#pinin');
+    var touch=window.matchMedia&&window.matchMedia('(pointer:coarse)').matches;
+    if(touch){
+      inp.readOnly=true;inp.setAttribute('inputmode','none');
+      var kp=document.createElement('div');kp.className='kpad';
+      kp.innerHTML=['1','2','3','4','5','6','7','8','9','C','0','B'].map(function(k){return '<button type="button" class="kk'+(k==='C'||k==='B'?' kx':'')+'" data-k="'+k+'" aria-label="'+(k==='B'?'Radera':k==='C'?'Rensa':k)+'">'+(k==='B'?'<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11a1 1 0 011 1v12a1 1 0 01-1 1H9l-6-7z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/></svg>':k==='C'?'C':k)+'</button>'}).join('');
+      inp.parentNode.insertBefore(kp,$('#pinerr'));
+      kp.addEventListener('click',function(e){var b=e.target.closest('.kk');if(!b)return;var k=b.dataset.k;
+        if(k==='B')inp.value=inp.value.slice(0,-1);else if(k==='C')inp.value='';else if(inp.value.length<12)inp.value+=k;
+        $('#pinerr').textContent='';
+        if(S.settings.pin&&inp.value.length===String(S.settings.pin).length)setTimeout(ok,120)});
+    }else inp.focus();
     function ok(){
       if(inp.value===S.settings.pin){parentUntil=Date.now()+5*60*1000;closeModal();res(true)}
       else{$('#pinerr').textContent='Fel kod';var s=$('.sheet');s.classList.remove('shake');void s.offsetWidth;s.classList.add('shake');inp.value='';inp.focus()}
