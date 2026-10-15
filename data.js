@@ -205,7 +205,7 @@ window.SKOLQUEST_DATA = {
         "emblem": "dragon",
         "banner": "kungs",
         "special": "thunder",
-        "vehicle": "guldskepp",
+        "vehicle": "tank",
         "ride": true,
         "vmotor": "m4",
         "vweapon": "w3",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792091710223
+  "updatedAt": 1792091730264
 };
