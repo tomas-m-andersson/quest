@@ -192,7 +192,7 @@ window.SKOLQUEST_DATA = {
         "legs": "",
         "back": "",
         "weapon": "magmahammare",
-        "offhand": "",
+        "offhand": "mirror",
         "aura": "",
         "bg": "",
         "emblem": "dragon",
@@ -241,5 +241,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1792055889978
+  "updatedAt": 1792086434554
 };
