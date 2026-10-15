@@ -205,7 +205,7 @@ window.SKOLQUEST_DATA = {
         "varmor": "",
         "vcolor": "c6",
         "pet": "phoenix",
-        "petacc": "ring"
+        "petacc": "sparkle"
       },
       "seen": 634,
       "pseen": 634,
@@ -255,5 +255,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088190474
+  "updatedAt": 1792088194850
 };
