@@ -234,7 +234,7 @@ window.SKOLQUEST_DATA = {
         "shoulders": "horned",
         "arms": "ljusarmar",
         "waist": "kedjekjol",
-        "legs": "",
+        "legs": "guard",
         "back": "",
         "weapon": "blodkatana",
         "offhand": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088700960
+  "updatedAt": 1792088705445
 };
