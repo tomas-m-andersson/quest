@@ -527,7 +527,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AM</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AN</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2557,6 +2557,7 @@ addVariants(BG_LIST,[
 /* ===================== FORDON ===================== */
 var VEHICLES={},VEH_VB='-20 160 340 260',VEH_PET_VB='-95 160 415 260',VSC=1;
 function vfl(K,x,y,rx,ry){return '<g class="vfl">'+glow(K,'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="'+K.e+'"/>')+'</g>'}
+var VPM=false;function vpmark(){return VPM?'<!--VPAT-->':''}
 var VREC=null;function vrec(s){if(VREC)VREC.push(s);return s}
 function wheel(K,x,y,r){return vrec(wheel0(K,x,y,r))}
 function wheel0(K,x,y,r){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#0d1018" stroke="#05070b" stroke-width="1.4"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.62)+'" fill="'+K.d+'" stroke="#05070b" stroke-opacity=".6"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.28)+'" fill="'+K.t+'" stroke="#05070b" stroke-opacity=".6"/>'+ln('M'+(x-r*.55)+' '+y+' H'+(x+r*.55)+' M'+x+' '+(y-r*.55)+' V'+(y+r*.55),'#000',1.4,.45)+'<path d="M'+(x-r*.85)+' '+(y-r*.35)+' A'+r*.9+' '+r*.9+' 0 0 1 '+(x-r*.2)+' '+(y-r*.88)+'" stroke="#fff" stroke-opacity=".25" stroke-width="1.4" fill="none"/>'}
@@ -2622,7 +2623,7 @@ VEHICLES.tank={h:100,w:350,
   for(i=0;i<6;i++)ra+=plate([[120+i*22,310],[138+i*22,310],[138+i*22,328],[120+i*22,328]],K.d,{inn:.6,hl:false});
   return '<g>'+barrel(K,246,316,100,9)+plate([[30,372],[48,342],[252,342],[334,374],[320,380],[34,380]],K.m,{inn:.7})+plate([[252,342],[334,374],[320,380],[246,356]],K.s,{inn:.5})+plate([[48,342],[250,342],[258,350],[44,352]],K.t,{inn:0,hl:false})+
   lamp2(K,294,364,12)+plate([[308,366],[324,370],[324,376],[308,372]],K.d,{inn:.8})+
-  plate([[90,342],[108,296],[170,288],[240,298],[268,320],[268,342]],K.m,{inn:.72})+plate([[108,296],[170,288],[240,298],[240,306],[108,306]],K.s,{inn:.42})+ra+
+  plate([[90,342],[108,296],[170,288],[240,298],[268,320],[268,342]],K.m,{inn:.72})+plate([[108,296],[170,288],[240,298],[240,306],[108,306]],K.s,{inn:.42})+vpmark()+ra+
   plate([[150,288],[196,286],[198,276],[152,278]],K.d,{inn:.7})+'<path d="M154 278 H194" stroke="#05070b" stroke-width="3"/>'+glass(K,'M156 281 H192 V284 H156Z',.4)+
   plate([[246,300],[276,302],[276,334],[246,336]],K.d,{inn:.7})+glow(K,'<rect x="250" y="322" width="20" height="3" fill="'+K.e+'"/>')+
   plate([[84,308],[102,308],[102,338],[84,338]],K.d,{inn:.7})+mpod(K,108,296,0,0,0)+[0,1,2].map(function(k){return '<rect x="'+(104+k*8)+'" y="'+(292-k*0)+'" width="5" height="12" fill="#10131a" stroke="#05070b"/>'}).join('')+
@@ -2829,11 +2830,11 @@ function vehDraw(vid,vu,K,layer){
   var vi=vu.c?vpaintOf(vu.c):-1,vp=vi>=0?VPAINT[vi]:null,k=K;
   if(vp){var q=K.id+'v'+vi;k=Object.assign({},K,{m:'url(#'+q+'m)',s:'url(#'+q+'s)',t:'url(#'+q+'t)',d:'url(#'+q+'d)',e:'url(#'+q+'e)',o:'url(#'+q+'o)',g:vp.g,mc:vp.m,m2c:vp.m2,tc:vp.t,dc:shade(vp.m,-.62)})}
   var a=V.an||{x0:30,x1:270,top:370,bot:404,r:[40,390],f:[270,380]};
-  var bk=V.back(k),fr;VREC=[];try{fr=V.front(k)}finally{var rc=VREC;VREC=null}
+  var bk=V.back(k),fr;VREC=[];VPM=!!(vp&&vp.pat);try{fr=V.front(k)}finally{var rc=VREC;VREC=null;VPM=false}
   if(vu.m&&VOV.motor[vu.m])bk=VOV.motor[vu.m](k,a)+bk;
   if(vu.a&&VOV.armor[vu.a])fr+=VOV.armor[vu.a](k,a);
   if(vu.w&&VOV.weapon[vu.w])fr+=VOV.weapon[vu.w](k,a);
-  if(vp){var pt=vpat(vp,V,k);if(pt)fr+=pt+rc.join('')}
+  if(vp){var pt=vpat(vp,V,k);if(pt){if(fr.indexOf('<!--VPAT-->')>=0)fr=fr.replace('<!--VPAT-->',function(){return pt});else fr+=pt+rc.join('')}}
   var dt='';for(var i=a.x0+16;i<a.x1-10;i+=24)dt+=bolt(i,a.top+((a.bot-a.top)*.22),1.5);dt+=ln('M'+(a.x0+14)+' '+(a.bot-12)+' H'+(a.x1-18),'#000',1.2,.35);fr+=dt;
   return layer==='back'?bk:layer==='front'?fr:bk+fr;
 }
