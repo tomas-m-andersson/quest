@@ -202,6 +202,13 @@ h3.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 #gmjoy i{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.95),rgba(150,190,255,.85));box-shadow:0 3px 12px rgba(0,0,0,.5);pointer-events:none}
 #gmjoy{font-size:46px;line-height:1;color:#fff;background:radial-gradient(circle at 35% 30%,rgba(130,205,255,.95),rgba(40,90,200,.92));border-color:rgba(255,255,255,.55)}
 #gmjoy:active{transform:scale(.93);filter:brightness(1.2)}
+#gmfire,#gmjoy{border:3px solid rgba(255,255,255,.85);overflow:hidden;font-size:40px;line-height:1;text-shadow:0 3px 6px rgba(0,0,0,.55);filter:drop-shadow(0 0 0 transparent);transition:transform .06s,filter .06s;
+  box-shadow:0 0 0 5px rgba(0,0,0,.28),0 10px 26px rgba(0,0,0,.65),inset 0 4px 7px rgba(255,255,255,.55),inset 0 -10px 16px rgba(0,0,0,.4)}
+#gmfire{background:radial-gradient(circle at 50% 28%,#ff9a6a 0%,#ff4a3a 45%,#a8141c 100%);box-shadow:0 0 0 5px rgba(0,0,0,.28),0 0 22px rgba(255,80,60,.55),0 10px 26px rgba(0,0,0,.65),inset 0 4px 7px rgba(255,255,255,.55),inset 0 -10px 16px rgba(0,0,0,.4)}
+#gmjoy{font-size:50px;background:radial-gradient(circle at 50% 28%,#9fdcff 0%,#3f90f0 45%,#16379a 100%);box-shadow:0 0 0 5px rgba(0,0,0,.28),0 0 22px rgba(80,160,255,.55),0 10px 26px rgba(0,0,0,.65),inset 0 4px 7px rgba(255,255,255,.55),inset 0 -10px 16px rgba(0,0,0,.4)}
+#gmfire::before,#gmjoy::before{content:'';position:absolute;left:14%;right:14%;top:5%;height:38%;border-radius:50%;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,0));pointer-events:none}
+#gmfire::after,#gmjoy::after{content:'';position:absolute;inset:7px;border-radius:50%;border:2px dashed rgba(255,255,255,.28);pointer-events:none}
+#gmfire:active,#gmjoy:active{transform:scale(.92);filter:brightness(1.25) saturate(1.2)}
 #gmfire:active{transform:scale(.93);filter:brightness(1.2)}
 @media(max-width:380px){.gmcards{grid-template-columns:1fr}}
 
@@ -529,7 +536,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AS</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AT</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3877,7 +3884,7 @@ function gmStart(which){
   var mode=which==='bot'?'shoot':gmModeOf(vit.id);
   var old=document.getElementById('gmov');if(old)old.remove();
   var ov=document.createElement('div');ov.id='gmov';
-  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>'+(mode==='shoot'?'<button id="gmjoy" aria-label="Hoppa">⬆️</button>':'');
+  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>'+(mode==='shoot'?'<button id="gmjoy" aria-label="Hoppa"><svg viewBox="0 0 48 48" width="52" height="52" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));pointer-events:none"><path d="M24 7 40 25H30v16H18V25H8z" fill="#fff" stroke="rgba(10,30,90,.55)" stroke-width="2" stroke-linejoin="round"/></svg></button>':'');
   document.body.appendChild(ov);
   var cv=ov.querySelector('#gmc');
   var g={mode:mode,hid:hid,vid:vit?vit.id:'',vname:vit?vit.name:'Mech',kind:vit?(VEHICLES[vit.id].kind||'ground'):'bot',col:heroColor(h),cv:cv,ctx:cv.getContext('2d'),spr:null,state:'load',score:0,t:0,raf:0,last:0,best:gmBest(hid,mode),hold:false,flash:0,cx:0,ty:320};
@@ -4003,7 +4010,7 @@ function gmInit(){
   }else if(g.mode==='run'){
     g.terr=false;g.sx=0;try{var vb=VEHICLES[g.vid]&&(VEHICLES[g.vid].bs||g.vid);g.terr=g.kind==='ground'&&(vb==='bike'||vb==='jeep'||vb==='tank')}catch(e){}g.hov=g.kind==='hover';if(g.hov)g.terr=true;g.water=g.kind==='water'||g.hov;g.gy=g.water?500:520;g.py=g.gy;g.vy=0;g.on=true;g.px=Math.max(70,LW*.22);g.obs=[];g.coins=[];g.drones=[];g.bul=[];g.parts=[];g.fx=[];g.kills=0;g.fcd=0;g.firing=false;g.spd=300;g.dist=0;g.nextX=LW+120;g.gx=0;g.cc=0;
   }else{
-    g.px=Math.max(110,LW*.22);g.x=g.px;g.tx=g.px;g.y=520-g.thh/2;g.ty=g.y;g.vy=0;g.sx=0;g.dist=0;g.sf=0;g.on=true;g.jumps=0;g.obs=[];g.blk=[];g.floor=520;g.nextX=LW*.9+260;g.lean=9;g.dp=0;g.en=[];g.eb=[];g.hp=5;g.inv=0;g.cdT=0;g.atk=-1;g.sw=1;g.spawn=1;g.parts=[];g.fx=[];g.shake=0;g.swId=0;g.keyY=0;g.keyX=0;
+    g.px=Math.max(110,LW*.22,(g.land||g.vrot?270:150)/g.s);g.x=g.px;g.tx=g.px;g.y=520-g.thh/2;g.ty=g.y;g.vy=0;g.sx=0;g.dist=0;g.sf=0;g.on=true;g.jumps=0;g.obs=[];g.blk=[];g.floor=520;g.nextX=LW*.9+260;g.lean=9;g.dp=0;g.en=[];g.eb=[];g.hp=5;g.inv=0;g.cdT=0;g.atk=-1;g.sw=1;g.spawn=1;g.parts=[];g.fx=[];g.shake=0;g.swId=0;g.keyY=0;g.keyX=0;
   }
   var sc=document.getElementById('gmsc');if(sc)sc.textContent='0';
 }
