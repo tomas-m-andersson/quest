@@ -252,7 +252,7 @@ window.SKOLQUEST_DATA = {
         "pet": "",
         "petacc": ""
       },
-      "seen": 1,
+      "seen": 71,
       "pseen": 1,
       "petNames": {},
       "care": {
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088664624
+  "updatedAt": 1792088667980
 };
