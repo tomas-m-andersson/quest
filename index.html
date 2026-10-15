@@ -506,7 +506,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AK</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AL</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2536,7 +2536,9 @@ addVariants(BG_LIST,[
 /* ===================== FORDON ===================== */
 var VEHICLES={},VEH_VB='-20 160 340 260',VEH_PET_VB='-95 160 415 260',VSC=1;
 function vfl(K,x,y,rx,ry){return '<g class="vfl">'+glow(K,'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="'+K.e+'"/>')+'</g>'}
-function wheel(K,x,y,r){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#0d1018" stroke="#05070b" stroke-width="1.4"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.62)+'" fill="'+K.d+'" stroke="#05070b" stroke-opacity=".6"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.28)+'" fill="'+K.t+'" stroke="#05070b" stroke-opacity=".6"/>'+ln('M'+(x-r*.55)+' '+y+' H'+(x+r*.55)+' M'+x+' '+(y-r*.55)+' V'+(y+r*.55),'#000',1.4,.45)+'<path d="M'+(x-r*.85)+' '+(y-r*.35)+' A'+r*.9+' '+r*.9+' 0 0 1 '+(x-r*.2)+' '+(y-r*.88)+'" stroke="#fff" stroke-opacity=".25" stroke-width="1.4" fill="none"/>'}
+var VREC=null;function vrec(s){if(VREC)VREC.push(s);return s}
+function wheel(K,x,y,r){return vrec(wheel0(K,x,y,r))}
+function wheel0(K,x,y,r){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#0d1018" stroke="#05070b" stroke-width="1.4"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.62)+'" fill="'+K.d+'" stroke="#05070b" stroke-opacity=".6"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.28)+'" fill="'+K.t+'" stroke="#05070b" stroke-opacity=".6"/>'+ln('M'+(x-r*.55)+' '+y+' H'+(x+r*.55)+' M'+x+' '+(y-r*.55)+' V'+(y+r*.55),'#000',1.4,.45)+'<path d="M'+(x-r*.85)+' '+(y-r*.35)+' A'+r*.9+' '+r*.9+' 0 0 1 '+(x-r*.2)+' '+(y-r*.88)+'" stroke="#fff" stroke-opacity=".25" stroke-width="1.4" fill="none"/>'}
 function riv(){return ''}
 
 function barrel(K,x,y,len,th){
@@ -2651,8 +2653,10 @@ VEHICLES.ship={h:120,w:350,lift:20,
   plate([[246,340],[276,340],[274,352],[246,352]],K.d,{inn:.7})+barrel(K,268,346,54,6)+barrel(K,268,362,52,6)+
   '<g class="vfl">'+glow(K,'<ellipse cx="170" cy="396" rx="58" ry="6" fill="none" stroke="'+K.g+'" stroke-width="3"/>')+'</g></g>'}};
 var VEHICLE_LIST=[['board','Attackbåt',2],['bike','Sandbuggy',5],['jeep','Attackjeep',9],['tank','Stridsvagn',15],['walker','Spindelvandrare',21],['heli','Helikopter',29],['jet','Stridsjet',37],['ship','Rymdskepp',45]];
-function glass(K,d,op){return '<path d="'+d+'" fill="#0b1f2e" stroke="#05070b" stroke-width="1.4"/><path d="'+d+'" fill="'+K.e+'" fill-opacity="'+(op||.16)+'"/>'}
-function shine(x1,y1,x2,y2){return '<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>'}
+function glass(K,d,op){return vrec(glass0(K,d,op))}
+function glass0(K,d,op){return '<path d="'+d+'" fill="#0b1f2e" stroke="#05070b" stroke-width="1.4"/><path d="'+d+'" fill="'+K.e+'" fill-opacity="'+(op||.16)+'"/>'}
+function shine(x1,y1,x2,y2){return vrec(shine0(x1,y1,x2,y2))}
+function shine0(x1,y1,x2,y2){return '<path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>'}
 
 function tube(K,x1,y1,x2,y2,w){var d='M'+x1+' '+y1+' L'+x2+' '+y2;return ln(d,'#05070b',w+4,1)+ln(d,K.d,w+1,1)+ln(d,'#aab4c8',w*.35,.8)}
 function flame(x,y){return glow({g:'#ff8a2a'},'<path d="M'+x+' '+(y-9)+' Q'+(x+30)+' '+(y-6)+' '+(x+44)+' '+y+' Q'+(x+30)+' '+(y+6)+' '+x+' '+(y+9)+'Z" fill="#ff7a1a"/><path d="M'+x+' '+(y-5)+' Q'+(x+20)+' '+(y-3)+' '+(x+30)+' '+y+' Q'+(x+20)+' '+(y+3)+' '+x+' '+(y+5)+'Z" fill="#ffe27a"/>')}
@@ -2804,11 +2808,11 @@ function vehDraw(vid,vu,K,layer){
   var vi=vu.c?vpaintOf(vu.c):-1,vp=vi>=0?VPAINT[vi]:null,k=K;
   if(vp){var q=K.id+'v'+vi;k=Object.assign({},K,{m:'url(#'+q+'m)',s:'url(#'+q+'s)',t:'url(#'+q+'t)',d:'url(#'+q+'d)',e:'url(#'+q+'e)',o:'url(#'+q+'o)',g:vp.g,mc:vp.m,m2c:vp.m2,tc:vp.t,dc:shade(vp.m,-.62)})}
   var a=V.an||{x0:30,x1:270,top:370,bot:404,r:[40,390],f:[270,380]};
-  var bk=V.back(k),fr=V.front(k);
+  var bk=V.back(k),fr;VREC=[];try{fr=V.front(k)}finally{var rc=VREC;VREC=null}
   if(vu.m&&VOV.motor[vu.m])bk=VOV.motor[vu.m](k,a)+bk;
   if(vu.a&&VOV.armor[vu.a])fr+=VOV.armor[vu.a](k,a);
   if(vu.w&&VOV.weapon[vu.w])fr+=VOV.weapon[vu.w](k,a);
-  if(vp)fr+=vpat(vp,V,k);
+  if(vp){var pt=vpat(vp,V,k);if(pt)fr+=pt+rc.join('')}
   var dt='';for(var i=a.x0+16;i<a.x1-10;i+=24)dt+=bolt(i,a.top+((a.bot-a.top)*.22),1.5);dt+=ln('M'+(a.x0+14)+' '+(a.bot-12)+' H'+(a.x1-18),'#000',1.2,.35);fr+=dt;
   return layer==='back'?bk:layer==='front'?fr:bk+fr;
 }
