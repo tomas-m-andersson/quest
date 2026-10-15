@@ -242,7 +242,7 @@ window.SKOLQUEST_DATA = {
         "bg": "desert",
         "emblem": "diamond",
         "banner": "blafana",
-        "special": "quake",
+        "special": "thunder",
         "vehicle": "",
         "ride": false,
         "vmotor": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088772253
+  "updatedAt": 1792088773997
 };
