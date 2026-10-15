@@ -320,6 +320,35 @@ details[open] summary::after{content:"–"}
 .hgstage{flex:none;display:flex;justify-content:center;margin-bottom:8px}
 .hgtabs{flex:none;display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .hgtabs::-webkit-scrollbar{display:none}
+/* följeslagare: liv */
+:is(.stagefx,.hgstage,.avc,.avprev) .petg{transform-box:fill-box;transform-origin:50% 100%;animation:petbr 3.8s ease-in-out infinite}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.fly{animation:petfloat 2.6s ease-in-out infinite}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.sleepy{animation:petsleep 6.5s ease-in-out infinite;filter:brightness(.82)}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.fly.sleepy{animation:petsleepf 6.5s ease-in-out infinite}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.sad{animation:petsleep 8s ease-in-out infinite;filter:brightness(.9) saturate(.8)}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.pk-hop{animation:pkhop .75s ease-out 1}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.pk-joy{animation:pkhop .6s ease-out 3}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.pk-loop{animation:pkloop .9s ease-in-out 1}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.pk-stomp{animation:pkstomp .7s ease-out 1}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.pk-wig{animation:pkwig .8s ease-in-out 1}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.pk-look{animation:pklook 1.6s ease-in-out 1}
+:is(.stagefx,.hgstage,.avc,.avprev) .petg.pk-blink{animation:pkblink .5s ease-in-out 2}
+@keyframes petbr{0%,100%{transform:scale(1,1)}50%{transform:scale(1.015,1.035)}}
+@keyframes petfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes petsleep{0%,100%{transform:translateY(3px) scale(1.01,.96)}50%{transform:translateY(3px) scale(1,1)}}
+@keyframes petsleepf{0%,100%{transform:translateY(10px)}50%{transform:translateY(7px)}}
+@keyframes pkhop{0%,100%{transform:translateY(0)}20%{transform:translateY(-26px) rotate(-5deg)}40%{transform:translateY(0) scale(1.06,.9)}65%{transform:translateY(-14px) rotate(4deg)}85%{transform:translateY(0) scale(1.03,.96)}}
+@keyframes pkloop{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-34px) rotate(-180deg)}100%{transform:translateY(0) rotate(-360deg)}}
+@keyframes pkstomp{0%,100%{transform:translateY(0) rotate(0)}15%{transform:translateY(-10px) scale(1.04,.96)}30%{transform:translateY(0) scale(1.08,.88)}45%{transform:rotate(-4deg)}60%{transform:rotate(4deg)}75%{transform:rotate(-2deg)}}
+@keyframes pkwig{0%,100%{transform:rotate(0) skewX(0)}20%{transform:rotate(-9deg) skewX(-8deg)}40%{transform:rotate(8deg) skewX(8deg)}60%{transform:rotate(-6deg) skewX(-6deg)}80%{transform:rotate(4deg) skewX(4deg)}}
+@keyframes pklook{0%,100%{transform:translateX(0) rotate(0)}25%,70%{transform:translateX(7px) rotate(4deg)}}
+@keyframes pkblink{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.88)}}
+#pbub{position:fixed;z-index:90;max-width:200px;background:#fff;color:#14171f;font:700 13px/1.25 var(--head);padding:7px 11px;border-radius:12px;pointer-events:none;opacity:0;transition:opacity .18s;box-shadow:0 6px 18px rgba(0,0,0,.45);transform:translate(-50%,-100%)}
+#pbub.show{opacity:1}
+#pbub::after{content:'';position:absolute;left:50%;bottom:-6px;width:12px;height:12px;background:#fff;transform:translateX(-50%) rotate(45deg);border-radius:2px}
+#pbub.below{transform:translate(-50%,0)}#pbub.below::after{bottom:auto;top:-6px}
+#pbub b{color:#1f6feb;margin-right:4px}
+.pchip{font:600 13px var(--head);color:var(--gold);background:var(--p2);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
 /* effekter: bara på stora avatarer (startsida, hangar, levelup) */
 .fxsmoke,.fxmist,.fxspark{display:none}
 :is(.stagefx,.hgstage,.avc,.avprev) :is(.fxsmoke,.fxmist,.fxspark){display:inline}
@@ -536,7 +565,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AV</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AW</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3181,7 +3210,7 @@ function mechRender(o,size,vb){
   if(!gar&&!o.noPilot){s+=mbody;s+=fxFront(id,K);s+=formFx(K,o.form||0)}
   s+='</g>';
   if(o.pet){var pp=petPlace(o.pet),pb=PETBB[o.pet]||[0,0,110,80],R=52,xr=R+pb[0]*pp.sc;
-    s+='<g transform="translate('+t.tx+' '+t.ty+') scale('+t.k+')"><ellipse cx="'+(R-pp.w/2).toFixed(1)+'" cy="406" rx="'+(pp.w*.5).toFixed(1)+'" ry="6" fill="url(#'+id+'sh)"/><g transform="translate('+xr.toFixed(1)+' '+pp.y.toFixed(1)+') scale('+(-pp.sc).toFixed(3)+' '+pp.sc.toFixed(3)+')">'+PETS[o.pet](K)+'</g></g>';}
+    s+='<g transform="translate('+t.tx+' '+t.ty+') scale('+t.k+')"><ellipse cx="'+(R-pp.w/2).toFixed(1)+'" cy="406" rx="'+(pp.w*.5).toFixed(1)+'" ry="6" fill="url(#'+id+'sh)"/><g class="petg '+petKind(o.pet)+'" data-act="petpoke" data-pet="'+o.pet+'" style="cursor:pointer"><rect x="'+(xr-(pb[0]+pb[2])*pp.sc).toFixed(1)+'" y="'+(pp.y+pb[1]*pp.sc).toFixed(1)+'" width="'+(pb[2]*pp.sc).toFixed(1)+'" height="'+(pb[3]*pp.sc).toFixed(1)+'" fill="rgba(0,0,0,.001)"/><g transform="translate('+xr.toFixed(1)+' '+pp.y.toFixed(1)+') scale('+(-pp.sc).toFixed(3)+' '+pp.sc.toFixed(3)+')">'+PETS[o.pet](K)+'</g></g></g>';}
   return s+'</svg>';
 }
 function avatarSvg(hid,size,eq,lvl,vb){return mechRender(mechOpts(hid,eq,lvl),size,vb)}
@@ -3246,7 +3275,7 @@ function panelHtml(h){
   var wx=weekXp(h.id,viewMon),goal=S.settings.weeklyGoal,gd=S.settings.weeklyBonus>0&&wx>=goal;
   var bs=(S.boosts[h.id]||[]).filter(function(b){return b.id.indexOf('legacy')!==0}).slice(-2).reverse();
   var o='<div class="stage" style="--c:'+heroColor(h)+'"><div class="stagefx" data-act="avatar" style="cursor:pointer" title="Öppna hangaren">'+avatarSvg(h.id,420)+'</div>';
-  o+='<div class="stagetop"><div class="sinfo"><div class="pname">'+esc(h.name)+'</div><div class="prank">'+rank(li.level)+'</div>'+(ep?'<div class="petline">🐾 '+esc(petName(h.id,ep))+'</div>':'')+'</div><span class="hex"><small>LV</small><b>'+li.level+'</b></span></div>';
+  o+='<div class="stagetop"><div class="sinfo"><div class="pname">'+esc(h.name)+'</div><div class="prank">'+rank(li.level)+'</div>'+(ep?'<div class="petline">🐾 '+esc(petName(h.id,ep))+' '+PK_MOOD[petMood(h.id)]+'</div>':'')+'</div><span class="hex"><small>LV</small><b>'+li.level+'</b></span></div>';
   o+='</div>';
   var pv=xpLast[h.id],startPct=(pv&&pv.lvl===li.level)?pv.pct:0,fromXp=(pv&&pv.lvl===li.level)?pv.cur:0,left=li.need-li.cur;
   o+='<div class="xpm'+((pv&&pv.lvl===li.level&&li.cur>pv.cur)?' hit':'')+'"><div class="xpm-top"><div class="xpm-num"><b data-from="'+fromXp+'" data-to="'+li.cur+'">'+fromXp+'</b><span>/ '+li.need+' XP</span></div><div class="xpm-next">'+left+' kvar till <em>LV '+(li.level+1)+'</em></div></div>'+
@@ -3265,7 +3294,7 @@ function render(){
   $('#hintbox').innerHTML=S.settings.setupDone?'':'<div class="hint">💡 Tryck på ⚙️ (kod <b>1234</b>) för att ge hjältarna namn, lägga till egna uppdrag och koppla ihop med GitHub. Bygg din mech i 🛠 Hangaren. '+esc(tag)+'</div>';
   $('#tabs').innerHTML=S.heroes.map(tabHtml).join('');
   $('#panel').innerHTML=panelHtml(sel);
-  xpAnim();
+  xpAnim();petApply();
 
   var mon=viewMon,fri=addDays(mon,4);
   $('#weektitle').textContent='Vecka '+isoWeek(mon)+' · '+mon.getDate()+' '+MONTHS[mon.getMonth()]+' – '+fri.getDate()+' '+MONTHS[fri.getMonth()];
@@ -3277,6 +3306,7 @@ function render(){
     strip+='<button class="dp'+(i===selDay?' act':'')+' s-'+cls+'" data-act="day" data-i="'+i+'"><span class="dpn">'+SHORT[i]+'</span><span class="dpd">'+dd.getDate()+'</span><i></i></button>';
     var badge=future?'🔒 KOMMANDE':st==='perfect'?'⭐ PERFEKT DAG':st==='good'?'✅ BRA DAG':st==='some'?'PÅGÅR…':st==='off'?'LEDIG':'—';
     cal+='<div class="day'+(i===selDay?' active':'')+(ds===today?' today':'')+(future?' locked':'')+(future?'':' s-'+st)+'"><div class="dh"><b>'+DAYS[i]+'</b><span>'+dd.getDate()+' '+MONTHS[dd.getMonth()]+'</span></div>';
+    if(ds===today&&petOf(sel.id))cal+='<div class="pchip">🐾 '+esc(petMoodLine(sel.id))+' '+PK_MOOD[petMood(sel.id)]+'</div>';
     if(!qs.length)cal+='<div class="off">Inga uppdrag den här dagen 🌴</div>';
     qs.forEach(function(q){
       var on=done.indexOf(q.id)>=0;
@@ -3301,7 +3331,7 @@ function render(){
 /* ---------- modal helpers ---------- */
 function openModal(html,keep){
   var m=$('#modal'),old=m.querySelector('.sheet'),st=(keep&&old)?old.scrollTop:0;
-  m.innerHTML=html;m.className='show';
+  m.innerHTML=html;m.className='show';petApply();
   if(st){var n=m.querySelector('.sheet');if(n)n.scrollTop=st}
 }
 function closeModal(){var m=$('#modal');m.className='';m.innerHTML=''}
@@ -3361,6 +3391,7 @@ async function tick(btn){
   var after=totalXp(hid),lvAfter=levelInfo(after).level;
   commit();
   if(adding)xpPop(rect,(dayState(hid,ds)==='perfect'?'⭐ ':'')+'+'+(after-before)+' XP');
+  if(adding)setTimeout(petCheer,250);
   if(lvAfter>lvBefore){setTimeout(function(){levelUp(heroById(hid),lvBefore,lvAfter)},350)}
 }
 async function claim(rid){
@@ -3431,6 +3462,89 @@ function namePet(){
 }
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='pn-in'){e.preventDefault();namePet()}});
 
+/* ---------- följeslagare: liv, humör, reaktioner ---------- */
+var PK_BEAST={wolf:1,lion:1,tiger:1,panther:1,fox:1,crystalwolf:1,magmalion:1,shadowpanther:1},PK_ARMOR={bear:1,rhino:1,turtle:1,beetle:1,crab:1},PK_CRAWL={cobra:1,serpent:1,scorpion:1,spider:1,hydra:1};
+function petKind(id){return PETFLY[id]?'fly':PK_ARMOR[id]?'armor':PK_CRAWL[id]?'crawl':'beast'}
+var PK_ANIM={fly:'pk-loop',beast:'pk-hop',armor:'pk-stomp',crawl:'pk-wig'};
+var PK_LINES={fly:['Wiiii! Titta, jag flyger!','Bzzzt! Hoppla!','Pip pip! Mer fart!','Jag ser allt härifrån!'],
+ beast:['Grrr! Vill du leka?','*viftar på svansen*','Spring, spring! Hoppa!','Rooaar! …fast snällt.'],
+ armor:['Mmph. Starkast av alla!','*stampar i marken*','Knack knack! Jag är en tank!','Ingen kommer förbi mig.'],
+ crawl:['Sssss! Det kittlas!','*kryper i cirklar*','Ssss… kul!','Titta, jag kan slingra mig!']};
+var PK_MOOD={ecstatic:'🤩',happy:'😊',calm:'🙂',sleepy:'😴',sad:'🥺'};
+var PK_MOODLINE={ecstatic:'{n} dansar av glädje! 🎉',happy:'{n} är glad över dagens uppdrag!',calm:'{n} väntar på nästa uppdrag',sleepy:'{n} blundar lite… Zzz',sad:'{n} saknar dig – ett litet uppdrag?'};
+var PK_CHEER=['Bra jobbat!','Yes! Ett uppdrag klart!','Vi är grymma ihop!','Hurra! 🎉','Det där gick ju galant!'];
+var PK_EQUIP=['Snyggt! Det klär dig!','Oj, nytt utseende!','Coolt! Mer sånt!','Wow, du ser tuff ut!'];
+var PK_SLEEP=['Zzz…','Mmm… fem minuter till…','*gäspar*'];
+function pkRand(a){return a[Math.floor(Math.random()*a.length)]}
+function petMood(hid){
+  var today=fmt(new Date()),dn=dayIds(hid,today).length;
+  if(dn>0)return dayState(hid,today)==='perfect'?'ecstatic':'happy';
+  var d=new Date(),missed=0,found=false;
+  for(var i=0;i<21;i++){d=addDays(d,-1);if(dayIds(hid,fmt(d)).length>0){found=true;break}var w=d.getDay();if(w!==0&&w!==6)missed++}
+  if(!found)return 'sleepy';
+  return missed>=3?'sad':missed>=2?'sleepy':'calm';
+}
+function petNameOf(hid,id){var it=findItem('pet',id);return it?petName(hid,it):'Följeslagare'}
+function petMoodLine(hid){var ep=petOf(hid);if(!ep)return '';return PK_MOODLINE[petMood(hid)].replace('{n}',petName(hid,ep))}
+function petApply(){
+  var hid=selId,m=petMood(hid);
+  document.querySelectorAll('.petg').forEach(function(g){g.classList.remove('sleepy','sad');if(m==='sleepy')g.classList.add('sleepy');else if(m==='sad')g.classList.add('sad','sleepy')});
+}
+function petPlay(g,cls){
+  if(!g)return;['pk-hop','pk-joy','pk-loop','pk-stomp','pk-wig','pk-look','pk-blink'].forEach(function(c){g.classList.remove(c)});
+  void g.getBoundingClientRect();g.classList.add(cls);
+  var done=function(){g.classList.remove(cls);g.removeEventListener('animationend',done)};g.addEventListener('animationend',done);
+}
+var pbT=0;
+function petBubble(g,html,ms){
+  var b=document.getElementById('pbub');if(!b){b=document.createElement('div');b.id='pbub';document.body.appendChild(b)}
+  b.innerHTML=html;var r=g.getBoundingClientRect(),x=Math.max(104,Math.min(window.innerWidth-104,r.left+r.width/2)),below=r.top<70;
+  b.className=below?'below':'';b.style.left=x+'px';b.style.top=(below?r.bottom+8:r.top-6)+'px';
+  void b.offsetWidth;b.classList.add('show');clearTimeout(pbT);pbT=setTimeout(function(){b.classList.remove('show')},ms||2600);
+}
+var pkAC=null;
+function petSound(kind){
+  try{
+    pkAC=pkAC||new (window.AudioContext||window.webkitAudioContext)();var a=pkAC,t=a.currentTime;
+    function tone(type,f0,f1,dur,vol,at){var o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f0,t+at);o.frequency.exponentialRampToValueAtTime(f1,t+at+dur);g.gain.setValueAtTime(vol,t+at);g.gain.exponentialRampToValueAtTime(.0001,t+at+dur);o.connect(g);g.connect(a.destination);o.start(t+at);o.stop(t+at+dur+.02)}
+    if(kind==='fly'){tone('triangle',880,1500,.12,.07,0);tone('triangle',1100,1800,.12,.07,.14)}
+    else if(kind==='beast'){tone('sawtooth',190,90,.28,.06,0);tone('square',120,70,.2,.03,.05)}
+    else if(kind==='armor'){tone('square',110,55,.22,.07,0);tone('square',100,50,.2,.06,.2)}
+    else{for(var i=0;i<5;i++)tone('sawtooth',700+i*40,420,.07,.035,i*.06)}
+  }catch(e){}
+}
+var pkPokes=[],pkLast=0;
+function petPoke(g){
+  if(!g)return;var id=g.dataset.pet,hid=selId,kind=petKind(id),name=esc(petNameOf(hid,id)),now=Date.now();
+  pkPokes=pkPokes.filter(function(t){return now-t<6000});pkPokes.push(now);
+  var line,mood=petMood(hid);
+  if(pkPokes.length>=8){line='Hallå! Sluta kittla! 😂';pkPokes=[]}
+  else if((mood==='sleepy'||mood==='sad')&&now-pkLast>9000)line='Mmm? Åh, hej! Jag vaknade… 🥱';
+  else line=pkRand(PK_LINES[kind]);
+  pkLast=now;
+  petPlay(g,PK_ANIM[kind]);petBubble(g,'<b>'+name+'</b>'+esc(line));petSound(kind);
+}
+function petCheer(){var g=document.querySelector('.stagefx .petg');if(!g)return;var hid=selId;petPlay(g,'pk-joy');petBubble(g,'<b>'+esc(petNameOf(hid,g.dataset.pet))+'</b>'+esc(pkRand(PK_CHEER)));petSound(petKind(g.dataset.pet))}
+var pkEqT=0;
+function petReact(kind){
+  var g=document.querySelector('#modal .petg,.stagefx .petg');if(!g||Date.now()-pkEqT<1200)return;pkEqT=Date.now();
+  var hid=selId,nm=esc(petNameOf(hid,g.dataset.pet));
+  if(kind==='hello'){petPlay(g,'pk-hop');petBubble(g,'<b>'+nm+'</b>Hej! Nu går vi på äventyr!')}
+  else{petPlay(g,Math.random()<.5?'pk-hop':'pk-look');petBubble(g,'<b>'+nm+'</b>'+esc(pkRand(PK_EQUIP)))}
+}
+setInterval(function(){
+  if(document.hidden||document.getElementById('gmov'))return;
+  var gs=document.querySelectorAll('.stagefx .petg,#modal .petg');if(!gs.length)return;
+  var m=petMood(selId);
+  gs.forEach(function(g){
+    if(g.className.baseVal&&/pk-/.test(g.className.baseVal))return;
+    var r=Math.random();
+    if(m==='sleepy'||m==='sad'){if(r<.18&&g.closest('.stagefx'))petBubble(g,esc(pkRand(PK_SLEEP)),1800);else if(r<.5)petPlay(g,'pk-blink')}
+    else if(m==='ecstatic'&&r<.3)petPlay(g,'pk-hop');
+    else if(r<.25)petPlay(g,'pk-look');
+    else if(r<.55)petPlay(g,'pk-blink');
+  });
+},5200);
 /* ---------- boost ---------- */
 function boostState(){
   var ids=[];document.querySelectorAll('#modal .bh.on').forEach(function(e){ids.push(e.dataset.id)});
@@ -3693,6 +3807,7 @@ document.addEventListener('click',function(e){
   else if(a==='today'){viewMon=monday(new Date());var w=(new Date().getDay()+6)%7;selDay=w<5?w:4;render()}
   else if(a==='day'){selDay=+t.dataset.i;render()}
   else if(a==='tick'){tick(t)}
+  else if(a==='petpoke'){petPoke(t)}
   else if(a==='claim'){claim(t.dataset.r)}
   else if(a==='settings'){requirePin().then(function(ok){if(ok)openSettings()})}
   else if(a==='close'){closeModal();if(boostFromSet){boostFromSet=false;renderSettings()}}
@@ -3702,7 +3817,7 @@ document.addEventListener('click',function(e){
   else if(a==='avatar'){openAvatar()}
   else if(a==='hslot'){hSlot=t.dataset.slot;openAvatar(false)}
   else if(a==='hscroll'){var ht=$('.hgtabs');if(ht)ht.scrollBy({left:(+t.dataset.dir)*180,behavior:'smooth'})}
-  else if(a==='aeq'){S.avatar[selId].eq[t.dataset.slot]=t.dataset.id;commit();if(t.dataset.slot==='pet')openPets(true);else{openAvatar(true);if(t.dataset.slot==='special'&&t.dataset.id)setTimeout(playSpecial,60)}}
+  else if(a==='aeq'){S.avatar[selId].eq[t.dataset.slot]=t.dataset.id;commit();(function(sl,idd){setTimeout(function(){petReact(sl==='pet'&&idd?'hello':'equip')},160)})(t.dataset.slot,t.dataset.id);if(t.dataset.slot==='pet')openPets(true);else{openAvatar(true);if(t.dataset.slot==='special'&&t.dataset.id)setTimeout(playSpecial,60)}}
   else if(a==='splay'){playSpecial()}
   else if(a==='bup'){var bk=t.dataset.k;S.base=S.base||{};S.base[bk]=(S.base[bk]===t.dataset.id)?'':t.dataset.id;commit();openBase(true)}
   else if(a==='base'){openBase()}
@@ -3889,6 +4004,7 @@ function gmStart(which){
   var cv=ov.querySelector('#gmc');
   var g={mode:mode,hid:hid,vid:vit?vit.id:'',vname:vit?vit.name:'Mech',kind:vit?(VEHICLES[vit.id].kind||'ground'):'bot',col:heroColor(h),cv:cv,ctx:cv.getContext('2d'),spr:null,state:'load',score:0,t:0,raf:0,last:0,best:gmBest(hid,mode),hold:false,flash:0,cx:0,ty:320};
   GM=g;
+  try{var gpet=petOf(hid);g.pname=gpet?petName(hid,gpet):''}catch(e){g.pname=''}
   g.wid=gmOpts(hid,'').weapon||'';g.mw=GM_MELEE[g.wid]||GM_MELEE.none;if(mode==='shoot'){var m0=g.mw,m1={};for(var mk in m0)m1[mk]=m0[mk];m1.r=m0.r*1.35;if(m0.a)m1.a=Math.min(300,m0.a*1.3);m1.cd=m0.cd*.85;g.mw=m1}var wi=findItem('weapon',g.wid);g.wname=wi?wi.name:'';
   closeModal();
   try{g.flip=localStorage.getItem('mq.flip')==='1'}catch(e){g.flip=false}
@@ -3969,7 +4085,7 @@ function gmUi(kind){
   var u=document.getElementById('gmui');if(!u||!GM)return;var g=GM;
   var how=g.mode==='flap'?'Tryck för att flaxa':g.mode==='run'?'Tryck för att hoppa (håll för högre hopp) · 🔫-knappen skjuter lådor och drönare':'Du springer automatiskt · ⬆️-knappen (eller tryck på skärmen) hoppar, håll för högre hopp, tryck igen i luften för dubbelhopp · ⚔️ slår med '+(g.wname||'nävarna')+' – krossa lådor och fiender';
   if(kind==='load'){u.innerHTML='<div class="gmcen"><b>Laddar…</b></div>';return}
-  if(kind==='ready'||kind==='pause'){u.innerHTML='<div class="gmcen"><b>'+esc(g.vname)+'</b><span>'+how+'</span>'+(g.vrot?'<span>↻ Vrid telefonen åt sidan – knappen uppe till höger vänder om bilden</span>':'')+'<span class="gmtap">'+(kind==='pause'?'Pausad – tryck för att fortsätta':'Tryck för att starta')+'</span></div>';return}
+  if(kind==='ready'||kind==='pause'){u.innerHTML='<div class="gmcen"><b>'+esc(g.vname)+'</b>'+(g.pname?'<span>🐾 '+esc(g.pname)+' hejar på dig!</span>':'')+'<span>'+how+'</span>'+(g.vrot?'<span>↻ Vrid telefonen åt sidan – knappen uppe till höger vänder om bilden</span>':'')+'<span class="gmtap">'+(kind==='pause'?'Pausad – tryck för att fortsätta':'Tryck för att starta')+'</span></div>';return}
   if(kind==='play'){u.innerHTML='';return}
   if(kind==='over'){
     u.innerHTML='<div class="gmcen over"><b>'+(g.newBest?'🏆 Nytt rekord!':'Game over')+'</b><span class="gmbig">'+g.score+'</span><span>Rekord: '+g.best+'</span><div class="gmbtns"><button class="btn pri" id="gmagain">Spela igen</button><button class="btn" id="gmmenu">Meny</button></div></div>';
