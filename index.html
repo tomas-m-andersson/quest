@@ -506,7 +506,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AH</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AI</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -4073,7 +4073,7 @@ function gmFxDraw(ctx,g){
   });
 }
 function gmBurst(x,y,c,n){var g=GM;for(var j=0;j<(n||10);j++)g.parts.push({x:x,y:y,vx:gmRnd(-170,170),vy:gmRnd(-190,120),l:.5,c:c})}
-function gmRunFire(){var g=GM;g.fcd=.26;g.bul.push({x:g.px+g.tw*.42,y:g.py-g.thh*.55,vx:760});gmBurst(g.px+g.tw*.46,g.py-g.thh*.55,g.col,4)}
+function gmRunFire(){var g=GM;g.fcd=.26;var by=g.py-Math.min(g.thh*.4,32);g.bul.push({x:g.px+g.tw*.42,y:by,vx:760});gmBurst(g.px+g.tw*.46,by,g.col,4)}
 function gmRun(dt){
   var g=GM,gy=g.gy,i,j;
   g.spd=(300+Math.min(260,g.dist/60*g.spm))*g.spm;g.sx=(g.sx||0)+g.spd*dt;g.dist+=g.spd/g.spm*dt;
@@ -4087,7 +4087,7 @@ function gmRun(dt){
     var t=Math.random(),w=40,h,type;
     if(t<.45){if(Math.random()<.35){g.drones.push({t:0,x:g.LW+40+90,y:0,base:gy-gmRnd(40,105),r:16,hp:1,vx:gmRnd(90,170),ph:gmRnd(0,6)});g.drones[g.drones.length-1].y=g.drones[g.drones.length-1].base}g.drones.push({t:0,x:g.LW+40,y:gy-gmRnd(40,105),base:0,r:16,hp:1,vx:gmRnd(90,170),ph:gmRnd(0,6)});g.drones[g.drones.length-1].base=g.drones[g.drones.length-1].y;g.nextX=g.spd*gmRnd(.7,1.05)+70}
     else{
-      if(t<.68){w=38;h=40;type=0}else if(t<.84){w=34;h=72;type=1}else{w=84;h=38;type=2}
+      if(t<.68){w=52;h=54;type=0}else if(t<.84){w=36;h=76;type=1}else{w=104;h=52;type=2}
       g.obs.push({x:g.LW+40,w:w,h:h,type:type,v:Math.floor(gmRnd(0,3)),hp:type===2?2:1,ind:type===1,fl:0});
       if(Math.random()<.55){for(i=0;i<5;i++){var a=i/4;g.coins.push({x:g.LW+40+w/2+(i-2)*30,y:gy-h-50-Math.sin(a*Math.PI)*60,r:9,got:false})}}
       g.nextX=g.spd*gmRnd(.72,1.25)+w+g.spd*.28;
@@ -4110,7 +4110,7 @@ function gmRun(dt){
       if(b.x+10>ob.x&&b.x<ob.x+ob.w&&b.y>gy-ob.h-10&&b.y<gy+8){
         gone=true;
         if(ob.ind){gmBurst(b.x,b.y,'#ffe08a',4)}
-        else{ob.hp--;ob.fl=.1;if(ob.hp<=0){gmExplode(g,ob.x+ob.w/2,gy-ob.h/2,.8,true);g.kills++;g.obs.splice(j,1)}else gmBurst(b.x,b.y,'#c89a5a',5)}
+        else{ob.hp--;ob.fl=.1;if(ob.hp<=0){gmExplode(g,ob.x+ob.w/2,gy-ob.h/2,1.15);gmExplode(g,ob.x+ob.w/2,gy-ob.h/2,1,true);g.kills++;g.obs.splice(j,1)}else gmBurst(b.x,b.y,'#c89a5a',5)}
         break}}
     if(!gone)for(j=g.drones.length-1;j>=0;j--){var dd=g.drones[j];
       if(Math.abs(b.x-dd.x)<dd.r+16&&Math.abs(b.y-dd.y)<dd.r+14){gone=true;gmExplode(g,dd.x,dd.y,1);g.kills++;g.drones.splice(j,1);break}}
