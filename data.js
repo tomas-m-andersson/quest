@@ -253,7 +253,7 @@ window.SKOLQUEST_DATA = {
         "petacc": ""
       },
       "seen": 71,
-      "pseen": 1,
+      "pseen": 71,
       "petNames": {},
       "care": {
         "bond": 0,
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088773997
+  "updatedAt": 1792088780444
 };
