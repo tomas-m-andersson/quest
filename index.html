@@ -608,7 +608,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BB</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BC</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2636,7 +2636,7 @@ addVariants(BG_LIST,[
 [HEAD_LIST,TORSO_LIST,SHOULDER_LIST,ARM_LIST,WAIST_LIST,LEG_LIST,BACK_LIST,WEAPON_LIST,OFFHAND_LIST,AURA_LIST,BG_LIST].forEach(function(l){l.sort(function(a,b){return a[2]-b[2]})});
 
 /* ===================== FORDON ===================== */
-var VEHICLES={},VEH_VB='-20 160 340 260',VEH_PET_VB='-95 160 415 260',VSC=1;
+var VEHICLES={},VEH_VB='5 160 340 260',VEH_PET_VB='-95 160 415 260',VSC=1;
 function vfl(K,x,y,rx,ry){return '<g class="vfl">'+glow(K,'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="'+K.e+'"/>')+'</g>'}
 var VPM=false;function vpmark(){return VPM?'<!--VPAT-->':''}
 var VREC=null;function vrec(s){if(VREC)VREC.push(s);return s}
@@ -3322,7 +3322,7 @@ function petSlideSvg(hid,ep){
 function stageCarousel(h){
   var hid=h.id,eq=S.avatar[hid].eq,lvl=levelInfo(totalXp(hid)).level,o0=mechOpts(hid);
   var sl=[{k:'all',n:'Allt',svg:avatarSvg(hid,420)},{k:'bot',n:'🤖 Robot',svg:mechRender(Object.assign({},o0,{pet:'',vehicle:'',petacc:''}),420,DEF_VB)}];
-  var vanx=function(x){return ((x+20)/340*100).toFixed(1)},vany=function(y){return ((y-160)/260*100).toFixed(1)};
+  var vanx=function(x){return ((x-5)/340*100).toFixed(1)},vany=function(y){return ((y-160)/260*100).toFixed(1)};
   var vit=findItem('vehicle',eq.vehicle),vid=(vit&&lvl>=vit.level)?vit.id:'';
   if(vid){var VA=(VEHICLES[vid]&&VEHICLES[vid].an)||{x0:30,x1:270,top:370,bot:404};sl.push({k:'veh',n:'🏍️ '+vit.name,svg:garageSvg(vid,vupOf(eq,lvl),420,true,hid),at:' data-rx="'+vanx(VA.x0+6)+'" data-ry="'+vany(VA.bot-34)+'" data-fx="'+vanx(VA.x1-4)+'" data-fy="'+vany(VA.bot-50)+'"'})}
   var ep=petOf(hid);if(ep)sl.push({k:'pet',n:'🐾 '+petName(hid,ep),svg:petSlideSvg(hid,ep)});
