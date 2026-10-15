@@ -182,7 +182,7 @@ window.SKOLQUEST_DATA = {
   "avatar": {
     "a": {
       "eq": {
-        "pose": "",
+        "pose": "stand",
         "paint": "",
         "head": "",
         "torso": "",
@@ -255,5 +255,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088199502
+  "updatedAt": 1792088561774
 };
