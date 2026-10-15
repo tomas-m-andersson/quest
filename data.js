@@ -240,7 +240,7 @@ window.SKOLQUEST_DATA = {
         "offhand": "",
         "aura": "pulse",
         "bg": "desert",
-        "emblem": "",
+        "emblem": "diamond",
         "banner": "",
         "special": "",
         "vehicle": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088741873
+  "updatedAt": 1792088747910
 };
