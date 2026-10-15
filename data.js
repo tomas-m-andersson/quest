@@ -213,9 +213,9 @@ window.SKOLQUEST_DATA = {
         "phoenix": "Olle"
       },
       "care": {
-        "bond": 5,
+        "bond": 10,
         "fed": "2026-10-15",
-        "played": ""
+        "played": "2026-10-15"
       }
     },
     "b": {
@@ -255,5 +255,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088196931
+  "updatedAt": 1792088199502
 };
