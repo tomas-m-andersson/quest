@@ -481,6 +481,27 @@ details[open] summary::after{content:"–"}
 .bupc{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
 .bupb{display:flex;flex-direction:column;align-items:center;min-width:76px;padding:7px 9px;border-radius:10px;border:1px solid #2a3350;background:#0f1422;color:#e8ecf6;font:600 12.5px var(--body,inherit)}
 .bupb small{font-size:10px;color:var(--mute);min-height:12px}.bupb.on{border-color:#2fd0f0;box-shadow:0 0 10px #2fd0f066}.bupb.lk{opacity:.5}
+
+/* ===== mobilanpassning (v AM) ===== */
+html{touch-action:manipulation;overscroll-behavior-y:none}
+body{min-height:100vh;min-height:100dvh;-webkit-touch-callout:none;overscroll-behavior-y:none}
+button,[data-act],.q,.ib,.chipb,.bh,.dchip{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+input,textarea{-webkit-user-select:text;user-select:text}
+.btn.sm{min-height:44px;min-width:44px;padding:8px 13px}
+.blog .x,.x[data-act="bdel"]{min-width:44px;min-height:44px}
+button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
+.ib{width:46px;height:46px}
+.sheet input[type=checkbox]{width:28px!important;height:28px!important;min-height:0!important;accent-color:var(--c)}
+.frow label[for="lt"]{padding:10px 0;flex:1}
+.gmx{width:48px;height:48px;right:calc(12px + env(safe-area-inset-right,0px))}
+.gmflip{right:calc(68px + env(safe-area-inset-right,0px))}
+.gmhud{left:calc(14px + env(safe-area-inset-left,0px))}
+#gmfire{right:calc(20px + env(safe-area-inset-right,0px));width:96px;height:96px}
+#gmjoy{width:128px;height:128px}
+#gmov.rot #gmfire,#gmov.rot #gmjoy{bottom:24px}
+@media (hover:none){.btn:hover{border-color:var(--line2)}.btn.pri:hover{border-color:var(--c)}.btn.gold:hover{border-color:var(--gold)}.btn.danger:hover{border-color:var(--red)}}
+@media (max-width:420px){.wrap{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}.sheet{padding-left:14px;padding-right:14px}}
+@media (orientation:landscape) and (max-height:500px){.sheet{max-height:96dvh}.wrap{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}}
 </style>
 </head>
 <body>
@@ -506,7 +527,7 @@ details[open] summary::after{content:"–"}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AL</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AM</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3971,7 +3992,7 @@ function gmInit(){
   }else if(g.mode==='run'){
     g.terr=false;g.sx=0;try{var vb=VEHICLES[g.vid]&&(VEHICLES[g.vid].bs||g.vid);g.terr=g.kind==='ground'&&(vb==='bike'||vb==='jeep'||vb==='tank')}catch(e){}g.water=g.kind==='water';g.gy=g.water?500:520;g.py=g.gy;g.vy=0;g.on=true;g.px=Math.max(70,LW*.22);g.obs=[];g.coins=[];g.drones=[];g.bul=[];g.parts=[];g.fx=[];g.kills=0;g.fcd=0;g.firing=false;g.spd=300;g.dist=0;g.nextX=LW+120;g.gx=0;g.cc=0;
   }else{
-    g.px=Math.max(56,LW*.14);g.x=g.px;g.tx=g.px;g.y=320;g.ty=320;g.vy=0;g.en=[];g.eb=[];g.hp=5;g.inv=0;g.cdT=0;g.atk=-1;g.sw=1;g.spawn=1;g.parts=[];g.fx=[];g.shake=0;g.swId=0;g.keyY=0;g.keyX=0;
+    g.px=Math.max(90,LW*.16);g.x=g.px;g.tx=g.px;g.y=250;g.ty=250;g.vy=0;g.en=[];g.eb=[];g.hp=5;g.inv=0;g.cdT=0;g.atk=-1;g.sw=1;g.spawn=1;g.parts=[];g.fx=[];g.shake=0;g.swId=0;g.keyY=0;g.keyX=0;
   }
   var sc=document.getElementById('gmsc');if(sc)sc.textContent='0';
 }
@@ -4408,6 +4429,8 @@ function gmEnemy(ctx,g,e){
 
 render();
 initSync();
+document.addEventListener('gesturestart',function(e){e.preventDefault()});
+document.addEventListener('contextmenu',function(e){if(e.target.closest&&e.target.closest('#gmov,button,[data-act],.q'))e.preventDefault()});
 })();
 </script>
 <script>
