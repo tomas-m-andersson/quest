@@ -320,6 +320,14 @@ details[open] summary::after{content:"–"}
 .hgstage{flex:none;display:flex;justify-content:center;margin-bottom:8px}
 .hgtabs{flex:none;display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .hgtabs::-webkit-scrollbar{display:none}
+/* karusell på startsidan */
+.stgwrap{order:2;position:relative}
+.stgs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
+.stgs::-webkit-scrollbar{display:none}
+.stgs>.stagefx{flex:0 0 100%;min-width:0;scroll-snap-align:center;scroll-snap-stop:always;display:flex;align-items:center;order:0}
+.stgdots{display:flex;justify-content:center;gap:6px;padding:6px 10px 12px;flex-wrap:wrap}
+.stgdots button{min-height:36px;border:1px solid var(--line);background:var(--p2);color:var(--mute);border-radius:999px;padding:6px 12px;font:700 12px var(--head);letter-spacing:.05em}
+.stgdots button.on{color:#fff;border-color:var(--c);box-shadow:inset 0 0 0 1px var(--c)}
 /* följeslagare: liv */
 :is(.stagefx,.hgstage,.avc,.avprev) .petg{transform-box:fill-box;transform-origin:50% 100%;animation:petbr 3.8s ease-in-out infinite}
 :is(.stagefx,.hgstage,.avc,.avprev) .petg.fly{animation:petfloat 2.6s ease-in-out infinite}
@@ -577,7 +585,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AZ</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BA</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3283,11 +3291,31 @@ function xpAnim(){
   var f=document.querySelector('.xpm-fill');if(f){setTimeout(function(){f.style.width=f.dataset.to+'%'},60)}
   var n=document.querySelector('.xpm-num b');if(n){var a=+n.dataset.from,b=+n.dataset.to;if(a===b){n.textContent=b}else{var t0=performance.now();(function st(t){var k=Math.min(1,(t-t0)/900);n.textContent=Math.round(a+(b-a)*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(st)})(t0)}}
 }
+var stgIdx=0;
+function petSlideSvg(hid,ep){
+  var o=mechOpts(hid),K=mechK(paintById(o.paint),'ps'+(MX.n++)+'_'),id=ep.id,pb=PETBB[id]||[0,0,110,80];
+  return '<svg viewBox="-30 -50 180 150" aria-hidden="true" focusable="false">'+K.defs+'<ellipse cx="60" cy="'+(pb[1]+pb[3]+3)+'" rx="52" ry="6" fill="rgba(0,0,0,.35)"/><g class="petg '+petKind(id)+'" data-act="petpoke" data-pet="'+id+'" style="cursor:pointer"><rect x="'+(120-pb[0]-pb[2]-8)+'" y="'+(pb[1]-8)+'" width="'+(pb[2]+16)+'" height="'+(pb[3]+16)+'" fill="rgba(0,0,0,.001)"/><g transform="translate(120 0) scale(-1 1)">'+petAccSvg(o.petacc,id,'b')+PETS[id](K)+petAccSvg(o.petacc,id,'f')+'</g></g></svg>';
+}
+function stageCarousel(h){
+  var hid=h.id,eq=S.avatar[hid].eq,lvl=levelInfo(totalXp(hid)).level,o0=mechOpts(hid);
+  var sl=[{k:'all',n:'Allt',svg:avatarSvg(hid,420)},{k:'bot',n:'🤖 Robot',svg:mechRender(Object.assign({},o0,{pet:'',vehicle:'',petacc:''}),420,DEF_VB)}];
+  var vit=findItem('vehicle',eq.vehicle),vid=(vit&&lvl>=vit.level)?vit.id:'';
+  if(vid)sl.push({k:'veh',n:'🏍️ '+vit.name,svg:garageSvg(vid,vupOf(eq,lvl),420,true,hid)});
+  var ep=petOf(hid);if(ep)sl.push({k:'pet',n:'🐾 '+petName(hid,ep),svg:petSlideSvg(hid,ep)});
+  if(stgIdx>=sl.length)stgIdx=0;
+  var o='<div class="stgwrap"><div class="stgs" id="stgs">'+sl.map(function(x,i){return '<div class="stagefx" data-i="'+i+'"'+(x.k==='pet'?'':' data-act="avatar" style="cursor:pointer" title="Öppna hangaren"')+'>'+x.svg+'</div>'}).join('')+'</div>';
+  if(sl.length>1)o+='<div class="stgdots">'+sl.map(function(x,i){return '<button type="button" data-act="stggo" data-i="'+i+'" class="'+(i===stgIdx?'on':'')+'">'+esc(x.n)+'</button>'}).join('')+'</div>';
+  return o+'</div>';
+}
+function stgInit(){
+  var sc=document.getElementById('stgs');if(!sc)return;sc.scrollLeft=stgIdx*sc.clientWidth;var t=0;
+  sc.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(function(){var i=Math.round(sc.scrollLeft/(sc.clientWidth||1));if(i!==stgIdx){stgIdx=i}document.querySelectorAll('.stgdots button').forEach(function(b,j){b.classList.toggle('on',j===i)})},70)},{passive:true});
+}
 function panelHtml(h){
   var tx=totalXp(h.id),li=levelInfo(tx),st=streak(h.id),pd=perfectDays(h.id),nw=newItemCount(h.id,false),np=newItemCount(h.id,true),ep=petOf(h.id),pl=petList(),ph=pl.filter(function(x){return x.level<=li.level}).length;
   var wx=weekXp(h.id,viewMon),goal=S.settings.weeklyGoal,gd=S.settings.weeklyBonus>0&&wx>=goal;
   var bs=(S.boosts[h.id]||[]).filter(function(b){return b.id.indexOf('legacy')!==0}).slice(-2).reverse();
-  var o='<div class="stage" style="--c:'+heroColor(h)+'"><div class="stagefx" data-act="avatar" style="cursor:pointer" title="Öppna hangaren">'+avatarSvg(h.id,420)+'</div>';
+  var o='<div class="stage" style="--c:'+heroColor(h)+'">'+stageCarousel(h);
   o+='<div class="stagetop"><div class="sinfo"><div class="pname">'+esc(h.name)+'</div><div class="prank">'+rank(li.level)+'</div>'+(ep?'<div class="petline">🐾 '+esc(petName(h.id,ep))+' '+PK_MOOD[petMood(h.id)]+'</div>':'')+'</div><span class="hex"><small>LV</small><b>'+li.level+'</b></span></div>';
   o+='</div>';
   var pv=xpLast[h.id],startPct=(pv&&pv.lvl===li.level)?pv.pct:0,fromXp=(pv&&pv.lvl===li.level)?pv.cur:0,left=li.need-li.cur;
@@ -3307,7 +3335,7 @@ function render(){
   $('#hintbox').innerHTML=S.settings.setupDone?'':'<div class="hint">💡 Tryck på ⚙️ (kod <b>1234</b>) för att ge hjältarna namn, lägga till egna uppdrag och koppla ihop med GitHub. Bygg din mech i 🛠 Hangaren. '+esc(tag)+'</div>';
   $('#tabs').innerHTML=S.heroes.map(tabHtml).join('');
   $('#panel').innerHTML=panelHtml(sel);
-  xpAnim();petApply();
+  xpAnim();petApply();stgInit();
 
   var mon=viewMon,fri=addDays(mon,4);
   $('#weektitle').textContent='Vecka '+isoWeek(mon)+' · '+mon.getDate()+' '+MONTHS[mon.getMonth()]+' – '+fri.getDate()+' '+MONTHS[fri.getMonth()];
@@ -3657,10 +3685,11 @@ function petPoke(g){
   pkLast=now;
   petPlay(g,PK_ANIM[kind]);petBubble(g,'<b>'+name+'</b>'+esc(line));petSound(kind);
 }
-function petCheer(){var g=document.querySelector('.stagefx .petg');if(!g)return;var hid=selId;petPlay(g,'pk-joy');petBubble(g,'<b>'+esc(petNameOf(hid,g.dataset.pet))+'</b>'+esc(pkRand(PK_CHEER)));petSound(petKind(g.dataset.pet))}
+function petVis(sel){var l=document.querySelectorAll(sel);for(var i=0;i<l.length;i++){var r=l[i].getBoundingClientRect();if(r.width>0&&r.right>0&&r.left<window.innerWidth)return l[i]}return null}
+function petCheer(){var g=petVis('.stagefx .petg');if(!g)return;var hid=selId;petPlay(g,'pk-joy');petBubble(g,'<b>'+esc(petNameOf(hid,g.dataset.pet))+'</b>'+esc(pkRand(PK_CHEER)));petSound(petKind(g.dataset.pet))}
 var pkEqT=0;
 function petReact(kind){
-  var g=document.querySelector('#modal .petg,.stagefx .petg');if(!g||Date.now()-pkEqT<1200)return;pkEqT=Date.now();
+  var g=petVis('#modal .petg')||petVis('.stagefx .petg');if(!g||Date.now()-pkEqT<1200)return;pkEqT=Date.now();
   var hid=selId,nm=esc(petNameOf(hid,g.dataset.pet));
   if(kind==='hello'){petPlay(g,'pk-hop');petBubble(g,'<b>'+nm+'</b>Hej! Nu går vi på äventyr!')}
   else{petPlay(g,Math.random()<.5?'pk-hop':'pk-look');petBubble(g,'<b>'+nm+'</b>'+esc(pkRand(PK_EQUIP)))}
@@ -3670,6 +3699,7 @@ setInterval(function(){
   var gs=document.querySelectorAll('.stagefx .petg,#modal .petg');if(!gs.length)return;
   var m=petMood(selId);
   gs.forEach(function(g){
+    var rr=g.getBoundingClientRect();if(!(rr.width>0&&rr.right>0&&rr.left<window.innerWidth))return;
     if(g.className.baseVal&&/pk-/.test(g.className.baseVal))return;
     var r=Math.random();
     if(m==='sleepy'||m==='sad'){if(r<.18&&g.closest('.stagefx'))petBubble(g,esc(pkRand(PK_SLEEP)),1800);else if(r<.5)petPlay(g,'pk-blink')}
@@ -3941,6 +3971,7 @@ document.addEventListener('click',function(e){
   else if(a==='day'){selDay=+t.dataset.i;render()}
   else if(a==='tick'){tick(t)}
   else if(a==='petpoke'){petPoke(t)}
+  else if(a==='stggo'){var sc0=document.getElementById('stgs');stgIdx=+t.dataset.i;if(sc0)sc0.scrollTo({left:stgIdx*sc0.clientWidth,behavior:'smooth'});document.querySelectorAll('.stgdots button').forEach(function(b,j){b.classList.toggle('on',j===stgIdx)})}
   else if(a==='claim'){claim(t.dataset.r)}
   else if(a==='settings'){requirePin().then(function(ok){if(ok)openSettings()})}
   else if(a==='close'){closeModal();if(boostFromSet){boostFromSet=false;renderSettings()}}
