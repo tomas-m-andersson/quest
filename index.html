@@ -320,6 +320,29 @@ details[open] summary::after{content:"–"}
 .hgstage{flex:none;display:flex;justify-content:center;margin-bottom:8px}
 .hgtabs{flex:none;display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .hgtabs::-webkit-scrollbar{display:none}
+/* karusell: reaktioner */
+.wpn{transform-origin:62px 277px}
+.wpn.spin{animation:wspin 1s cubic-bezier(.4,0,.2,1) 1}
+@keyframes wspin{0%{transform:rotate(0)}100%{transform:rotate(720deg)}}
+.stgv{position:relative;width:100%;transform-origin:50% 92%}
+.stgv svg{display:block;width:100%;height:auto}
+.fxo{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.stgv.pkrev{animation:pkrev .8s linear 1}
+.stgv.pkhonk{animation:pkhonkv .6s ease-out 1}
+.stgv.pkflex{animation:pkflex .9s ease-in-out 1}
+.stgv.pkhopb{animation:pkhopb .8s ease-out 1}
+@keyframes pkrev{0%,100%{transform:translateX(0) rotate(0)}10%{transform:translateX(-5px) rotate(-1.2deg)}20%{transform:translateX(3px) rotate(.6deg)}30%{transform:translateX(-4px) rotate(-1deg)}40%{transform:translateX(3px)}50%{transform:translateX(-3px) rotate(-.8deg)}60%{transform:translateX(2px)}75%{transform:translateX(-2px)}90%{transform:translateX(5px) rotate(.8deg)}}
+@keyframes pkhonkv{0%,100%{transform:translateY(0) scale(1)}25%{transform:translateY(-9px) scale(1.02)}50%{transform:translateY(0) scale(1.03,.97)}70%{transform:translateY(-4px)}}
+@keyframes pkflex{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(1.045) rotate(-1.4deg)}50%{transform:scale(1.06) rotate(1.4deg)}75%{transform:scale(1.03) rotate(-.6deg)}}
+@keyframes pkhopb{0%,100%{transform:translateY(0) scale(1)}25%{transform:translateY(-26px) scale(1,1.02)}45%{transform:translateY(0) scale(1.04,.95)}65%{transform:translateY(-12px)}85%{transform:translateY(0) scale(1.02,.98)}}
+.fxo .pf{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:radial-gradient(circle,rgba(210,210,215,.85),rgba(120,120,130,.0) 70%);opacity:0;animation:pfpuff 1.4s ease-out forwards}
+@keyframes pfpuff{0%{opacity:0;transform:translate(0,0) scale(.4)}15%{opacity:.9}100%{opacity:0;transform:translate(var(--dx,-40px),-46px) scale(2.8)}}
+.fxo .hl{position:absolute;width:90px;height:60px;margin:-30px 0 0 -10px;border-radius:50%;background:radial-gradient(ellipse at 0 50%,rgba(255,244,170,.95),rgba(255,230,120,.4) 40%,rgba(255,230,120,0) 70%);opacity:0;animation:pfhl 1s ease-in-out 1 forwards}
+@keyframes pfhl{0%,100%{opacity:0}10%,35%,60%{opacity:1}22%,48%{opacity:.1}}
+.fxo .gw{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;background:radial-gradient(circle,rgba(111,227,255,.8),rgba(111,227,255,0) 68%);opacity:0;animation:pfgw .9s ease-out 1 forwards}
+@keyframes pfgw{0%{opacity:0;transform:scale(.4)}30%{opacity:1}100%{opacity:0;transform:scale(1.6)}}
+.fxo .sp{position:absolute;width:5px;height:5px;margin:-2px 0 0 -2px;border-radius:50%;background:#ffe27a;box-shadow:0 0 8px #ffb347;opacity:0;animation:pfsp .8s ease-out forwards}
+@keyframes pfsp{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx,20px),var(--dy,-20px))}}
 /* karusell på startsidan */
 .stgwrap{order:2;position:relative}
 .stgs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
@@ -585,7 +608,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BA</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 15 OKT BB</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3221,7 +3244,7 @@ function mechRender(o,size,vb){
   if(o.emblem)s+='<g transform="translate(70 118) scale(1)">'+embSvg(o.emblem,'#f4f6fb','#0b0e14')+'</g>';
   s+='<g transform="translate(150 106) scale('+t.head+') rotate('+q.hd+') translate(-150 -106)">'+HEADS[o.head](K)+'</g>';
   function hand(side,d1,d2){var g='<g transform="rotate('+(armC.a1+d1)+' '+armC.p1[0]+' '+armC.p1[1]+')"><g transform="rotate('+(armC.a2+d2)+' '+armC.p2[0]+' '+armC.p2[1]+')"><g clip-path="url(#'+id+'hc)">'+armC.lo+'</g></g></g>';return side?MR(g):g}
-  if(o.weapon){var W=WEAPONS[o.weapon];s+='<g transform="'+poseTf(armC,q.L.s,q.L.e)+' rotate('+q.L.w+' 62 277)"><g transform="rotate('+W.ang+' 62 277)">'+W.svg(K)+'</g>'+grip(K,62,277)+'</g>'}
+  if(o.weapon){var W=WEAPONS[o.weapon];s+='<g transform="'+poseTf(armC,q.L.s,q.L.e)+' rotate('+q.L.w+' 62 277)"><g class="wpn"><g transform="rotate('+W.ang+' 62 277)">'+W.svg(K)+'</g></g>'+grip(K,62,277)+'</g>'}
   s+=hand(0,q.L.s,q.L.e);
   s+=hand(1,q.R.s,q.R.e);
   if(o.offhand){var Q=OFFHANDS[o.offhand];var inner=(Q.ang?'<g transform="rotate('+Q.ang+' 238 277)">':'<g>')+Q.svg(K)+'</g>'+MR(grip(K,62,277));
@@ -3299,13 +3322,43 @@ function petSlideSvg(hid,ep){
 function stageCarousel(h){
   var hid=h.id,eq=S.avatar[hid].eq,lvl=levelInfo(totalXp(hid)).level,o0=mechOpts(hid);
   var sl=[{k:'all',n:'Allt',svg:avatarSvg(hid,420)},{k:'bot',n:'🤖 Robot',svg:mechRender(Object.assign({},o0,{pet:'',vehicle:'',petacc:''}),420,DEF_VB)}];
+  var vanx=function(x){return ((x+20)/340*100).toFixed(1)},vany=function(y){return ((y-160)/260*100).toFixed(1)};
   var vit=findItem('vehicle',eq.vehicle),vid=(vit&&lvl>=vit.level)?vit.id:'';
-  if(vid)sl.push({k:'veh',n:'🏍️ '+vit.name,svg:garageSvg(vid,vupOf(eq,lvl),420,true,hid)});
+  if(vid){var VA=(VEHICLES[vid]&&VEHICLES[vid].an)||{x0:30,x1:270,top:370,bot:404};sl.push({k:'veh',n:'🏍️ '+vit.name,svg:garageSvg(vid,vupOf(eq,lvl),420,true,hid),at:' data-rx="'+vanx(VA.x0+6)+'" data-ry="'+vany(VA.bot-34)+'" data-fx="'+vanx(VA.x1-4)+'" data-fy="'+vany(VA.bot-50)+'"'})}
   var ep=petOf(hid);if(ep)sl.push({k:'pet',n:'🐾 '+petName(hid,ep),svg:petSlideSvg(hid,ep)});
   if(stgIdx>=sl.length)stgIdx=0;
-  var o='<div class="stgwrap"><div class="stgs" id="stgs">'+sl.map(function(x,i){return '<div class="stagefx" data-i="'+i+'"'+(x.k==='pet'?'':' data-act="avatar" style="cursor:pointer" title="Öppna hangaren"')+'>'+x.svg+'</div>'}).join('')+'</div>';
+  var o='<div class="stgwrap"><div class="stgs" id="stgs">'+sl.map(function(x,i){var act=x.k==='pet'?'':(x.k==='all'?' data-act="avatar" style="cursor:pointer" title="Öppna hangaren"':' data-act="stgpoke" data-k="'+x.k+'" style="cursor:pointer"'+(x.at||'')+' data-nm="'+esc(x.n.replace(/^\S+\s/,''))+'"');
+    var inner=(x.k==='bot'||x.k==='veh')?'<div class="stgv">'+x.svg+'<div class="fxo"></div></div>':x.svg;
+    return '<div class="stagefx" data-i="'+i+'"'+act+'>'+inner+'</div>'}).join('')+'</div>';
   if(sl.length>1)o+='<div class="stgdots">'+sl.map(function(x,i){return '<button type="button" data-act="stggo" data-i="'+i+'" class="'+(i===stgIdx?'on':'')+'">'+esc(x.n)+'</button>'}).join('')+'</div>';
   return o+'</div>';
+}
+var fxAC=null;
+function fxSound(kind){
+  try{fxAC=fxAC||new (window.AudioContext||window.webkitAudioContext)();var a=fxAC,t=a.currentTime;
+    function tone(type,f0,f1,dur,vol,at){var o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f0,t+at);o.frequency.exponentialRampToValueAtTime(f1,t+at+dur);g.gain.setValueAtTime(0.0001,t+at);g.gain.exponentialRampToValueAtTime(vol,t+at+.04);g.gain.exponentialRampToValueAtTime(.0001,t+at+dur);o.connect(g);g.connect(a.destination);o.start(t+at);o.stop(t+at+dur+.02)}
+    if(kind==='rev'){tone('sawtooth',70,210,.45,.06,0);tone('sawtooth',210,85,.35,.05,.4);tone('square',35,105,.45,.04,0)}
+    else if(kind==='honk'){tone('square',440,440,.16,.05,0);tone('square',350,350,.2,.05,.2)}
+    else if(kind==='servo'){tone('triangle',300,900,.25,.05,0);tone('triangle',900,420,.25,.05,.25);tone('sine',1400,1400,.08,.04,.5)}
+    else if(kind==='spin'){tone('triangle',200,1100,.6,.04,0);tone('sine',1500,900,.2,.04,.65)}
+  }catch(e){}
+}
+var STG_REV=['Vrooom! 🔥','Motorn är varm!','Redo att köra!','Brrrmm brrrmm!'],STG_HONK=['Tut tut! 📯','Piiip!','Aaaa-oooga!'],STG_BOT=['Systemen online!','Vapnet är laddat!','Redo för uppdrag!','Kraften är på topp! 💪','Skannar efter fara…'];
+function stgPoke(t){
+  var k=t.dataset.k,v=t.querySelector('.stgv');if(!v)return;var n=+t.dataset.n||0;t.dataset.n=n+1;var fo=v.querySelector('.fxo'),nm=esc(t.dataset.nm||'');
+  function cls(c,list){list.forEach(function(x){v.classList.remove(x)});void v.offsetWidth;v.classList.add(c);var d=function(){v.classList.remove(c);v.removeEventListener('animationend',d)};v.addEventListener('animationend',d)}
+  function add(h,ms){var e=document.createElement('div');e.innerHTML=h;e=e.firstChild;fo.appendChild(e);setTimeout(function(){e.remove()},ms||1600);return e}
+  var all=['pkrev','pkhonk','pkflex','pkhopb'];
+  if(k==='veh'){
+    var rx=t.dataset.rx,ry=t.dataset.ry,fx=t.dataset.fx,fy=t.dataset.fy;
+    if(n%2===0){cls('pkrev',all);fxSound('rev');for(var i=0;i<6;i++)add('<i class="pf" style="left:'+rx+'%;top:'+ry+'%;--dx:'+(-30-Math.random()*40).toFixed(0)+'px;animation-delay:'+(i*.12).toFixed(2)+'s"></i>',2200);petBubble(v,'<b>'+nm+'</b>'+esc(pkRand(STG_REV)))}
+    else{cls('pkhonk',all);fxSound('honk');add('<i class="hl" style="left:'+fx+'%;top:'+fy+'%"></i>',1200);petBubble(v,'<b>'+nm+'</b>'+esc(pkRand(STG_HONK)))}
+  }else{
+    var hasW=!!v.querySelector('.wpn'),m=hasW?n%3:1+n%2;
+    if(hasW&&m===0){v.querySelectorAll('.wpn').forEach(function(w){w.classList.remove('spin');void w.getBoundingClientRect();w.classList.add('spin');w.addEventListener('animationend',function(){w.classList.remove('spin')},{once:true})});fxSound('spin');for(var j=0;j<7;j++)add('<i class="sp" style="left:'+(22+Math.random()*10).toFixed(0)+'%;top:'+(48+Math.random()*10).toFixed(0)+'%;--dx:'+((Math.random()-.5)*60).toFixed(0)+'px;--dy:'+(-10-Math.random()*40).toFixed(0)+'px;animation-delay:'+(j*.08).toFixed(2)+'s"></i>',1600);petBubble(v,esc('Vapnet snurrar! ⚔️'))}
+    else if(m===1){cls('pkflex',all);fxSound('servo');add('<i class="gw" style="left:50%;top:50%"></i>',1100);petBubble(v,esc(pkRand(STG_BOT)))}
+    else{cls('pkhopb',all);fxSound('servo');add('<i class="gw" style="left:50%;top:25%"></i>',1100);petBubble(v,esc(pkRand(STG_BOT)))}
+  }
 }
 function stgInit(){
   var sc=document.getElementById('stgs');if(!sc)return;sc.scrollLeft=stgIdx*sc.clientWidth;var t=0;
@@ -3971,6 +4024,7 @@ document.addEventListener('click',function(e){
   else if(a==='day'){selDay=+t.dataset.i;render()}
   else if(a==='tick'){tick(t)}
   else if(a==='petpoke'){petPoke(t)}
+  else if(a==='stgpoke'){stgPoke(t)}
   else if(a==='stggo'){var sc0=document.getElementById('stgs');stgIdx=+t.dataset.i;if(sc0)sc0.scrollTo({left:stgIdx*sc0.clientWidth,behavior:'smooth'});document.querySelectorAll('.stgdots button').forEach(function(b,j){b.classList.toggle('on',j===stgIdx)})}
   else if(a==='claim'){claim(t.dataset.r)}
   else if(a==='settings'){requirePin().then(function(ok){if(ok)openSettings()})}
