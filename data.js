@@ -233,7 +233,7 @@ window.SKOLQUEST_DATA = {
         "torso": "kedjebrost",
         "shoulders": "horned",
         "arms": "ljusarmar",
-        "waist": "",
+        "waist": "kedjekjol",
         "legs": "",
         "back": "",
         "weapon": "blodkatana",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088696694
+  "updatedAt": 1792088700960
 };
