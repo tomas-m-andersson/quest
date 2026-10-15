@@ -239,7 +239,7 @@ window.SKOLQUEST_DATA = {
         "weapon": "gatling",
         "offhand": "",
         "aura": "pulse",
-        "bg": "",
+        "bg": "desert",
         "emblem": "",
         "banner": "",
         "special": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088735836
+  "updatedAt": 1792088741873
 };
