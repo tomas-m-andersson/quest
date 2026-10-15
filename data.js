@@ -249,7 +249,7 @@ window.SKOLQUEST_DATA = {
         "vweapon": "",
         "varmor": "",
         "vcolor": "",
-        "pet": "beetle",
+        "pet": "spider",
         "petacc": ""
       },
       "seen": 71,
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088785619
+  "updatedAt": 1792088790302
 };
