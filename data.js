@@ -208,7 +208,9 @@ window.SKOLQUEST_DATA = {
       },
       "seen": 634,
       "pseen": 634,
-      "petNames": {}
+      "petNames": {
+        "phoenix": "Olle"
+      }
     },
     "b": {
       "eq": {
@@ -241,5 +243,5 @@ window.SKOLQUEST_DATA = {
       "petNames": {}
     }
   },
-  "updatedAt": 1792086434554
+  "updatedAt": 1792087684282
 };
