@@ -565,7 +565,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AW</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AX</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3441,11 +3441,12 @@ function openPets(keep){
   var o='<div class="sheet" style="--c:'+c+'"><h4>🐾 Följeslagare · '+esc(h.name)+'</h4><div class="avprev">'+avBox(hid,150)+'</div>';
   var ep=petOf(hid);
   if(ep){o+='<div class="namerow"><label for="pn-in">Namn på din följeslagare ('+esc(ep.name)+')</label><div class="frow"><input class="grow" id="pn-in" maxlength="16" placeholder="Döp den här…" value="'+esc(((av.petNames||{})[ep.id])||'')+'" autocomplete="off"><button class="btn sm" data-act="pname">Döp</button></div></div>'}
+  if(ep&&PET_POW[ep.id])o+='<p class="mute" style="margin:4px 0 8px">⚡ Förmåga: '+PET_POWTXT[PET_POW[ep.id]]+' <span style="opacity:.7">(gäller i alla spel utom flappy)</span></p>';
   o+='<div class="coll"><div class="gl"><span>Samling '+have+' / '+pets.length+'</span><span>'+(next?'Nästa: ??? på nivå '+next.level:'Alla hittade! 🏆')+'</span></div><div class="bar"><i style="width:'+(have/pets.length*100).toFixed(1)+'%"></i></div></div>';
   o+='<div class="pets"><button class="pet'+(!av.eq.pet?' on':'')+'" data-act="aeq" data-slot="pet" data-id=""><span class="pv"><span class="none">∅</span></span><b>Ingen</b><small>'+(!av.eq.pet?'PÅ':'')+'</small></button>';
   pets.forEach(function(it){
     var locked=lvl<it.level,on=av.eq.pet===it.id&&!locked;
-    o+='<button class="pet'+(on?' on':'')+(locked?' lock':'')+'"'+(locked?' disabled':'')+' data-act="aeq" data-slot="pet" data-id="'+it.id+'"><span class="pv">'+petThumb(it,hid,86)+'</span><b>'+(locked?'???':esc(petName(hid,it)))+'</b><small>'+(locked?'🔒 NIVÅ '+it.level:(on?'PÅ':'NIVÅ '+it.level))+'</small></button>';
+    o+='<button class="pet'+(on?' on':'')+(locked?' lock':'')+'"'+(locked?' disabled':'')+' data-act="aeq" data-slot="pet" data-id="'+it.id+'"><span class="pv">'+petThumb(it,hid,86)+'</span><b>'+(locked?'???':esc(petName(hid,it)))+'</b><small>'+(locked?'🔒 NIVÅ '+it.level:(on?'PÅ':'NIVÅ '+it.level)+' · '+(PET_POWICON[PET_POW[it.id]]||''))+'</small></button>';
   });
   o+='</div><div class="acts"><button class="btn" data-act="avatar">🎭 Avatar</button><button class="btn pri" data-act="close">Klar</button></div></div>';
   openModal(o,keep);
@@ -3465,6 +3466,9 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.
 /* ---------- följeslagare: liv, humör, reaktioner ---------- */
 var PK_BEAST={wolf:1,lion:1,tiger:1,panther:1,fox:1,crystalwolf:1,magmalion:1,shadowpanther:1},PK_ARMOR={bear:1,rhino:1,turtle:1,beetle:1,crab:1},PK_CRAWL={cobra:1,serpent:1,scorpion:1,spider:1,hydra:1};
 function petKind(id){return PETFLY[id]?'fly':PK_ARMOR[id]?'armor':PK_CRAWL[id]?'crawl':'beast'}
+var PET_POW={orb:'magnet',wolf:'luck',falcon:'helper',shielddrone:'shield',cobra:'luck',lion:'hp',scorpion:'helper',quadcopter:'magnet',eagle:'jump',tiger:'hp',spider:'magnet',panther:'jump',fox:'luck',crab:'shield',owl:'magnet',serpent:'helper',bear:'hp',beetle:'shield',rhino:'hp',turtle:'shield',phoenix:'helper',drake:'jump',hydra:'helper',thunderbird:'luck',shadowpanther:'jump',crystalwolf:'magnet',skydragon:'helper',magmalion:'hp',starphoenix:'shield',eternaldragon:'jump'};
+var PET_POWICON={magnet:'🧲',luck:'🍀',hp:'❤️',shield:'🛡️',helper:'🎯',jump:'🦘'};
+var PET_POWTXT={magnet:'🧲 Magnet – drar till sig drops och mynt',luck:'🍀 Tur – fler hjärtan och sköldar droppar',hp:'❤️ Extra liv – börjar med ett extra hjärta',shield:'🛡️ Startsköld – skyddad de första 4 sekunderna',helper:'🎯 Hjälpare – skjuter på fiender och lådor',jump:'🦘 Extra hopp – ett hopp till i luften'};
 var PK_ANIM={fly:'pk-loop',beast:'pk-hop',armor:'pk-stomp',crawl:'pk-wig'};
 var PK_LINES={fly:['Wiiii! Titta, jag flyger!','Bzzzt! Hoppla!','Pip pip! Mer fart!','Jag ser allt härifrån!'],
  beast:['Grrr! Vill du leka?','*viftar på svansen*','Spring, spring! Hoppa!','Rooaar! …fast snällt.'],
@@ -3976,6 +3980,42 @@ function gmWeaponSprite(wid,o,cb){
       cb({c:c2,px:424-x0,py:634-y0})}catch(e){cb(null)}
   });
 }
+function gmPetSprite(hid,id,cb){
+  var K=mechK(paintById(mechOpts(hid).paint),'gpt'+(MX.n++)+'_');
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="-14 -20 140 112" width="560" height="448">'+K.defs+'<g transform="translate(112 0) scale(-1 1)">'+PETS[id](K)+'</g></svg>';
+  gmLoadSvg(svg,function(im){
+    if(!im){cb(null);return}
+    try{var w=560,h=448,c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');x.drawImage(im,0,0,w,h);
+      var d=x.getImageData(0,0,w,h).data,x0=w,y0=h,x1=0,y1=0;
+      for(var yy=0;yy<h;yy++)for(var xx=0;xx<w;xx++){if(d[(yy*w+xx)*4+3]>40){if(xx<x0)x0=xx;if(xx>x1)x1=xx;if(yy<y0)y0=yy;if(yy>y1)y1=yy}}
+      if(x1<=x0||y1<=y0){cb(null);return}
+      var c2=document.createElement('canvas');c2.width=x1-x0+1;c2.height=y1-y0+1;c2.getContext('2d').drawImage(c,x0,y0,c2.width,c2.height,0,0,c2.width,c2.height);cb(c2)}catch(e){cb(null)}
+  });
+}
+function gmPetPlace(g,dt){
+  var sp=g.petspr;if(!sp)return;
+  var fly=!!PETFLY[g.pid],h=fly?42:46,w=h*sp.width/sp.height;if(w>88){w=88;h=w*sp.height/sp.width}
+  var p=g.pt||(g.pt={x:0,y:0});p.h=h;p.w=w;p.ph=(p.ph||0)+dt*(fly?4:12);
+  var tx,ty;
+  if(g.mode==='shoot'){tx=g.x-g.tw*.55-w*.5;ty=fly?g.y-g.thh*.1+Math.sin(p.ph)*6:gmGH(g,tx)-(g.state==='play'&&g.on?Math.abs(Math.sin(p.ph))*3:0)}
+  else if(g.mode==='run'){if(fly){tx=g.px-g.tw*.55-w*.4;ty=g.py-g.thh-6+Math.sin(p.ph)*6}else{tx=g.px-g.tw*.05;ty=g.py-g.thh*.8-(g.state==='play'&&g.on?Math.abs(Math.sin(p.ph))*2:0)}}
+  else{tx=g.px-g.tw*.65-w*.4;ty=g.y+h*.45+Math.sin(p.ph)*6}
+  var k=p.init?Math.min(1,dt*9):1;p.init=1;p.x+=(tx-p.x)*k;p.y+=(ty-p.y)*k;
+}
+function gmPetDraw(ctx,g){
+  var sp=g.petspr,p=g.pt;if(!sp||!p||g.dead)return;
+  if(g.ptr&&g.ptr.t>0){ctx.save();ctx.strokeStyle=g.col;ctx.shadowColor=g.col;ctx.shadowBlur=10;ctx.lineWidth=3;ctx.globalAlpha=Math.min(1,g.ptr.t*8);ctx.beginPath();ctx.moveTo(g.ptr.x1,g.ptr.y1);ctx.lineTo(g.ptr.x2,g.ptr.y2);ctx.stroke();ctx.restore()}
+  ctx.drawImage(sp,p.x-p.w/2,p.y-p.h,p.w,p.h);
+  if(g.pname){ctx.save();ctx.font='700 '+(11/g.s)+'px system-ui,sans-serif';ctx.textAlign='center';ctx.fillStyle='rgba(255,255,255,.85)';ctx.shadowColor='#000';ctx.shadowBlur=4;ctx.fillText(g.pname,p.x,p.y-p.h-4/g.s);ctx.restore()}
+}
+function gmPetShoot(g){
+  var p=g.pt;if(!p)return;var bx=p.x+p.w*.4,by=p.y-p.h*.5,best=null,bd=1e9,i;
+  for(i=0;i<g.en.length;i++){var e=g.en[i],d=e.x-bx;if(d>0&&e.x<g.LW+10&&d<bd){bd=d;best=e}}
+  if(best){g.ptr={x1:bx,y1:by,x2:best.x,y2:best.y,t:.16};best.hp-=1;best.hit=.12;if(best.hp<=0){gmKill(g,best);g.en.splice(g.en.indexOf(best),1)}else gmSpark(g,best.x,best.y,g.col);return}
+  var bo=null;bd=1e9;
+  for(i=0;i<g.obs.length;i++){var o=g.obs[i],d2=o.x-bx;if(!o.ind&&d2>0&&d2<420&&o.x<g.LW&&d2<bd){bd=d2;bo=o}}
+  if(bo){g.ptr={x1:bx,y1:by,x2:bo.x+bo.w/2,y2:bo.gy-bo.h/2,t:.16};bo.hp-=1;bo.fl=.1;if(bo.hp<=0){gmExplode(g,bo.x+bo.w/2,bo.gy-bo.h/2,1.1);gmExplode(g,bo.x+bo.w/2,bo.gy-bo.h/2,1,true);g.score+=4;gmDrop(g,bo.x+bo.w/2,bo.gy-bo.h/2,.12);g.obs.splice(g.obs.indexOf(bo),1)}else gmSpark(g,bo.x+bo.w/2,bo.gy-bo.h/2,'#c89a5a')}
+}
 function gmFinishLoad(g,c){if(GM!==g)return;g.spr=c;gmInit();g.state='ready';gmUi('ready');g.last=performance.now();g.raf=requestAnimationFrame(gmLoop)}
 function gameMenu(){
   var hid=selId,h=heroById(hid),vit=gmVeh(),col=heroColor(h);
@@ -3999,12 +4039,12 @@ function gmStart(which){
   var mode=which==='bot'?'shoot':gmModeOf(vit.id);
   var old=document.getElementById('gmov');if(old)old.remove();
   var ov=document.createElement('div');ov.id='gmov';
-  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>'+(mode==='shoot'?'<button id="gmjoy" aria-label="Hoppa"><svg viewBox="0 0 48 48" width="52" height="52" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));pointer-events:none"><path d="M24 7 40 25H30v16H18V25H8z" fill="#fff" stroke="rgba(10,30,90,.55)" stroke-width="2" stroke-linejoin="round"/></svg></button>':'');
+  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+(mode==='flap'?'':'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>')+(mode==='shoot'?'<button id="gmjoy" aria-label="Hoppa"><svg viewBox="0 0 48 48" width="52" height="52" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));pointer-events:none"><path d="M24 7 40 25H30v16H18V25H8z" fill="#fff" stroke="rgba(10,30,90,.55)" stroke-width="2" stroke-linejoin="round"/></svg></button>':'');
   document.body.appendChild(ov);
   var cv=ov.querySelector('#gmc');
   var g={mode:mode,hid:hid,vid:vit?vit.id:'',vname:vit?vit.name:'Mech',kind:vit?(VEHICLES[vit.id].kind||'ground'):'bot',col:heroColor(h),cv:cv,ctx:cv.getContext('2d'),spr:null,state:'load',score:0,t:0,raf:0,last:0,best:gmBest(hid,mode),hold:false,flash:0,cx:0,ty:320};
   GM=g;
-  try{var gpet=petOf(hid);g.pname=gpet?petName(hid,gpet):''}catch(e){g.pname=''}
+  try{var gpet=petOf(hid);g.pname=gpet?petName(hid,gpet):'';g.pid=gpet?gpet.id:'';g.pw=gpet?(PET_POW[gpet.id]||''):'';if(gpet)gmPetSprite(hid,gpet.id,function(c){if(GM===g)g.petspr=c})}catch(e){g.pname='';g.pid='';g.pw=''}
   g.wid=gmOpts(hid,'').weapon||'';g.mw=GM_MELEE[g.wid]||GM_MELEE.none;if(mode==='shoot'){var m0=g.mw,m1={};for(var mk in m0)m1[mk]=m0[mk];m1.r=m0.r*1.35;if(m0.a)m1.a=Math.min(300,m0.a*1.3);m1.cd=m0.cd*.85;g.mw=m1}var wi=findItem('weapon',g.wid);g.wname=wi?wi.name:'';
   closeModal();
   try{g.flip=localStorage.getItem('mq.flip')==='1'}catch(e){g.flip=false}
@@ -4083,9 +4123,9 @@ function gmResetZoom(){
 }
 function gmUi(kind){
   var u=document.getElementById('gmui');if(!u||!GM)return;var g=GM;
-  var how=g.mode==='flap'?'Tryck för att flaxa':g.mode==='run'?'Tryck för att hoppa (håll för högre hopp) · 🔫-knappen skjuter lådor och drönare':'Du springer automatiskt · ⬆️-knappen (eller tryck på skärmen) hoppar, håll för högre hopp, tryck igen i luften för dubbelhopp · ⚔️ slår med '+(g.wname||'nävarna')+' – krossa lådor och fiender';
+  var how=g.mode==='flap'?'Tryck för att flaxa':g.mode==='run'?'Tryck för att hoppa (håll för högre hopp) · 🔫-knappen skjuter lådor och drönare':'⬆️ hoppar (håll = högre, igen i luften = dubbelhopp) · ⚔️ slår med '+(g.wname||'nävarna');
   if(kind==='load'){u.innerHTML='<div class="gmcen"><b>Laddar…</b></div>';return}
-  if(kind==='ready'||kind==='pause'){u.innerHTML='<div class="gmcen"><b>'+esc(g.vname)+'</b>'+(g.pname?'<span>🐾 '+esc(g.pname)+' hejar på dig!</span>':'')+'<span>'+how+'</span>'+(g.vrot?'<span>↻ Vrid telefonen åt sidan – knappen uppe till höger vänder om bilden</span>':'')+'<span class="gmtap">'+(kind==='pause'?'Pausad – tryck för att fortsätta':'Tryck för att starta')+'</span></div>';return}
+  if(kind==='ready'||kind==='pause'){u.innerHTML='<div class="gmcen"><b>'+esc(g.vname)+'</b>'+(g.pname?'<span>🐾 '+esc(g.pname)+(g.pw&&g.mode!=='flap'?' · '+PET_POWTXT[g.pw].split(' – ')[0]:'')+'</span>':'')+'<span>'+how+'</span>'+(g.vrot?'<span>↻ Vrid telefonen åt sidan – knappen uppe till höger vänder om bilden</span>':'')+'<span class="gmtap">'+(kind==='pause'?'Pausad – tryck för att fortsätta':'Tryck för att starta')+'</span></div>';return}
   if(kind==='play'){u.innerHTML='';return}
   if(kind==='over'){
     u.innerHTML='<div class="gmcen over"><b>'+(g.newBest?'🏆 Nytt rekord!':'Game over')+'</b><span class="gmbig">'+g.score+'</span><span>Rekord: '+g.best+'</span><div class="gmbtns"><button class="btn pri" id="gmagain">Spela igen</button><button class="btn" id="gmmenu">Meny</button></div></div>';
@@ -4128,18 +4168,22 @@ function gmInit(){
   }else{
     g.px=Math.max(110,LW*.22,(g.land||g.vrot?270:150)/g.s);g.x=g.px;g.tx=g.px;g.y=520-g.thh/2;g.ty=g.y;g.vy=0;g.sx=0;g.dist=0;g.sf=0;g.on=true;g.jumps=0;g.obs=[];g.blk=[];g.floor=520;g.nextX=LW*.9+260;g.lean=9;g.dp=0;g.en=[];g.eb=[];g.hp=5;g.inv=0;g.sh=0;g.pk=[];g.cdT=0;g.atk=-1;g.sw=1;g.spawn=1;g.parts=[];g.fx=[];g.shake=0;g.swId=0;g.keyY=0;g.keyX=0;
   }
+  g.xj=0;g.pcd=1.5;g.ptr=null;
+  if(g.pw==='hp'){if(g.mode==='shoot')g.hp=6;else if(g.mode==='run')g.lives=1}
+  if(g.pw==='shield'&&g.mode!=='flap')g.sh=4;
   var sc=document.getElementById('gmsc');if(sc)sc.textContent='0';
 }
 function gmDrop(g,x,y,ch){
-  if(Math.random()>ch)return;
+  if(Math.random()>ch*(g.pw==='luck'?1.8:1))return;
   var heart=Math.random()<.55;
   if(g.mode==='shoot'&&g.hp>=7)heart=false;
   if(g.mode==='run'&&g.lives>=3)heart=false;
   g.pk.push({x:x,y:y,vy:-170,k:heart?'h':'s',t:0});
 }
 function gmPkUpdate(g,dt,gf,cx,cy,r){
-  for(var i=g.pk.length-1;i>=0;i--){var p=g.pk[i];p.t+=dt;p.x-=g.spd*dt;p.vy+=900*dt;p.y+=p.vy*dt;
-    var gy=gf(p.x)-18;if(p.y>gy){p.y=gy;p.vy=0}
+  for(var i=g.pk.length-1;i>=0;i--){var p=g.pk[i];p.t+=dt;if(g.pw==='magnet'&&!p.mg&&Math.hypot(cx-p.x,cy-p.y)<300)p.mg=1;
+    if(p.mg){var mdx=cx-p.x,mdy=cy-p.y,md=Math.hypot(mdx,mdy)||1,ms=Math.min(md,520*dt);p.x+=mdx/md*ms;p.y+=mdy/md*ms}
+    else{p.x-=g.spd*dt;p.vy+=900*dt;p.y+=p.vy*dt;var gy=gf(p.x)-18;if(p.y>gy){p.y=gy;p.vy=0}}
     if(p.x<-40){g.pk.splice(i,1);continue}
     if(Math.hypot(p.x-cx,p.y-cy)<r+26){g.pk.splice(i,1);
       if(p.k==='h'){if(g.mode==='shoot')g.hp=Math.min(7,g.hp+1);else g.lives=Math.min(3,g.lives+1);gmSpark(g,p.x,p.y,'#ff6a8a')}
@@ -4167,8 +4211,8 @@ function gmRunHurt(g,arr,i){
 }
 function gmRJump(){var g=GM;if(!g||g.mode!=='shoot'||g.state!=='play')return;
   if(g.on){g.vy=-780;g.on=false;g.jumps=1;for(var i=0;i<6;i++)g.parts.push({x:g.x+gmRnd(-12,12),y:g.floor||520,vx:gmRnd(-120,60),vy:-gmRnd(10,70),l:.35,l0:.35,c:'#8a7a9a',s:gmRnd(2,4),g:200,dr:.9})}
-  else if(g.jumps<2){g.vy=-700;g.jumps=2;g.thr=1;for(var k=0;k<10;k++)g.parts.push({x:g.x+gmRnd(-14,14),y:g.y+g.thh*.45,vx:gmRnd(-90,90),vy:gmRnd(60,200),l:.4,c:Math.random()<.5?'#ffb347':'#7fd4ff'})}}
-function gmJump(){var g=GM;if(g.on){g.vy=-760;g.on=false}}
+  else if(g.jumps<(g.pw==='jump'?3:2)){g.vy=-700;g.jumps=2;g.thr=1;for(var k=0;k<10;k++)g.parts.push({x:g.x+gmRnd(-14,14),y:g.y+g.thh*.45,vx:gmRnd(-90,90),vy:gmRnd(60,200),l:.4,c:Math.random()<.5?'#ffb347':'#7fd4ff'})}}
+function gmJump(){var g=GM;if(g.on){g.vy=-760;g.on=false;g.xj=0}else if(g.pw==='jump'&&g.xj<1){g.vy=-650;g.xj=1}}
 function gmLoop(now){
   var g=GM;if(!g)return;
   var dt=Math.min(.033,(now-g.last)/1000||0);g.last=now;
@@ -4285,10 +4329,11 @@ function gmRun(dt){
   var gr=(g.hold&&g.vy<0)?1250:2300;
   g.vy+=gr*dt;g.py+=g.vy*dt;
   var gyl=gy-gmTerr(g,g.px);
-  if(g.py>=gyl-(g.on?3:0)&&g.vy>=0||g.py>=gyl){g.py=gyl;g.vy=0;g.on=true}else g.on=false;
+  if(g.py>=gyl-(g.on?3:0)&&g.vy>=0||g.py>=gyl){g.py=gyl;g.vy=0;g.on=true;g.xj=0}else g.on=false;
   if(g.hov&&g.on){g.spt=(g.spt||0)-dt;if(g.spt<=0){g.spt=.03;var he=gmEnv(g.px+g.sx)>.3,fx2=g.px-g.tw*.38;g.parts.push({x:fx2,y:g.py-5,vx:-gmRnd(180,300),vy:-gmRnd(10,90),l:.4,l0:.4,c:he?'#d2b08a':'#cfeaff',s:gmRnd(3,6),g:260,dr:.8});g.parts.push({x:g.px+g.tw*.1+gmRnd(-30,30),y:g.py-3,vx:-gmRnd(60,160),vy:-gmRnd(5,40),l:.3,l0:.3,c:he?'#a98a6a':'#e8f6ff',s:gmRnd(2,4),g:100,dr:1})}}
   if(g.inv>0)g.inv-=dt;if(g.sh>0)g.sh-=dt;
   g.fcd-=dt;if(g.firing&&g.fcd<=0)gmRunFire();
+  if(g.pw==='helper'&&g.pt){g.pcd-=dt;if(g.pcd<=0){g.pcd=2.2;g.bul.push({x:g.pt.x+g.pt.w*.4,y:g.pt.y-g.pt.h*.5,vx:760});gmBurst(g.pt.x+g.pt.w*.5,g.pt.y-g.pt.h*.5,g.col,3)}}
   g.score=Math.floor(g.dist/12)+g.cc*5+g.kills*8;
   g.nextX-=g.spd*dt;
   if(g.nextX<=0){
@@ -4326,6 +4371,7 @@ function gmRun(dt){
   }
   for(i=g.coins.length-1;i>=0;i--){
     var c=g.coins[i];c.x-=g.spd*dt;
+    if(g.pw==='magnet'){var cdx=g.px-c.x,cdy=(g.py-g.thh/2)-c.y,cd=Math.hypot(cdx,cdy);if(cd<260&&cd>1){c.x+=cdx/cd*430*dt;c.y+=cdy/cd*430*dt}}
     if(c.x<-20){g.coins.splice(i,1);continue}
     if(!c.got&&gmHit(pb,{x:c.x-c.r,y:c.y-c.r,w:c.r*2,h:c.r*2})){c.got=true;g.cc++;g.coins.splice(i,1)}
   }
@@ -4408,6 +4454,8 @@ function gmShoot(dt){
     gmSwObs(g,hx,hy);
     for(i=g.en.length-1;i>=0;i--){var ee=g.en[i];if(ee.hs!==g.swId&&gmInCone(g,hx,hy,ee,false)){ee.hs=g.swId;ee.hp-=mw.d;ee.hit=.12;ee.x+=22;if(ee.hp<=0){gmKill(g,ee);g.en.splice(i,1)}else gmSpark(g,ee.x,ee.y,mw.c)}}
   }
+  if(g.ptr&&g.ptr.t>0)g.ptr.t-=dt;
+  if(g.pw==='helper'&&g.pt){g.pcd-=dt;if(g.pcd<=0){g.pcd=2.6;gmPetShoot(g)}}
   g.spawn-=dt;
   if(g.spawn<=0){g.spawn=Math.max(.5,1.4-g.score/1500)*gmRnd(.7,1.25);gmSpawn(g)}
   var pr={x:g.x,y:g.y,r:g.thh*.24};
@@ -4498,7 +4546,7 @@ function gmDraw(dt){
   var g=GM,ctx=g.ctx,LW=g.LW;
   ctx.setTransform(g.dpr*g.s,0,0,g.dpr*g.s,0,0);
   if(g.shake>0){ctx.translate((Math.random()-.5)*14*g.shake,(Math.random()-.5)*14*g.shake);g.shake=Math.max(0,g.shake-dt*1.4)}
-  g.sx=g.sx||0;
+  g.sx=g.sx||0;gmPetPlace(g,dt);
   if(g.mode==='flap'){
     var sp=g.kind==='space';
     if(sp){gmSky(ctx,g,'#04050d','#1b1244');gmStars(ctx,g,90,.35);
@@ -4514,6 +4562,7 @@ function gmDraw(dt){
     var bob=g.state==='play'?0:Math.sin(g.t*3)*6;
     var rot=g.rot||0;
     if(!g.dead)gmDrawSprite(ctx,g,g.px,g.y+bob,rot);
+    gmPetDraw(ctx,g);
     gmPartsDraw(ctx,g);gmFxDraw(ctx,g);
   }else if(g.mode==='run'){
     var gy=g.gy;
@@ -4533,7 +4582,7 @@ function gmDraw(dt){
     (g.obs||[]).forEach(function(o){var ow=g.water;if(g.hov)g.water=!o.ld;gmObs(ctx,g,o,gmOG(g,o));g.water=ow});
     var hen=g.hov?gmEnv(g.px+g.sx):0,bob2=g.water&&g.on?Math.sin(g.t*5)*2.5*(1-hen):0,tilt=g.on?(g.hov?(g.tl=(g.tl||0)+((Math.sin(g.t*4)*.03*(1-hen)-Math.atan((gmTerr(g,g.px+24)-gmTerr(g,g.px-24))/48)*.9)-(g.tl||0))*.35):g.water?Math.sin(g.t*4)*.03:(g.terr?(g.tl=(g.tl||0)+((-Math.atan((gmTerr(g,g.px+24)-gmTerr(g,g.px-24))/48)*.9)-(g.tl||0))*.35):0)):Math.max(-.3,Math.min(.3,g.vy/2800));
     gmDrawSprite(ctx,g,g.px,(g.state==='ready'&&g.terr?g.gy-gmTerr(g,g.px):g.py)-g.thh/2+bob2+(g.state==='ready'?Math.sin(g.t*3)*3:0),tilt,(g.inv>0&&g.sh<=0&&Math.floor(g.t*14)%2===0)?.35:1);
-    gmShield(ctx,g,g.px,g.py-g.thh/2,Math.max(g.tw,g.thh)*.68);gmPkDraw(ctx,g);
+    gmShield(ctx,g,g.px,g.py-g.thh/2,Math.max(g.tw,g.thh)*.68);gmPkDraw(ctx,g);gmPetDraw(ctx,g);
     (g.drones||[]).forEach(function(d){gmEnemy(ctx,g,d)});
     gmPartsDraw(ctx,g);gmFxDraw(ctx,g);
     (g.bul||[]).forEach(function(b){ctx.save();ctx.shadowColor=g.col;ctx.shadowBlur=10;ctx.fillStyle=g.col;ctx.fillRect(b.x-15,b.y-4,30,8);ctx.fillStyle='#fff';ctx.globalAlpha=.8;ctx.fillRect(b.x-8,b.y-1.5,20,3);ctx.restore()});
@@ -4567,7 +4616,7 @@ function gmDraw(dt){
         ctx.drawImage(g.spr,sd?sc2/2:0,cut,sc2/2,sh2-cut,(sd?0:-W2/2)-pv,0,W2/2,H2-uh);ctx.restore()}
     }else if(g.spr)ctx.drawImage(g.spr,-g.tw/2,-g.thh/2,g.tw,g.thh);
     gmWeaponDraw(ctx,g);ctx.restore();
-    gmSlashFx(ctx,g);gmShield(ctx,g,g.x,g.y,Math.max(g.tw,g.thh)*.72);gmPkDraw(ctx,g);
+    gmSlashFx(ctx,g);gmShield(ctx,g,g.x,g.y,Math.max(g.tw,g.thh)*.72);gmPkDraw(ctx,g);gmPetDraw(ctx,g);
     if(g.sh>0){ctx.font='700 '+(15/g.s)+'px system-ui,sans-serif';ctx.textAlign='left';ctx.fillStyle='#9fdcff';ctx.fillText('🛡️ '+Math.ceil(g.sh),14/g.s,134/g.s)}
     for(var h2=0;h2<Math.max(5,g.hp);h2++){ctx.font=(18/g.s)+'px system-ui';ctx.textAlign='left';ctx.globalAlpha=h2<g.hp?1:.22;ctx.fillText('❤️',(14+h2*25)/g.s,106/g.s)}ctx.globalAlpha=1;
   }
