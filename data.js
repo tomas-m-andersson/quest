@@ -236,7 +236,7 @@ window.SKOLQUEST_DATA = {
         "waist": "",
         "legs": "",
         "back": "",
-        "weapon": "",
+        "weapon": "blodkatana",
         "offhand": "",
         "aura": "",
         "bg": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088667980
+  "updatedAt": 1792088670367
 };
