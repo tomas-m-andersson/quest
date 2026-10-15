@@ -236,7 +236,7 @@ window.SKOLQUEST_DATA = {
         "waist": "kedjekjol",
         "legs": "guard",
         "back": "raketpack",
-        "weapon": "blodkatana",
+        "weapon": "gatling",
         "offhand": "",
         "aura": "",
         "bg": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792088716021
+  "updatedAt": 1792088723613
 };
