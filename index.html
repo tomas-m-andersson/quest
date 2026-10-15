@@ -343,6 +343,12 @@ details[open] summary::after{content:"–"}
 @keyframes pkwig{0%,100%{transform:rotate(0) skewX(0)}20%{transform:rotate(-9deg) skewX(-8deg)}40%{transform:rotate(8deg) skewX(8deg)}60%{transform:rotate(-6deg) skewX(-6deg)}80%{transform:rotate(4deg) skewX(4deg)}}
 @keyframes pklook{0%,100%{transform:translateX(0) rotate(0)}25%,70%{transform:translateX(7px) rotate(4deg)}}
 @keyframes pkblink{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.88)}}
+#pfov{position:fixed;inset:0;z-index:120;background:rgba(2,4,10,.78);display:flex;align-items:center;justify-content:center;padding:12px}
+#pfov .pfbox{width:min(560px,100%);background:var(--p1);border:1px solid var(--line);border-radius:16px;padding:10px 10px 12px;display:flex;flex-direction:column;gap:8px}
+#pfov .pfh{display:flex;align-items:center;justify-content:space-between;gap:10px;font:700 15px var(--head);letter-spacing:.04em}
+#pfov canvas{display:block;width:100%;border-radius:12px;touch-action:none;background:#0b1220}
+#pfov .pfx{min-width:44px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--p2);color:var(--fg,#fff);font-size:18px}
+#pfov .pfm{text-align:center;font:600 13px var(--head);color:var(--mute);min-height:18px}
 @keyframes pstw{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.15)}}
 @keyframes phr{0%{opacity:0;transform:translateY(6px) scale(.8)}25%{opacity:1}100%{opacity:0;transform:translateY(-22px) scale(1.1)}}
 @keyframes pfl{from{transform:scaleY(.8)}to{transform:scaleY(1.15)}}
@@ -571,7 +577,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AY</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 14 OKT AZ</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -3451,7 +3457,7 @@ function openPets(keep){
   if(ep&&PET_POW[ep.id])o+='<p class="mute" style="margin:4px 0 8px">⚡ Förmåga: '+PET_POWTXT[PET_POW[ep.id]]+' <span style="opacity:.7">(gäller i alla spel utom flappy)</span></p>';
   if(ep){
     var cr=av.care||{bond:0,fed:'',played:''},td0=fmt(new Date());
-    o+='<div class="care"><div class="gl"><span>🤝 Band med '+esc(petName(hid,ep))+'</span><span style="margin-left:10px">'+cr.bond+' / 100</span></div><div class="bar"><i style="width:'+cr.bond+'%"></i></div><div class="acts" style="justify-content:flex-start"><button class="btn sm" data-act="petfeed"'+(cr.fed===td0?' disabled':'')+'>🍖 Mata'+(cr.fed===td0?' ✓':'')+'</button><button class="btn sm" data-act="petplay"'+(cr.played===td0?' disabled':'')+'>🎾 Leka'+(cr.played===td0?' ✓':'')+'</button></div><p class="mute" style="margin:4px 0">En gång om dagen vardera. Ger band (inte XP) och låser upp särskilda tillbehör.</p></div>';
+    o+='<div class="care"><div class="gl"><span>🤝 Band med '+esc(petName(hid,ep))+'</span><span style="margin-left:10px">'+cr.bond+' / 100</span></div><div class="bar"><i style="width:'+cr.bond+'%"></i></div><div class="acts" style="justify-content:flex-start"><button class="btn sm" data-act="petfeed"'+(cr.fed===td0?' disabled':'')+'>🍖 Mata'+(cr.fed===td0?' ✓':'')+'</button><button class="btn sm" data-act="petplay">🎾 '+(cr.played===td0?'Apport (för skojs skull)':'Leka – apport')+'</button></div><p class="mute" style="margin:4px 0">En gång om dagen vardera. Ger band (inte XP) och låser upp särskilda tillbehör.</p></div>';
     o+='<h5>Tillbehör</h5><div class="pets"><button class="pet'+(!av.eq.petacc?' on':'')+'" data-act="aeq" data-slot="petacc" data-id=""><span class="pv"><span class="none">∅</span></span><b>Inget</b><small>'+(!av.eq.petacc?'PÅ':'')+'</small></button>';
     PETACC.forEach(function(a){
       var ok=petAccUnlocked(hid,a,lvl),on=ok&&av.eq.petacc===a[0];
@@ -3514,6 +3520,77 @@ function petCare(kind){
   setTimeout(function(){var g=document.querySelector('#modal .petg');
     if(g){petPlay(g,kind==='feed'?'pk-hop':'pk-joy');petBubble(g,'<b>'+esc(petName(hid,ep))+'</b>'+(kind==='feed'?'Mums! 😋 Tack för maten!':'Hihi! Det var kul! 🎾'));petSound(petKind(ep.id))}
     toast(ms.length?'🎁 Nytt tillbehör: '+ms[0][1]+'!':'🤝 Band +5');},170);
+}
+var pfCur=null;
+function petFetch(){
+  var hid=selId,ep=petOf(hid);if(!ep||pfCur)return;
+  var nm=petName(hid,ep),td=fmt(new Date()),credit=(S.avatar[hid].care||{}).played!==td,TOTAL=5;
+  var ov=document.createElement('div');ov.id='pfov';
+  ov.innerHTML='<div class="pfbox"><div class="pfh"><span>🎾 Apport med '+esc(nm)+'</span><span id="pfc">0 / '+TOTAL+'</span><button class="pfx" id="pfx" aria-label="Stäng">✕</button></div><canvas id="pfcv"></canvas><div class="pfm" id="pfm">Laddar…</div></div>';
+  document.body.appendChild(ov);
+  var cv=ov.querySelector('#pfcv'),ctx=cv.getContext('2d'),W=Math.min(window.innerWidth-44,536),H=Math.round(W*.56),dpr=Math.min(window.devicePixelRatio||1,2),k=W/400;
+  cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';
+  var GY=190,fly=!!PETFLY[ep.id],kind=petKind(ep.id);
+  var F={pet:null,bot:null,st:'wait',cnt:0,t:0,ball:{x:318,y:GY-16,on:1,ls:0,th:0,x0:0,y0:0,tx:0},pp:{x:300,dir:1,carry:false,ph:0},raf:0,last:performance.now(),done:false,msg:''},
+      msg=ov.querySelector('#pfm'),cc=ov.querySelector('#pfc');
+  pfCur=F;
+  function say(t){msg.textContent=t}
+  say('Laddar…');
+  gmPetSprite(hid,ep.id,function(c){F.pet=c;if(F.bot!==null)say('Tryck där du vill kasta bollen!')});
+  gmSprite(gmOpts(hid,''),undefined,function(c){F.bot=c||false;if(F.pet)say('Tryck där du vill kasta bollen!')});
+  function close(ok){
+    if(F.done)return;F.done=true;cancelAnimationFrame(F.raf);ov.remove();pfCur=null;
+    if(ok&&credit)petCare('play');else if(ok)toast('🎾 Bra lek! (Bandet var redan fyllt för idag)');
+  }
+  ov.querySelector('#pfx').addEventListener('click',function(){close(F.cnt>=3)});
+  cv.addEventListener('pointerdown',function(e){
+    e.preventDefault();if(F.st!=='wait'||!F.pet)return;
+    var r=cv.getBoundingClientRect(),wx=(e.clientX-r.left)/r.width*400;
+    var tx=Math.max(30,Math.min(250,wx)),b=F.ball;b.x0=318;b.y0=GY-96;b.tx=tx;b.th=0;b.on=0;b.land=0;F.st='throw';F.pp.carry=false;say('');petSound(kind==='fly'?'fly':'crawl');
+  });
+  function frame(now){
+    var dt=Math.min(.04,(now-F.last)/1000);F.last=now;F.t+=dt;var b=F.ball,p=F.pp,T=.85;
+    if(F.st==='throw'){
+      b.th+=dt;var u=Math.min(1,b.th/T);b.x=b.x0+(b.tx-b.x0)*u;b.y=b.y0+(GY-8-b.y0)*u-110*Math.sin(Math.PI*u);
+      if(b.th>.15){var d=b.tx-p.x;p.dir=d>0?1:-1;p.x+=p.dir*Math.min(Math.abs(d),(fly?300:250)*dt);p.ph+=dt*14}
+      if(u>=1){b.land=0;F.st='chase';b.y=GY-8}
+    }else if(F.st==='chase'){
+      b.land+=dt;b.y=GY-8-Math.abs(Math.sin(b.land*12))*Math.max(0,14*(1-b.land*3));
+      var d2=b.tx-p.x;p.dir=d2>0?1:-1;
+      if(Math.abs(d2)>10){p.x+=p.dir*Math.min(Math.abs(d2),(fly?300:250)*dt);p.ph+=dt*14}
+      else if(b.land>.4){F.st='back';p.carry=true;petSound(kind);say('')}
+    }else if(F.st==='back'){
+      var d3=300-p.x;p.dir=d3>0?1:-1;p.ph+=dt*14;
+      if(Math.abs(d3)>6)p.x+=p.dir*Math.min(Math.abs(d3),210*dt);
+      else{p.carry=false;b.x=p.x+26;b.y=GY-8;F.cnt++;cc.textContent=F.cnt+' / '+TOTAL;F.st='cheer';F.ct=0;petSound(kind);
+        say(F.cnt>=TOTAL?'Wow! Alla hämtade! 🎉':pkRand(['Hämtat! Bra jobbat!','Vilken apport!','Duktig '+nm+'!','Kasta igen!']))}
+    }else if(F.st==='cheer'){
+      F.ct+=dt;if(F.ct>.9){if(F.cnt>=TOTAL){F.st='end';F.et=0;say('Bra lek! Tryck för att avsluta.')}else{b.x=318;b.y=GY-16;F.st='wait';say('Tryck där du vill kasta bollen!')}}
+    }else if(F.st==='end'){F.et+=dt}
+    draw();F.raf=requestAnimationFrame(frame);
+  }
+  function draw(){
+    ctx.setTransform(dpr*k,0,0,dpr*k,0,0);
+    var g=ctx.createLinearGradient(0,0,0,H/k);g.addColorStop(0,'#1d3a6a');g.addColorStop(1,'#f0b070');ctx.fillStyle=g;ctx.fillRect(0,0,400,H/k);
+    ctx.fillStyle='#ffe2a8';ctx.beginPath();ctx.arc(70,50,22,0,7);ctx.fill();
+    ctx.fillStyle='#3a5a3a';ctx.fillRect(0,GY,400,H/k-GY);ctx.fillStyle='#4a7a4a';ctx.fillRect(0,GY,400,5);
+    ctx.fillStyle='rgba(255,255,255,.1)';for(var x=0;x<420;x+=44)ctx.fillRect(x-(F.t*0)%44,GY+16,22,3);
+    var b=F.ball;
+    if(F.bot){var bh=118,bw=bh*F.bot.width/F.bot.height;ctx.drawImage(F.bot,342-bw/2,GY-bh+4,bw,bh)}
+    if(F.pet){var p=F.pp,ph=54,pw=ph*F.pet.width/F.pet.height;if(pw>104){pw=104;ph=pw*F.pet.height/F.pet.width}
+      var hop=F.st==='cheer'?-Math.abs(Math.sin(F.ct*10))*14:(F.st==='chase'||F.st==='back'||F.st==='throw')&&!fly?-Math.abs(Math.sin(p.ph))*4:0,fy=fly?-26+Math.sin(F.t*4)*5:0;
+      ctx.fillStyle='rgba(0,0,0,.28)';ctx.beginPath();ctx.ellipse(p.x,GY+2,pw*.4,5,0,0,7);ctx.fill();
+      ctx.save();ctx.translate(p.x,GY+hop+fy);if(p.dir<0)ctx.scale(-1,1);ctx.drawImage(F.pet,-pw/2,-ph,pw,ph);
+      if(p.carry){ctx.fillStyle='#ff5a4a';ctx.beginPath();ctx.arc(pw*.38,-ph*.42,6,0,7);ctx.fill()}
+      ctx.restore();
+      if(F.st!=='wait'||true){}
+    }
+    if(!(F.pp.carry)){ctx.fillStyle='rgba(0,0,0,.3)';ctx.beginPath();ctx.ellipse(b.x,GY+2,7,2.5,0,0,7);ctx.fill();
+      var gr=ctx.createRadialGradient(b.x-2,b.y-3,1,b.x,b.y,8);gr.addColorStop(0,'#fff6a0');gr.addColorStop(1,'#ff5a4a');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(b.x,b.y,7,0,7);ctx.fill();ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(b.x,b.y,7,.4,2.4);ctx.stroke()}
+    if(F.st==='wait'&&F.pet){ctx.fillStyle='rgba(255,255,255,.55)';ctx.font='700 11px system-ui';ctx.textAlign='center';ctx.fillText('👆 tryck på marken',180,GY-40+Math.sin(F.t*3)*3)}
+  }
+  cv.addEventListener('click',function(){if(F.st==='end')close(true)});
+  F.raf=requestAnimationFrame(frame);
 }
 var PK_BEAST={wolf:1,lion:1,tiger:1,panther:1,fox:1,crystalwolf:1,magmalion:1,shadowpanther:1},PK_ARMOR={bear:1,rhino:1,turtle:1,beetle:1,crab:1},PK_CRAWL={cobra:1,serpent:1,scorpion:1,spider:1,hydra:1};
 function petKind(id){return PETFLY[id]?'fly':PK_ARMOR[id]?'armor':PK_CRAWL[id]?'crawl':'beast'}
@@ -3886,7 +3963,7 @@ document.addEventListener('click',function(e){
   else if(a==='vride'){S.avatar[selId].eq.ride=!S.avatar[selId].eq.ride;commit();openGarage(true)}
   else if(a==='pname'){namePet()}
   else if(a==='petfeed'){petCare('feed')}
-  else if(a==='petplay'){petCare('play')}
+  else if(a==='petplay'){petFetch()}
   else if(a==='boost'){requirePin().then(function(ok){if(ok){boostTake=false;openBoost()}})}
   else if(a==='bhero'){t.classList.toggle('on')}
   else if(a==='bpre'){var ai=$('#b-amt');if(ai)ai.value=t.dataset.v}
