@@ -635,7 +635,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 17 OKT BK</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 17 OKT BL</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -2803,10 +2803,10 @@ VEHICLES.jet={h:100,w:350,lift:14,
  an:{x0:14,x1:338,top:352,bot:400,r:[6,390],f:[336,386]},
  back:function(K){return '<g>'+vfl(K,4,388,28,8)+vfl(K,8,398,22,5)+plate([[48,358],[34,274],[72,352]],K.s,{inn:.5})+plate([[74,356],[62,290],[98,350]],K.t,{inn:.5})+glow(K,'<rect x="36" y="272" width="3" height="8" fill="#ff4a4a"/>')+'</g>'},
  front:function(K){return '<g>'+plate([[160,382],[60,414],[262,398]],K.s,{inn:.6})+plate([[96,404],[150,402],[150,408],[96,410]],K.d,{inn:.6})+
-  plate([[8,392],[40,358],[204,348],[334,382],[294,398],[40,404]],K.m,{inn:.72})+plate([[204,348],[334,382],[298,386],[200,360]],K.t,{inn:.5})+vpmark()+
+  plate([[8,392],[30,368],[110,357],[212,353],[264,362],[336,384],[300,396],[40,404]],K.m,{inn:.72})+plate([[110,357],[212,353],[264,362],[258,368],[110,365]],K.t,{inn:.5})+plate([[264,362],[336,384],[302,391],[256,376]],K.t,{inn:.62})+vpmark()+
   plate([[18,376],[60,372],[60,398],[18,398]],K.d,{inn:.8})+vents(24,382,30,3,5,'#000',.6)+plate([[140,370],[200,366],[200,394],[140,398]],K.d,{inn:.8})+vents(146,376,48,3,6,'#000',.7)+
-  vents(220,376,70,2,6,'#000',.5)+glow(K,'<path d="M70 398 H300" stroke="'+K.e+'" stroke-width="2.4"/>')+rvr(70,362,120,10)+decal(86,388,'F-37',11)+ln('M332 382 L352 386','#9aa6bd',2,1)+
-  glass(K,'M200 352 L222 322 L262 318 L300 354Z',.2)+ln('M222 322 L230 354 M262 318 L268 354','#05070b',2,.9)+shine(206,346,226,326)+plate([[196,352],[302,356],[304,364],[194,360]],K.t,{inn:0,hl:false})+'</g>'}};
+  vents(220,376,70,2,6,'#000',.5)+glow(K,'<path d="M70 398 H300" stroke="'+K.e+'" stroke-width="2.4"/>')+rvr(70,362,120,10)+decal(86,388,'F-37',11)+ln('M334 384 L352 388','#9aa6bd',2,1)+
+  glass(K,'M216 356 Q228 338 246 337 Q264 338 276 358Z',.24)+ln('M246 338 L248 357','#05070b',1.8,.9)+shine(222,352,234,342)+plate([[212,355],[280,358],[281,363],[211,360]],K.t,{inn:0,hl:false})+'</g>'}};
 VEHICLES.ship={h:120,w:350,lift:20,
  an:{x0:12,x1:342,top:330,bot:388,r:[8,364],f:[342,358]},
  back:function(K){return '<g><path d="M70 392 L250 392 L290 470 L40 470Z" fill="'+K.g+'" fill-opacity=".07"/>'+plate([[4,342],[56,338],[56,388],[4,384]],K.d,{inn:.8})+vfl(K,0,352,30,9)+vfl(K,0,372,30,9)+plate([[64,336],[40,284],[108,330]],K.s,{inn:.5})+plate([[250,330],[270,290],[296,336]],K.t,{inn:.5})+'</g>'},
