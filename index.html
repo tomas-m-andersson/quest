@@ -814,7 +814,7 @@ function emoInit(){
   new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')emoHandle(m.target);else m.addedNodes.forEach(emoWalk)})}).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 setTimeout(emoInit,0);
-var APP_VER='17 OKT CB';
+var APP_VER='17 OKT CC';
 setTimeout(function(){var a=document.getElementById('ver'),b=document.getElementById('verf');if(a)a.textContent=APP_VER;if(b)b.textContent='MECH QUEST · VERSION '+APP_VER},0);
 var SND_ON='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.6 9.2a4 4 0 010 5.6M18.2 6.6a7.7 7.7 0 010 10.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',SND_OFF='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function muteSync(){var b=document.getElementById('mutebtn');if(!b)return;b.innerHTML=SNDMUTE?SND_OFF:SND_ON;b.setAttribute('aria-label',SNDMUTE?'Ljud av – tryck för att slå på':'Ljud på – tryck för att stänga av');b.title=SNDMUTE?'Ljud av':'Ljud på';b.classList.toggle('muted',SNDMUTE)}
@@ -4925,7 +4925,7 @@ function gmRunHurt(g,arr,i){
 function gmRJump(){var g=GM;if(g&&g.mode==='tower'){twJump();return}if(!g||g.mode!=='shoot'||g.state!=='play')return;
   if(g.on){g.vy=-780;g.on=false;g.jumps=1;for(var i=0;i<6;i++)g.parts.push({x:g.x+gmRnd(-12,12),y:g.floor||520,vx:gmRnd(-120,60),vy:-gmRnd(10,70),l:.35,l0:.35,c:'#8a7a9a',s:gmRnd(2,4),g:200,dr:.9})}
   else if(g.jumps<(g.pw==='jump'?3:2)){g.vy=-700;g.jumps=2;g.thr=1;for(var k=0;k<10;k++)g.parts.push({x:g.x+gmRnd(-14,14),y:g.y+g.thh*.45,vx:gmRnd(-90,90),vy:gmRnd(60,200),l:.4,c:Math.random()<.5?'#ffb347':'#7fd4ff'})}}
-function gmJump(){var g=GM;if(g.on){g.vy=-760;g.on=false;g.xj=0}else if(g.pw==='jump'&&g.xj<1){g.vy=-650;g.xj=1}}
+function gmJump(){var g=GM;if(g.on){g.vy=-760;g.on=false;g.xj=0}else if(g.xj<(g.pw==='jump'?2:1)){g.vy=-650;g.xj++;for(var di=0;di<8;di++)g.parts.push({x:g.px+gmRnd(-16,16),y:g.py-4,vx:gmRnd(-90,90),vy:gmRnd(40,160),l:.35,l0:.35,c:Math.random()<.5?'#e8f6ff':'#9fdcff',s:gmRnd(2,4)})}}
 function gmLoop(now){
   var g=GM;if(!g)return;
   var dt=Math.min(.033,(now-g.last)/1000||0);g.last=now;
