@@ -800,7 +800,7 @@ function emoInit(){
   new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')emoHandle(m.target);else m.addedNodes.forEach(emoWalk)})}).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 setTimeout(emoInit,0);
-var APP_VER='17 OKT BP';
+var APP_VER='17 OKT BQ';
 setTimeout(function(){var a=document.getElementById('ver'),b=document.getElementById('verf');if(a)a.textContent=APP_VER;if(b)b.textContent='MECH QUEST · VERSION '+APP_VER},0);
 var SND_ON='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.6 9.2a4 4 0 010 5.6M18.2 6.6a7.7 7.7 0 010 10.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',SND_OFF='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function muteSync(){var b=document.getElementById('mutebtn');if(!b)return;b.innerHTML=SNDMUTE?SND_OFF:SND_ON;b.setAttribute('aria-label',SNDMUTE?'Ljud av – tryck för att slå på':'Ljud på – tryck för att stänga av');b.title=SNDMUTE?'Ljud av':'Ljud på';b.classList.toggle('muted',SNDMUTE)}
@@ -4649,7 +4649,7 @@ function gmFlap(dt){
   if(g.ptr&&g.ptr.t>0)g.ptr.t-=dt;
   g.ex-=dt;if(g.ex<=0){g.ex=.03;g.parts.push({x:g.px-g.tw*.46,y:g.y+gmRnd(-4,4),vx:-gmRnd(160,260),vy:gmRnd(-20,20),l:.3,l0:.3,c:Math.random()<.5?'#ffb347':'#7fd4ff',s:gmRnd(3,6),dr:1})}
   g.fcd-=dt;
-  if(g.fcd<=0){var nn=g.score>=350?3:g.score>=120?2:1,bx=g.px+g.tw*.46;if(g.wu>0)nn=Math.min(5,nn+2);g.fcd=g.wu>0?.17:.24;
+  if(g.fcd<=0){var nn=g.wu>0?3:1,bx=g.px+g.tw*.46;g.fcd=g.wu>0?.17:.24;
     if(nn===1)g.bul.push({x:bx,y:g.y,vx:820,vy:0});
     else if(nn===2){g.bul.push({x:bx,y:g.y-9,vx:820,vy:0});g.bul.push({x:bx,y:g.y+9,vx:820,vy:0})}
     else if(nn===3){g.bul.push({x:bx,y:g.y,vx:840,vy:0});g.bul.push({x:bx,y:g.y-8,vx:800,vy:-130});g.bul.push({x:bx,y:g.y+8,vx:800,vy:130})}
