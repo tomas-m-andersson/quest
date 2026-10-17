@@ -211,6 +211,9 @@ h3.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 .gmth{display:flex;align-items:center;justify-content:center;height:92px;width:100%;font-size:40px}
 .gmth svg{max-width:100%;max-height:92px;width:auto;height:auto}
 #gmov.rot .gmflip{display:block}.gmflip{display:none;right:66px}
+.gmpause{position:absolute;left:12px;top:calc(10px + env(safe-area-inset-top,0px));width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(8,10,16,.6);color:#fff;display:none;place-items:center;padding:0}
+.gmpause svg{width:20px;height:20px;display:block;pointer-events:none}
+#gmov .gmhud{left:70px}
 #gmov{overflow:hidden}
 #gmfire{position:absolute;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(30px + env(safe-area-inset-bottom,0px));width:92px;height:92px;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:radial-gradient(circle at 35% 30%,rgba(255,120,90,.95),rgba(190,40,40,.92));color:#fff;font-size:38px;line-height:1;touch-action:none;box-shadow:0 6px 22px rgba(0,0,0,.55);z-index:3;-webkit-tap-highlight-color:transparent}
 #gmjoy{position:absolute;left:calc(26px + env(safe-area-inset-left,0px));bottom:calc(30px + env(safe-area-inset-bottom,0px));width:120px;height:120px;border-radius:50%;border:2px solid rgba(255,255,255,.45);background:radial-gradient(circle,rgba(255,255,255,.10),rgba(255,255,255,.04));touch-action:none;z-index:3;box-shadow:0 6px 22px rgba(0,0,0,.45);-webkit-tap-highlight-color:transparent}
@@ -604,6 +607,8 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
 .gmx{width:48px;height:48px;right:calc(12px + env(safe-area-inset-right,0px))}
 .gmflip{right:calc(68px + env(safe-area-inset-right,0px))}
 .gmhud{left:calc(14px + env(safe-area-inset-left,0px))}
+.gmpause{left:calc(12px + env(safe-area-inset-left,0px));width:48px;height:48px}
+#gmov .gmhud{left:calc(72px + env(safe-area-inset-left,0px))}
 #gmfire{right:calc(20px + env(safe-area-inset-right,0px));width:96px;height:96px}
 #gmjoy{width:128px;height:128px}
 #gmov.rot #gmfire,#gmov.rot #gmjoy{bottom:24px}
@@ -635,7 +640,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 17 OKT BM</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 17 OKT BN</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -4389,7 +4394,7 @@ function gmStart(which){
   var mode=which==='bot'?'shoot':gmModeOf(vit.id);
   var old=document.getElementById('gmov');if(old)old.remove();
   var ov=document.createElement('div');ov.id='gmov';
-  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+(mode==='flap'?'':'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>')+(mode==='shoot'?'<button id="gmjoy" aria-label="Hoppa"><svg viewBox="0 0 48 48" width="52" height="52" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));pointer-events:none"><path d="M24 7 40 25H30v16H18V25H8z" fill="#fff" stroke="rgba(10,30,90,.55)" stroke-width="2" stroke-linejoin="round"/></svg></button>':'');
+  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmpause" id="gmpause" type="button" aria-label="Pausa"></button><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+(mode==='flap'?'':'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>')+(mode==='shoot'?'<button id="gmjoy" aria-label="Hoppa"><svg viewBox="0 0 48 48" width="52" height="52" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));pointer-events:none"><path d="M24 7 40 25H30v16H18V25H8z" fill="#fff" stroke="rgba(10,30,90,.55)" stroke-width="2" stroke-linejoin="round"/></svg></button>':'');
   document.body.appendChild(ov);
   var cv=ov.querySelector('#gmc');
   var g={mode:mode,hid:hid,vid:vit?vit.id:'',vname:vit?vit.name:'Mech',kind:vit?(VEHICLES[vit.id].kind||'ground'):'bot',col:heroColor(h),cv:cv,ctx:cv.getContext('2d'),spr:null,state:'load',score:0,t:0,raf:0,last:0,best:gmBest(hid,mode),hold:false,flash:0,cx:0,ty:320};
@@ -4412,6 +4417,7 @@ function gmStart(which){
   window.addEventListener('resize',g.resize);
   g.onKey=function(e){
     var k=e.key;if(k==='Escape'){gmClose();return}
+    if(k==='p'||k==='P'){gmTogglePause();return}
     if(g.mode==='flap'){
       if(k==='ArrowUp'||k==='w'){e.preventDefault();if(g.state==='ready')gmBegin();g.keyY=-1;return}
       if(k==='ArrowDown'||k==='s'){e.preventDefault();if(g.state==='ready')gmBegin();g.keyY=1;return}
@@ -4431,6 +4437,7 @@ function gmStart(which){
   cv.addEventListener('pointerup',function(){g.hold=false});
   cv.addEventListener('pointercancel',function(){g.hold=false});
   ov.querySelector('#gmx').addEventListener('click',gmClose);
+  var gpb=ov.querySelector('#gmpause');gpb.addEventListener('pointerdown',function(e){e.stopPropagation()});gpb.addEventListener('click',function(e){e.stopPropagation();gmTogglePause()});
   ov.querySelector('#gmflip').addEventListener('click',function(e){e.stopPropagation();g.flip=!g.flip;try{localStorage.setItem('mq.flip',g.flip?'1':'0')}catch(x){}g.resize()});
   var jy=ov.querySelector('#gmjoy');g.jx=0;g.jy=0;
   if(jy){
@@ -4442,7 +4449,7 @@ function gmStart(which){
     fb.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();if(g.state==='ready'){gmBegin()}if(g.state==='play'){g.firing=true;if(g.mode==='run'){if(g.fcd<=0)gmRunFire()}else gmSwing(true)}});
     ['pointerup','pointerleave','pointercancel'].forEach(function(ev){fb.addEventListener(ev,function(){g.firing=false})});
   }
-  g.vis=function(){if(document.hidden&&g.state==='play'){g.state='ready';gmUi('pause')}};
+  g.vis=function(){if(document.hidden&&g.state==='play'){g.state='ready';g.paused=true;g.firing=false;g.hold=false;gmUi('pause')}};
   document.addEventListener('visibilitychange',g.vis);
   document.getElementById('gmbest').textContent='Rekord '+g.best;
   var o=gmOpts(hid,g.vid);
@@ -4478,8 +4485,15 @@ function gmResetZoom(){
     window.scrollTo(0,0);window.dispatchEvent(new Event('resize'));
     setTimeout(function(){m.setAttribute('content',o)},250)}catch(e){}
 }
+var GM_PAUSE_SVG='<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',GM_PLAY_SVG='<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 5l11 7-11 7z"/></svg>';
+function gmTogglePause(){
+  var g=GM;if(!g)return;
+  if(g.state==='play'){g.state='ready';g.paused=true;g.firing=false;g.hold=false;g.jx=g.jy=0;g.keyX=g.keyY=0;gmUi('pause')}
+  else if(g.state==='ready'&&g.paused){g.paused=false;gmBegin()}
+}
 function gmUi(kind){
   var u=document.getElementById('gmui');if(!u||!GM)return;var g=GM;
+  var pb=document.getElementById('gmpause');if(pb){pb.style.display=(kind==='play'||kind==='pause')?'grid':'none';pb.innerHTML=kind==='pause'?GM_PLAY_SVG:GM_PAUSE_SVG;pb.setAttribute('aria-label',kind==='pause'?'Fortsätt':'Pausa')}
   var how=g.mode==='flap'?'Dra upp och ner för att flyga – farkosten skjuter själv':g.mode==='run'?'Tryck för att hoppa (håll för högre hopp) · 🔫-knappen skjuter lådor och drönare':'⬆️ hoppar (håll = högre, igen i luften = dubbelhopp) · ⚔️ slår med '+(g.wname||'nävarna');
   if(kind==='load'){u.innerHTML='<div class="gmcen"><b>Laddar…</b></div>';return}
   if(kind==='ready'||kind==='pause'){u.innerHTML='<div class="gmcen"><b>'+esc(g.vname)+'</b>'+(g.pname?'<span>🐾 '+esc(g.pname)+(g.pw?' · '+PET_POWTXT[g.pw].split(' – ')[0]:'')+'</span>':'')+'<span>'+how+'</span>'+(g.vrot?'<span>↻ Vrid telefonen åt sidan – knappen uppe till höger vänder om bilden</span>':'')+'<span class="gmtap">'+(kind==='pause'?'Pausad – tryck för att fortsätta':'Tryck för att starta')+'</span></div>';return}
@@ -4490,12 +4504,12 @@ function gmUi(kind){
     document.getElementById('gmmenu').onclick=function(e){e.stopPropagation();gmClose();gameMenu()};
   }
 }
-function gmReset(){var g=GM;if(!g)return;var fbb=document.getElementById('gmfire');if(fbb)fbb.style.display='';var jjj=document.getElementById('gmjoy');if(jjj)jjj.style.display='';g.jx=g.jy=0;gmInit();g.state='ready';g.newBest=false;gmUi('ready');g.last=performance.now()}
+function gmReset(){var g=GM;if(!g)return;g.paused=false;var fbb=document.getElementById('gmfire');if(fbb)fbb.style.display='';var jjj=document.getElementById('gmjoy');if(jjj)jjj.style.display='';g.jx=g.jy=0;gmInit();g.state='ready';g.newBest=false;gmUi('ready');g.last=performance.now()}
 function gmBegin(){var g=GM;g.state='play';gmUi('play');g.last=performance.now()}
 function gmPress(down){
   var g=GM;if(!g)return;
   if(g.state==='over')return;
-  if(g.state==='ready'){g.state='play';gmUi('play');g.last=performance.now();if(g.mode==='run'){gmJump()}return}
+  if(g.state==='ready'){g.paused=false;g.state='play';gmUi('play');g.last=performance.now();if(g.mode==='run'){gmJump()}return}
   if(g.state!=='play')return;
   if(g.mode==='shoot'){g.hold=down;if(down)gmRJump();return}
   g.hold=down;
