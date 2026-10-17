@@ -814,7 +814,7 @@ function emoInit(){
   new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')emoHandle(m.target);else m.addedNodes.forEach(emoWalk)})}).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 setTimeout(emoInit,0);
-var APP_VER='17 OKT CA';
+var APP_VER='17 OKT CB';
 setTimeout(function(){var a=document.getElementById('ver'),b=document.getElementById('verf');if(a)a.textContent=APP_VER;if(b)b.textContent='MECH QUEST · VERSION '+APP_VER},0);
 var SND_ON='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.6 9.2a4 4 0 010 5.6M18.2 6.6a7.7 7.7 0 010 10.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',SND_OFF='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function muteSync(){var b=document.getElementById('mutebtn');if(!b)return;b.innerHTML=SNDMUTE?SND_OFF:SND_ON;b.setAttribute('aria-label',SNDMUTE?'Ljud av – tryck för att slå på':'Ljud på – tryck för att stänga av');b.title=SNDMUTE?'Ljud av':'Ljud på';b.classList.toggle('muted',SNDMUTE)}
@@ -1935,7 +1935,19 @@ WEAPONS.eternalblade={ang:-18,svg:function(K){
   s+=shaft(K,62,266,350,10,K.d)+plate([[50,346],[74,346],[70,368],[54,368]],K.t,{inn:.5});
   s+=dots([[18,60,2],[104,90,2],[20,150,1.6],[106,170,1.8],[30,10,1.6]],'#fff',.9);
   return s}};
-var WEAPON_LIST=[['katana','Katana',2],['dualblade','Dubbelblad',4],['glaive','Glaive',6],['halberd','Hillebard',11],['spear','Drakspjut',15],['staff','Stridsstav',19],['crescent','Halvmånsyxa',23],['energysword','Energisvärd',28],['hammer','Krigshammare',32],['cannon','Plasmakanon',36],['gatling','Gatling',40],['scythe','Skuggslåtter',44],['greatsword','Stålsvärd',47],['eternalblade','Evighetsklinga',50]];
+WEAPONS.chainsaw={ang:-16,svg:function(K){
+  var s='';
+  s+=plate([[46,208],[78,208],[81,32],[73,-10],[51,-10],[43,32]],K.d,{inn:.9,io:.05});
+  s+='<path d="M45 206 V32 L51 -10 H73 L79 32 V206" fill="none" stroke="#d3dbec" stroke-width="5" stroke-dasharray="3 4" stroke-linejoin="round"/><path d="M45 206 V32 L51 -10 H73 L79 32 V206" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="1"/>';
+  s+=plate([[53,204],[71,204],[72,36],[66,-2],[58,-2],[52,36]],K.m,{inn:.8});
+  s+=glow(K,'<path d="M62 196 V8" stroke="'+K.e+'" stroke-width="4" stroke-linecap="round"/>');
+  s+=plate([[26,206],[98,206],[102,272],[24,272]],K.d,{inn:.9,io:.05})+plate([[32,214],[92,214],[94,264],[30,264]],K.s,{inn:.7})+vents(38,222,48,4,9,'#000',.5);
+  s+=glow(K,'<circle cx="62" cy="248" r="8" fill="'+K.e+'"/>');
+  s+=plate([[96,222],[122,222],[122,230],[100,230]],K.t,{inn:.5})+plate([[112,222],[122,222],[122,262],[112,262]],K.t,{inn:.5})+plate([[98,254],[122,254],[122,262],[98,262]],K.t,{inn:.5});
+  s+=plate([[46,272],[78,272],[74,336],[50,336]],K.d,{inn:.88})+ring(K,62,290,30)+ring(K,62,318,26);
+  s+=bolt(34,214)+bolt(90,214)+bolt(34,258)+bolt(90,258);
+  return s}};
+var WEAPON_LIST=[['katana','Katana',2],['dualblade','Dubbelblad',4],['glaive','Glaive',6],['halberd','Hillebard',11],['spear','Drakspjut',15],['staff','Stridsstav',19],['crescent','Halvmånsyxa',23],['energysword','Energisvärd',28],['hammer','Krigshammare',32],['chainsaw','Motorsåg',34],['cannon','Plasmakanon',36],['gatling','Gatling',40],['scythe','Skuggslåtter',44],['greatsword','Stålsvärd',47],['eternalblade','Evighetsklinga',50]];
 
 /* ===== VÄNSTERHAND / SKÖLD (höger hand på y=277, x=238) ===== */
 var OFFHANDS={};
@@ -4292,7 +4304,7 @@ var GM_MELEE={
  none:{r:72,a:110,cd:.3,d:1,k:'arc',c:'#e8ecf6'},katana:{r:108,a:120,cd:.3,d:1,k:'arc',c:'#f4f8ff'},dualblade:{r:92,a:140,cd:.2,d:1,k:'arc',c:'#cfe6ff'},
  glaive:{r:132,a:130,cd:.38,d:1,k:'arc',c:'#ffd6a0'},halberd:{r:142,a:100,cd:.5,d:2,k:'arc',c:'#ffe08a'},spear:{r:178,a:26,cd:.34,d:1,k:'thrust',c:'#fff3c0'},
  staff:{r:124,a:160,cd:.3,d:1,k:'arc',c:'#c8ffd8'},crescent:{r:118,a:150,cd:.46,d:2,k:'arc',c:'#ffb36b'},energysword:{r:124,a:120,cd:.26,d:1,k:'arc',c:'#5ff0ff'},
- hammer:{r:104,a:360,cd:.62,d:3,k:'smash',c:'#ffcc66'},cannon:{r:158,a:50,cd:.7,d:3,k:'blast',c:'#ff7ad8'},gatling:{r:104,a:34,cd:.12,d:1,k:'jab',c:'#ffe066'},
+ hammer:{r:104,a:360,cd:.62,d:3,k:'smash',c:'#ffcc66'},cannon:{r:158,a:50,cd:.7,d:3,k:'blast',c:'#ff7ad8'},gatling:{r:104,a:34,cd:.12,d:1,k:'jab',c:'#ffe066'},chainsaw:{r:92,a:40,cd:.15,d:1,k:'jab',c:'#ff9a3a'},
  scythe:{r:150,a:170,cd:.55,d:2,k:'arc',c:'#b36bff'},greatsword:{r:146,a:130,cd:.5,d:3,k:'arc',c:'#e6ecff'},eternalblade:{r:140,a:150,cd:.3,d:2,k:'arc',c:'#ffd95e'}
 };
 
@@ -4407,7 +4419,7 @@ function twSurf(g,x,y){
 }
 function twFloor(g){
   var k=g.fl,Y=twY(k),i,WW=TW.WW;
-  g.led=twLedges(k);g.en=[];g.eb=[];g.pk=[];g.open=false;g.ride=null;
+  g.led=twLedges(k);g.en=[];g.eb=[];g.bul=[];g.pk=[];g.open=false;g.ride=null;
   var ex=twEX(k),dir=ex<WW/2?1:-1,x0=ex+dir*420,x1=twLX(k)-dir*300;
   var pos=function(n,j){return x0+(x1-x0)*((j+.5+gmRnd(-.25,.25))/n)};
   var drone=function(x){var by=Y-gmRnd(120,230);g.en.push({t:0,x:x,y:by,base:by,home:x,r:16,hp:1,vx:0,ph:gmRnd(0,6)})};
@@ -4455,12 +4467,19 @@ function twKill(g,e){
     for(i=g.en.length-1;i>=0;i--){gmExplode(g,g.en[i].x,g.en[i].y,1);}g.en=[];g.pk=[];
     gmExplode(g,e.x,e.y,2.6);g.shake=.9;g.msg={t:3,txt:'BYGGNADEN ERÖVRAD!'}}
 }
+function twShoot(g){
+  var mw=g.mw,f=g.face,mx=g.x+f*(g.tw*.55+26),my=g.y-2+(g.hand?g.hand[1]*.4:0),sp=gmRnd(-.04,.04);
+  g.bul.push({x:mx,y:my,x0:mx,vx:Math.cos(sp)*980*f,vy:Math.sin(sp)*980,d:mw.d});
+  g.parts.push({x:mx+f*6,y:my,vx:f*gmRnd(60,160),vy:gmRnd(-60,60),l:.12,l0:.12,c:'#ffe066',s:3.5});
+  g.parts.push({x:g.x,y:g.y-4,vx:-f*gmRnd(30,90),vy:-gmRnd(80,160),l:.4,l0:.4,c:'#c9a227',s:2.5,g:700});
+}
 function twSwing(){
   var g=GM;if(!g||g.mode!=='tower'||g.state!=='play'||g.ride||g.cdT>0)return;
   var mw=g.mw,i,near=null,nd=1e9;
-  if(Math.abs(g.jx||0)<.25&&!g.keyX){for(i=0;i<g.en.length;i++){var e=g.en[i],d=Math.hypot(e.x-g.x,e.y-g.y);if(d<mw.r+90&&d<nd){nd=d;near=e}}
+  if(Math.abs(g.jx||0)<.25&&!g.keyX){for(i=0;i<g.en.length;i++){var e=g.en[i],d=Math.hypot(e.x-g.x,e.y-g.y);if(d<(g.wid==='gatling'?520:mw.r+90)&&(g.wid!=='gatling'||Math.abs(e.y-g.y)<170)&&d<nd){nd=d;near=e}}
     if(near&&Math.abs(near.x-g.x)>10)g.face=near.x>g.x?1:-1}
   g.cdT=mw.cd;g.atk=0;g.sw=-g.sw;g.swId=(g.swId||0)+1;
+  if(g.wid==='gatling'){twShoot(g);return}
   twHits(g);
 }
 function twHurt(g,sx){
@@ -4516,7 +4535,10 @@ function twUpdate(dt){
   else if(!g.on){g.fpt=(g.fpt||0)-dt;if(g.fpt<=0){g.fpt=.04;var fa=g.lean*Math.PI/180;
     g.parts.push({x:g.x-g.face*g.tw*.15,y:g.y+g.thh*.5,vx:gmRnd(-30,30),vy:gmRnd(90,170),l:.36,c:Math.random()<.5?'#ffb347':'#ff6a2a'});
     g.parts.push({x:g.x+g.face*g.tw*.05,y:g.y+g.thh*.5,vx:gmRnd(-30,30),vy:gmRnd(90,170),l:.36,c:Math.random()<.5?'#ffb347':'#7fd4ff'})}}
-  if(g.atk>=0&&g.atk<=.2)twHits(g);
+  if(g.atk>=0&&g.atk<=.2&&g.wid!=='gatling')twHits(g);
+  for(i=g.bul.length-1;i>=0;i--){var bb=g.bul[i];bb.x+=bb.vx*dt;bb.y+=bb.vy*dt;
+    if(Math.abs(bb.x-bb.x0)>780||bb.x<0||bb.x>WW||bb.y<Y-FH+TH||bb.y>Y){g.bul.splice(i,1);continue}
+    for(j=g.en.length-1;j>=0;j--){var be=g.en[j];if(Math.hypot(bb.x-be.x,bb.y-be.y)<be.r+7){g.bul.splice(i,1);twDmg(g,be,bb.d,false);break}}}
   twPet(g,dt);
   /* fiender */
   var pr={x:g.x,y:g.y,r:g.thh*.24};g.shR=Math.max(g.tw,g.thh)*.72;
@@ -4640,6 +4662,7 @@ function twDraw(dt){
   g.en.forEach(function(e){ctx.save();if(g.x>e.x){ctx.translate(e.x,0);ctx.scale(-1,1);ctx.translate(-e.x,0)}gmEnemy(ctx,g,e);ctx.restore();
     if(e.t===2&&e.cs===1){ctx.save();ctx.fillStyle='#ff4a4a';ctx.font='800 22px system-ui,sans-serif';ctx.textAlign='center';ctx.shadowColor='#ff4a4a';ctx.shadowBlur=12;ctx.fillText('!',e.x,e.y-e.r-12);ctx.restore()}});
   g.eb.forEach(function(b){ctx.save();ctx.shadowColor=b.big?'#ff8a2a':'#ff4a4a';ctx.shadowBlur=b.big?14:10;ctx.fillStyle=b.big?'#ffb04a':'#ff6a6a';ctx.beginPath();ctx.arc(b.x,b.y,b.big?7:5,0,7);ctx.fill();if(b.big){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(b.x,b.y,3,0,7);ctx.fill()}ctx.restore()});
+  g.bul.forEach(function(b){var l=Math.hypot(b.vx,b.vy)||1;ctx.save();ctx.strokeStyle=g.mw.c;ctx.shadowColor=g.mw.c;ctx.shadowBlur=10;ctx.lineWidth=3.5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x-b.vx/l*26,b.y-b.vy/l*26);ctx.stroke();ctx.restore()});
   if(!g.dead){
     var blink=g.inv>0&&!(g.sh>0)&&!g.ride&&Math.floor(g.t*14)%2===0,mv=Math.abs(g.vx)>40&&g.on;
     var hv=g.ride?0:(g.on?(mv&&g.state==='play'?-Math.abs(Math.sin(g.t*13))*5:Math.sin(g.t*3)*2):0),lunge=g.atk>=0?Math.sin(Math.min(1,g.atk/.2)*Math.PI):0;
@@ -4656,7 +4679,7 @@ function twDraw(dt){
         ctx.drawImage(g.spr,sd?sc2/2:0,cut,sc2/2,sh2-cut,(sd?0:-W2/2)-pv,0,W2/2,H2-uh);ctx.restore()}
     }else if(g.spr)ctx.drawImage(g.spr,-g.tw/2,-g.thh/2,g.tw,g.thh);
     gmWeaponDraw(ctx,g);ctx.restore();
-    gmSlashFx(ctx,g);ctx.restore();
+    if(g.wid!=='gatling')gmSlashFx(ctx,g);ctx.restore();
     gmShield(ctx,g,g.x,g.y,Math.max(g.tw,g.thh)*.72);
   }
   gmPetDraw(ctx,g);
