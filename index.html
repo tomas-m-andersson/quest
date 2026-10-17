@@ -805,7 +805,7 @@ function emoInit(){
   new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')emoHandle(m.target);else m.addedNodes.forEach(emoWalk)})}).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 setTimeout(emoInit,0);
-var APP_VER='17 OKT BU';
+var APP_VER='17 OKT BV';
 setTimeout(function(){var a=document.getElementById('ver'),b=document.getElementById('verf');if(a)a.textContent=APP_VER;if(b)b.textContent='MECH QUEST · VERSION '+APP_VER},0);
 var SND_ON='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.6 9.2a4 4 0 010 5.6M18.2 6.6a7.7 7.7 0 010 10.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',SND_OFF='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function muteSync(){var b=document.getElementById('mutebtn');if(!b)return;b.innerHTML=SNDMUTE?SND_OFF:SND_ON;b.setAttribute('aria-label',SNDMUTE?'Ljud av – tryck för att slå på':'Ljud på – tryck för att stänga av');b.title=SNDMUTE?'Ljud av':'Ljud på';b.classList.toggle('muted',SNDMUTE)}
@@ -4666,13 +4666,13 @@ function gameMenu(){
   }else{
     o+='<div class="gmcard off"><span class="gmth">🏍️</span><b>Inget fordon</b><small>Välj och lås upp ett fordon i Garaget för att flyga eller köra.</small></div>';
   }
-  o+='<button class="gmcard" data-act="gmgo" data-k="bot"><span class="gmth">'+mechRender(gmOpts(hid,''),120)+'</span><b>Mech-närstrid</b><small>Dra för att flyga · slå med ⚔️-knappen: '+esc((function(){var w=findItem('weapon',gmOpts(hid,'').weapon);return w?w.name:'nävarna'})())+'</small><em>Rekord: '+gmBest(hid,'shoot')+'</em></button>';
-  o+='<button class="gmcard" data-act="gmgo" data-k="tower"><span class="gmth">'+mechRender(gmOpts(hid,''),120)+'</span><b>Mech-tornet</b><small>Prototyp · joystick, hoppa, slå – ta dig upp våning för våning</small><em>Rekord: '+gmBest(hid,'tower')+'</em></button>';
+  o+='<button class="gmcard" data-act="gmgo" data-k="tower"><span class="gmth">'+mechRender(gmOpts(hid,''),120)+'</span><b>Mech-tornet</b><small>Joystick, hoppa och slå med '+esc((function(){var w=findItem('weapon',gmOpts(hid,'').weapon);return w?w.name:'nävarna'})())+' – ta dig upp våning för våning</small><em>Rekord: '+gmBest(hid,'tower')+'</em></button>';
   o+='</div></div>';
   openModal(o);
 }
 function gmIsTouch(){try{return window.matchMedia('(pointer:coarse)').matches}catch(e){return false}}
 function gmStart(which){
+  if(which==='bot')which='tower';
   if(gmIsTouch()){try{var de=document.documentElement,fp=de.requestFullscreen?de.requestFullscreen({navigationUI:'hide'}):null;
     if(fp&&fp.then)fp.then(function(){try{var lp=screen.orientation.lock('landscape');if(lp&&lp.catch)lp.catch(function(){})}catch(e){}}).catch(function(){})}catch(e){}}
   var hid=selId,h=heroById(hid),vit=which==='veh'?gmVeh():null;
