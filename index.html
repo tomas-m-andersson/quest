@@ -800,7 +800,7 @@ function emoInit(){
   new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')emoHandle(m.target);else m.addedNodes.forEach(emoWalk)})}).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 setTimeout(emoInit,0);
-var APP_VER='17 OKT BS';
+var APP_VER='17 OKT BT';
 setTimeout(function(){var a=document.getElementById('ver'),b=document.getElementById('verf');if(a)a.textContent=APP_VER;if(b)b.textContent='MECH QUEST · VERSION '+APP_VER},0);
 var SND_ON='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.6 9.2a4 4 0 010 5.6M18.2 6.6a7.7 7.7 0 010 10.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',SND_OFF='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function muteSync(){var b=document.getElementById('mutebtn');if(!b)return;b.innerHTML=SNDMUTE?SND_OFF:SND_ON;b.setAttribute('aria-label',SNDMUTE?'Ljud av – tryck för att slå på':'Ljud på – tryck för att stänga av');b.title=SNDMUTE?'Ljud av':'Ljud på';b.classList.toggle('muted',SNDMUTE)}
@@ -4536,14 +4536,14 @@ function gmInit(){
     g.wk=(g.tw/cw)*(g.rs||1)/2*1.5}
   else{g.tw=Math.max(78,Math.min(LW*.3,g.land?168:132));g.thh=g.tw*ch/cw;var mh=g.land?122:96;if(g.thh>mh){g.thh=mh;g.tw=mh*cw/ch}}
   if(g.mode==='flap'){
-    g.y=320;g.ty=320;g.vy=0;g.rot=0;g.dead=false;g.boom=[];g.parts=[];g.fx=[];g.shake=0;g.px=Math.max(130,Math.min(LW*.3,300));g.sx=0;g.spd=260;g.en=[];g.eb=[];g.bul=[];g.pk=[];g.hp=5;g.inv=0;g.sh=0;g.spawn=1.2;g.fcd=0;g.keyY=0;g.ex=0;
+    g.y=320;g.ty=320;g.vy=0;g.rot=0;g.dead=false;g.boom=[];g.parts=[];g.fx=[];g.shake=0;g.px=Math.max(130,Math.min(LW*.3,300));g.sx=0;g.spd=260;g.en=[];g.eb=[];g.bul=[];g.pk=[];g.hp=3;g.inv=0;g.sh=0;g.spawn=1.2;g.fcd=0;g.keyY=0;g.ex=0;
   }else if(g.mode==='run'){
     g.terr=false;g.sx=0;try{var vb=VEHICLES[g.vid]&&(VEHICLES[g.vid].bs||g.vid);g.terr=g.kind==='ground'&&(vb==='bike'||vb==='jeep'||vb==='tank')}catch(e){}g.hov=g.kind==='hover';if(g.hov)g.terr=true;g.water=g.kind==='water'||g.hov;g.gy=g.water?500:520;g.py=g.gy;g.vy=0;g.on=true;g.px=Math.max(70,LW*.22);g.obs=[];g.coins=[];g.drones=[];g.bul=[];g.parts=[];g.fx=[];g.kills=0;g.fcd=0;g.firing=false;g.spd=300;g.dist=0;g.nextX=LW+120;g.gx=0;g.cc=0;g.lives=0;g.inv=0;g.sh=0;g.pk=[];
   }else{
     g.px=Math.max(110,LW*.22,(g.land||g.vrot?270:150)/g.s);g.x=g.px;g.tx=g.px;g.y=520-g.thh/2;g.ty=g.y;g.vy=0;g.sx=0;g.dist=0;g.sf=0;g.on=true;g.jumps=0;g.obs=[];g.blk=[];g.floor=520;g.nextX=LW*.9+260;g.lean=9;g.dp=0;g.en=[];g.eb=[];g.hp=5;g.inv=0;g.sh=0;g.pk=[];g.cdT=0;g.atk=-1;g.sw=1;g.spawn=1;g.parts=[];g.fx=[];g.shake=0;g.swId=0;g.keyY=0;g.keyX=0;
   }
   g.xj=0;g.pcd=1.5;g.ptr=null;g.wu=0;if(g.mw0)g.mw=g.mw0;
-  if(g.pw==='hp'){if(g.mode==='shoot'||g.mode==='flap')g.hp=6;else if(g.mode==='run')g.lives=1}
+  if(g.pw==='hp'){if(g.mode==='flap')g.hp=4;else if(g.mode==='shoot')g.hp=6;else if(g.mode==='run')g.lives=1}
   g.hpMax=g.hp||5;
   if(g.pw==='shield')g.sh=4;
   var sc=document.getElementById('gmsc');if(sc)sc.textContent='0';
@@ -5005,7 +5005,7 @@ function gmDraw(dt){
     gmPetDraw(ctx,g);
     gmPartsDraw(ctx,g);gmFxDraw(ctx,g);
     if(g.sh>0){ctx.font='700 '+(15/g.s)+'px system-ui,sans-serif';ctx.textAlign='left';ctx.fillStyle='#9fdcff';cvIc(ctx,'shield','#5ad1ff',14/g.s,(134-15)/g.s,18/g.s);ctx.fillText(''+Math.ceil(g.sh),(14+23)/g.s,134/g.s)}
-    for(var hf=0;hf<Math.max(5,g.hp);hf++){ctx.globalAlpha=hf<g.hp?1:.22;cvIc(ctx,'heart','#ff5d73',(14+hf*25)/g.s,(106-17)/g.s,20/g.s)}ctx.globalAlpha=1;
+    for(var hf=0;hf<Math.max(g.hpMax||3,g.hp);hf++){ctx.globalAlpha=hf<g.hp?1:.22;cvIc(ctx,'heart','#ff5d73',(14+hf*25)/g.s,(106-17)/g.s,20/g.s)}ctx.globalAlpha=1;
     gmWuHud(ctx,g,162);
   }else if(g.mode==='run'){
     var gy=g.gy;
