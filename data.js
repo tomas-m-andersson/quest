@@ -205,8 +205,8 @@ window.SKOLQUEST_DATA = {
         "emblem": "dragon",
         "banner": "kungs",
         "special": "thunder",
-        "vehicle": "guldtank",
-        "ride": false,
+        "vehicle": "walker",
+        "ride": true,
         "vmotor": "m4",
         "vweapon": "w3",
         "varmor": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792239379608
+  "updatedAt": 1792239403112
 };
