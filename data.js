@@ -198,7 +198,7 @@ window.SKOLQUEST_DATA = {
         "waist": "",
         "legs": "",
         "back": "",
-        "weapon": "halberd",
+        "weapon": "gatling",
         "offhand": "mirror",
         "aura": "",
         "bg": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792237963206
+  "updatedAt": 1792238584971
 };
