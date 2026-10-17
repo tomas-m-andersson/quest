@@ -635,7 +635,7 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
   <h3 class="sec">Belöningar</h3>
   <section class="rewards" id="rewards"></section>
 </div>
-<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 17 OKT BL</p>
+<p style="text-align:center;font-size:11px;color:var(--mute);margin:18px 0 8px;letter-spacing:.1em">MECH QUEST · VERSION 17 OKT BM</p>
 <div id="modal"></div>
 <div id="toast"></div>
 
@@ -4518,7 +4518,7 @@ function gmInit(){
     g.wk=(g.tw/cw)*(g.rs||1)/2*1.5}
   else{g.tw=Math.max(78,Math.min(LW*.3,g.land?168:132));g.thh=g.tw*ch/cw;var mh=g.land?122:96;if(g.thh>mh){g.thh=mh;g.tw=mh*cw/ch}}
   if(g.mode==='flap'){
-    g.y=320;g.ty=320;g.vy=0;g.rot=0;g.dead=false;g.boom=[];g.parts=[];g.fx=[];g.shake=0;g.px=Math.max(70,Math.min(LW*.18,150));g.sx=0;g.spd=260;g.en=[];g.eb=[];g.bul=[];g.pk=[];g.hp=5;g.inv=0;g.sh=0;g.spawn=1.2;g.fcd=0;g.keyY=0;g.ex=0;
+    g.y=320;g.ty=320;g.vy=0;g.rot=0;g.dead=false;g.boom=[];g.parts=[];g.fx=[];g.shake=0;g.px=Math.max(130,Math.min(LW*.3,300));g.sx=0;g.spd=260;g.en=[];g.eb=[];g.bul=[];g.pk=[];g.hp=5;g.inv=0;g.sh=0;g.spawn=1.2;g.fcd=0;g.keyY=0;g.ex=0;
   }else if(g.mode==='run'){
     g.terr=false;g.sx=0;try{var vb=VEHICLES[g.vid]&&(VEHICLES[g.vid].bs||g.vid);g.terr=g.kind==='ground'&&(vb==='bike'||vb==='jeep'||vb==='tank')}catch(e){}g.hov=g.kind==='hover';if(g.hov)g.terr=true;g.water=g.kind==='water'||g.hov;g.gy=g.water?500:520;g.py=g.gy;g.vy=0;g.on=true;g.px=Math.max(70,LW*.22);g.obs=[];g.coins=[];g.drones=[];g.bul=[];g.parts=[];g.fx=[];g.kills=0;g.fcd=0;g.firing=false;g.spd=300;g.dist=0;g.nextX=LW+120;g.gx=0;g.cc=0;g.lives=0;g.inv=0;g.sh=0;g.pk=[];
   }else{
