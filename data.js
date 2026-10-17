@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792229289302
+  "updatedAt": 1792229293349
 };
