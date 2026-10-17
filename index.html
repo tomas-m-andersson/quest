@@ -619,6 +619,15 @@ button[data-act="delq"],button[data-act="delr"]{min-width:46px;min-height:46px}
 #twknob{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#fff,#9fd0ff 55%,#4a86d8);border:2px solid rgba(255,255,255,.85);box-shadow:0 4px 12px rgba(0,0,0,.55);pointer-events:none}
 #gmov.tw #gmjoy{left:auto;right:calc(128px + env(safe-area-inset-right,0px));bottom:calc(30px + env(safe-area-inset-bottom,0px));width:88px;height:88px}
 #gmov.rot #twstick{bottom:24px}
+#gmov.tw #gmfire,#gmov.tw #gmjoy{--ac:var(--red);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:20px;border:2px solid var(--ac);color:var(--ac);background:linear-gradient(165deg,#1f2631,#10141b);box-shadow:0 0 0 1px rgba(0,0,0,.6),0 0 18px color-mix(in srgb,var(--ac) 38%,transparent),0 8px 20px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.12);text-shadow:none;overflow:visible;font:700 11px var(--head);letter-spacing:.14em;text-transform:uppercase;padding:0}
+#gmov.tw #gmjoy{--ac:var(--c)}
+#gmov.tw #gmfire::before,#gmov.tw #gmjoy::before{content:'';position:absolute;inset:5px;left:5px;right:5px;top:5px;height:auto;border-radius:15px;border:1px solid color-mix(in srgb,var(--ac) 35%,transparent);background:none}
+#gmov.tw #gmfire::after,#gmov.tw #gmjoy::after{display:none}
+#gmov.tw #gmfire:active,#gmov.tw #gmjoy:active{background:var(--ac);color:#0b0d11;transform:scale(.94);filter:none}
+.tbi{width:38px;height:38px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}.tbi .f{fill:currentColor;fill-opacity:.2}.tbi .s{fill:currentColor;stroke:none}
+#gmov.tw #gmfire span,#gmov.tw #gmjoy span{pointer-events:none;line-height:1}
+#twring{border:2px solid var(--line2);background:radial-gradient(circle,rgba(43,212,240,.10),rgba(18,22,29,.35))}
+#twknob{background:linear-gradient(165deg,#2bd4f0,#168aa0);border:2px solid #0b0d11;box-shadow:0 0 0 2px var(--c),0 0 16px rgba(43,212,240,.45),0 4px 10px rgba(0,0,0,.55)}
 @media (hover:none){.btn:hover{border-color:var(--line2)}.btn.pri:hover{border-color:var(--c)}.btn.gold:hover{border-color:var(--gold)}.btn.danger:hover{border-color:var(--red)}}
 @media (max-width:420px){.wrap{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}.sheet{padding-left:14px;padding-right:14px}}
 @media (orientation:landscape) and (max-height:500px){.sheet{max-height:96dvh}.wrap{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}}
@@ -805,7 +814,7 @@ function emoInit(){
   new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='characterData')emoHandle(m.target);else m.addedNodes.forEach(emoWalk)})}).observe(document.body,{childList:true,subtree:true,characterData:true});
 }
 setTimeout(emoInit,0);
-var APP_VER='17 OKT BV';
+var APP_VER='17 OKT BW';
 setTimeout(function(){var a=document.getElementById('ver'),b=document.getElementById('verf');if(a)a.textContent=APP_VER;if(b)b.textContent='MECH QUEST · VERSION '+APP_VER},0);
 var SND_ON='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.6 9.2a4 4 0 010 5.6M18.2 6.6a7.7 7.7 0 010 10.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',SND_OFF='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h3.6L12 5.2v13.6l-4.9-4.3H3.5z" fill="rgba(43,212,240,.14)" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function muteSync(){var b=document.getElementById('mutebtn');if(!b)return;b.innerHTML=SNDMUTE?SND_OFF:SND_ON;b.setAttribute('aria-label',SNDMUTE?'Ljud av – tryck för att slå på':'Ljud på – tryck för att stänga av');b.title=SNDMUTE?'Ljud av':'Ljud på';b.classList.toggle('muted',SNDMUTE)}
@@ -4381,6 +4390,7 @@ function gmPetShoot(g){
   if(bo){g.ptr={x1:bx,y1:by,x2:bo.x+bo.w/2,y2:bo.gy-bo.h/2,t:.16};bo.hp-=1;bo.fl=.1;if(bo.hp<=0){gmExplode(g,bo.x+bo.w/2,bo.gy-bo.h/2,1.1);gmExplode(g,bo.x+bo.w/2,bo.gy-bo.h/2,1,true);g.score+=4;gmDrop(g,bo.x+bo.w/2,bo.gy-bo.h/2,.12);g.obs.splice(g.obs.indexOf(bo),1)}else gmSpark(g,bo.x+bo.w/2,bo.gy-bo.h/2,'#c89a5a')}
 }
 /* ---------- TORNET (prototyp): joystick, hopp- och slå-knapp, våningsplan ---------- */
+function twBtn(n,l){return '<svg class="tbi" viewBox="0 0 24 24">'+ICONS[n]+'</svg><span>'+l+'</span>'}
 var TW={NF:5,FH:380,WW:2600,TH:30};
 function twY(k){return (TW.NF-k)*TW.FH}
 function twLX(k){return k%2===0?TW.WW-130:130}
@@ -4679,7 +4689,7 @@ function gmStart(which){
   var mode=which==='bot'?'shoot':(which==='tower'?'tower':gmModeOf(vit.id));
   var old=document.getElementById('gmov');if(old)old.remove();
   var ov=document.createElement('div');ov.id='gmov';if(mode==='tower')ov.className='tw';
-  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmpause" id="gmpause" type="button" aria-label="Pausa"></button><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+(mode==='flap'?'':'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='run'?'🔫':'⚔️')+'</button>')+((mode==='shoot'||mode==='tower')?'<button id="gmjoy" aria-label="Hoppa"><svg viewBox="0 0 48 48" width="52" height="52" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));pointer-events:none"><path d="M24 7 40 25H30v16H18V25H8z" fill="#fff" stroke="rgba(10,30,90,.55)" stroke-width="2" stroke-linejoin="round"/></svg></button>':'')+(mode==='tower'?'<div id="twstick"><div id="twring"></div><div id="twknob"></div></div>':'');
+  ov.innerHTML='<canvas id="gmc"></canvas><div class="gmhud"><span id="gmsc">0</span><span id="gmbest"></span></div><button class="gmpause" id="gmpause" type="button" aria-label="Pausa"></button><button class="gmx" id="gmx" aria-label="Stäng">✕</button><button class="gmx gmflip" id="gmflip" aria-label="Vänd">↻</button><div id="gmui"></div>'+(mode==='flap'?'':'<button class="gmfire" id="gmfire" aria-label="'+(mode==='run'?'Skjut':'Slå')+'">'+(mode==='tower'?twBtn('swords','Slå'):(mode==='run'?'🔫':'⚔️'))+'</button>')+((mode==='shoot'||mode==='tower')?(mode==='tower'?'<button id="gmjoy" aria-label="Hoppa">'+twBtn('jump','Hoppa')+'</button>':'<button id="gmjoy" aria-label="Hoppa"><svg viewBox="0 0 48 48" width="52" height="52" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));pointer-events:none"><path d="M24 7 40 25H30v16H18V25H8z" fill="#fff" stroke="rgba(10,30,90,.55)" stroke-width="2" stroke-linejoin="round"/></svg></button>'):'')+(mode==='tower'?'<div id="twstick"><div id="twring"></div><div id="twknob"></div></div>':'');
   document.body.appendChild(ov);
   var cv=ov.querySelector('#gmc');
   var g={mode:mode,hid:hid,vid:vit?vit.id:'',vname:vit?vit.name:'Mech',kind:vit?(VEHICLES[vit.id].kind||'ground'):'bot',col:heroColor(h),cv:cv,ctx:cv.getContext('2d'),spr:null,state:'load',score:0,t:0,raf:0,last:0,best:gmBest(hid,mode),hold:false,flash:0,cx:0,ty:320};
