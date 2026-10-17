@@ -205,7 +205,7 @@ window.SKOLQUEST_DATA = {
         "emblem": "dragon",
         "banner": "kungs",
         "special": "thunder",
-        "vehicle": "board",
+        "vehicle": "jet",
         "ride": true,
         "vmotor": "m4",
         "vweapon": "w3",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792239449098
+  "updatedAt": 1792256262757
 };
