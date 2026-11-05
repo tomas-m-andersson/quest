@@ -191,7 +191,7 @@ window.SKOLQUEST_DATA = {
       "eq": {
         "pose": "stand",
         "paint": "",
-        "head": "",
+        "head": "kamhjalm",
         "torso": "",
         "shoulders": "",
         "arms": "",
@@ -262,5 +262,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1792256262757
+  "updatedAt": 1793916434207
 };
