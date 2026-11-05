@@ -165,7 +165,9 @@ window.SKOLQUEST_DATA = {
     "b": {}
   },
   "claimed": {
-    "a": [],
+    "a": [
+      "r3"
+    ],
     "b": []
   },
   "boosts": {
@@ -262,5 +264,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1793916434207
+  "updatedAt": 1793916470222
 };
