@@ -154,108 +154,85 @@ window.SKOLQUEST_DATA = {
     "weeklyBonus": 75,
     "setupDone": true
   },
-  "base": {
-    "l": "l1",
-    "t": "t5",
-    "g": "",
-    "s": "s5"
-  },
+  "base": {},
   "checks": {
     "a": {},
     "b": {}
   },
   "claimed": {
-    "a": [
-      "r3"
-    ],
+    "a": [],
     "b": []
   },
   "boosts": {
-    "a": [
-      {
-        "id": "bmv8btm8trla",
-        "xp": 500000,
-        "note": "Extra boost",
-        "date": "2026-10-14"
-      }
-    ],
-    "b": [
-      {
-        "id": "bmv9vbjg0ot8",
-        "xp": 50000,
-        "note": "Extra boost",
-        "date": "2026-10-15"
-      }
-    ]
+    "a": [],
+    "b": []
   },
   "avatar": {
     "a": {
       "eq": {
-        "pose": "stand",
+        "pose": "",
         "paint": "",
-        "head": "kamhjalm",
+        "head": "",
         "torso": "",
         "shoulders": "",
         "arms": "",
         "waist": "",
         "legs": "",
         "back": "",
-        "weapon": "gatling",
-        "offhand": "mirror",
+        "weapon": "",
+        "offhand": "",
         "aura": "",
         "bg": "",
-        "emblem": "dragon",
-        "banner": "kungs",
-        "special": "thunder",
-        "vehicle": "jet",
-        "ride": true,
-        "vmotor": "m4",
-        "vweapon": "w3",
+        "emblem": "",
+        "banner": "",
+        "special": "",
+        "vehicle": "",
+        "ride": false,
+        "vmotor": "",
+        "vweapon": "",
         "varmor": "",
-        "vcolor": "c1",
-        "pet": "fox",
-        "petacc": "sparkle"
+        "vcolor": "",
+        "pet": "",
+        "petacc": ""
       },
-      "seen": 634,
-      "pseen": 634,
-      "petNames": {
-        "phoenix": "Olle"
-      },
+      "seen": 1,
+      "pseen": 1,
+      "petNames": {},
       "care": {
-        "bond": 10,
-        "fed": "2026-10-15",
-        "played": "2026-10-15"
+        "bond": 0,
+        "fed": "",
+        "played": ""
       }
     },
     "b": {
       "eq": {
         "pose": "",
-        "paint": "blue",
-        "head": "valkyria",
-        "torso": "kedjebrost",
-        "shoulders": "horned",
-        "arms": "ljusarmar",
-        "waist": "kedjekjol",
-        "legs": "guard",
-        "back": "raketpack",
-        "weapon": "gatling",
+        "paint": "",
+        "head": "",
+        "torso": "",
+        "shoulders": "",
+        "arms": "",
+        "waist": "",
+        "legs": "",
+        "back": "",
+        "weapon": "",
         "offhand": "",
-        "aura": "pulse",
-        "bg": "desert",
-        "emblem": "diamond",
-        "banner": "blafana",
-        "special": "thunder",
-        "vehicle": "tank",
-        "ride": true,
-        "vmotor": "m2",
-        "vweapon": "w2",
+        "aura": "",
+        "bg": "",
+        "emblem": "",
+        "banner": "",
+        "special": "",
+        "vehicle": "",
+        "ride": false,
+        "vmotor": "",
+        "vweapon": "",
         "varmor": "",
-        "vcolor": "c0",
-        "pet": "spider",
+        "vcolor": "",
+        "pet": "",
         "petacc": ""
       },
-      "seen": 71,
-      "pseen": 71,
+      "seen": 1,
+      "pseen": 1,
       "petNames": {},
       "care": {
         "bond": 0,
@@ -264,5 +241,5 @@ window.SKOLQUEST_DATA = {
       }
     }
   },
-  "updatedAt": 1793916470222
+  "updatedAt": 1793916485035
 };
